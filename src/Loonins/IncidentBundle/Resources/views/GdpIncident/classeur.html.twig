@@ -1,0 +1,93 @@
+{% extends 'LooninsIncidentBundle::layout.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dtpicker/js/jquery.datetimepicker.css') }}" />
+{% endblock %}
+
+{% block body -%}
+    {#<input type="text" id="datetimepicker1"/><br><br>#}
+    <div class="well" style="width: auto;">
+        <legend>Rechercher </legend>
+        <form method="post" action="{{ path('gdp_classeur',{'classeur':classeur.id}) }}">
+            <div>
+                {{ form_label(form.debut, "Date de création comprise entre") }}
+            </div>
+            <div>
+                {{ form_widget(form.debut) }} 
+                &nbsp;&nbsp; et &nbsp;&nbsp;
+                {{ form_widget(form.fin, {'attr':{'class':'datetimepicker1'} }) }}
+                &nbsp;&nbsp; avec un status  &nbsp;&nbsp;
+                {{ form_errors(form.status) }}    
+                {{ form_widget(form.status) }}    
+            </div>
+
+            {{ form_widget(form.fin, {'attr':{'class':'datetimepicker1'} }) }}    
+            {#        {{ form_widget(form.submit, {'attr':{'class':'btn btn-success'} }) }}    #}
+            {{ form_rest(form) }}    
+            <input type="submit" class="btn btn-primary" />  
+        </form>
+    </div>
+
+            <legend>Liste  des incidents <b class="alert alert-info"> <i> {{ classeur.type }} </i> </b></legend>
+    <p>
+        <b> Afficher les incidents par cat&eacute;gorie </b>
+        {% for cat in categ %}
+            <a class="btn btn-primary" href="{{ path('gdp_classeur',{'classeur':cat.id}) }}"> {{ cat.type }} </a>
+        {% endfor %}
+        <a class="btn btn-success" href="{{ path('gdpincident') }}"> Afficher tout </a>
+    </p>
+    <a href="{{ path('gdpexport') }}"> <i class="icon icon-download-alt" > </i> T&eacute;l&eacute;charger la liste en CSV </a>
+    <table style="width:auto;" id="tablePage" class="table table-bordered table records_list">
+        <thead class="alert alert-info">
+            <tr>
+		<th> Num&eacute;ro d&apos;enregistrement</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Catégorie</th>
+                <th>Status</th>
+                <th style="width:30%;"> D&eacute;tails </th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr {% if entity.status.num ==3 %} class="alert alert-danger" {% endif %}>
+                    <td>{{ entity.id }}</td>                    
+			<td>{{ entity.titre }}</td>
+                    <td>{{ entity.description }}</td>
+                    <td>
+                        {% if(entity.categorie) %}
+                            {{ entity.categorie.type }}
+                        {% endif %}
+                    </td>
+                    <td>{% if entity.status %}{{ entity.status.status }}{% endif %}</td>
+                    <td> 
+                        {% if entity.date %}
+                            Cr&eacute;&eacute; le {{ entity.date|date('Y-m-d H:i:s') }}
+                        {% endif %}
+
+                        {% if entity.proprio %}
+                            Par {{ entity.proprio.username }}
+                        {% endif %}
+                        <br/>
+                        {% if entity.clotureDate %}
+                            Clotur&eacute; le {{ entity.clotureDate|date('Y-m-d H:i:s') }}
+                        {% endif %}
+                        {% if entity.closer %}
+                            Par {{ entity.closer.username }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('gdpincident_show', { 'id': entity.id }) }}"> En savoir plus </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

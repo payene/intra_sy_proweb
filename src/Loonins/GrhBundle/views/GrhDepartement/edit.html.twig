@@ -1,0 +1,25 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+<legend>Modifier un d&eacute;partement</legend>
+<form action="{{ path('grhdepartement_update', {'id':entity.id} ) }}" method="POST">
+    <div>
+    {{ form_label(edit_form.departement, "Département")}}
+    {{ form_errors(edit_form.departement)}}
+    {{ form_widget(edit_form.departement)}}
+    </div>
+    {{ form_widget(edit_form.submit, {'attr':{'class':'btn btn-warning'} })}}
+    {{ form_rest(edit_form) }}
+</form>
+
+<br/>
+<br/>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('grhdepartement') }}">
+            <button class="btn btn-primary"> <i class="icon-white icon-backward"></i> Retour sur la liste </button>
+        </a>
+    </li>
+</ul>
+{% endblock %}

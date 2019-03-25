@@ -1,0 +1,44 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+{#{{ art }}#}
+{{ form_start(form) }}
+
+<legend><a href="{{ path('article_show', {'id':art.id}) }}">{{ art.artTitre }}</a> >> Nouveau paragraphe </legend>
+    <div>
+    {{ form_label(form.verTitre, "Titre paragraphe") }}
+    {{ form_errors(form.verTitre) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.verTitre,{ 'attr': {'placeholder':'Titre'} }) }} 
+        </div>
+        <div>
+    {{ form_label(form.verContent, "Contenu paragraphe") }}
+    {{ form_errors(form.verContent) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.verContent,{ 'attr': {'class':'ckeditor', 'placeholder':'Contenu','style':'height:105px;width:450px;'} }) }} 
+            </div>
+         {% if is_granted("ROLE_ADMIN") %}
+            <div>
+    {{ form_label(form.attachement, "Insérer une image") }}
+    {{ form_errors(form.attachement) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.attachement) }} 
+                </div>
+        {% endif %}
+                <div>
+    {{ form_label(form.verEditable, "Lecture seule") }}
+    {{ form_errors(form.verEditable) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.verEditable) }} 
+                    </div>
+    {{ form_widget(form.verArticle,{ 'attr': {'class':'hidden'} }) }} 
+    {{ form_widget(form.verDel,{ 'attr': {'class':'hidden'} }) }} 
+    {{ form_widget(form.verDate,{ 'attr': {'class':'hidden'} }) }} 
+    {{ form_widget(form.verCreator,{ 'attr': {'class':'hidden'} }) }} 
+                    <div>
+    {{ form_widget(form.submit,{ 'attr': {'class':'btn btn-success'} }) }} 
+                        </div>
+{{ form_rest(form) }}
+{{ form_end(form) }}
+
+{% endblock %}

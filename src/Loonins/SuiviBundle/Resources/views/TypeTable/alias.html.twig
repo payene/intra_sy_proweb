@@ -1,0 +1,40 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+   
+{% block body -%}
+    <a style="float: right;margin-left: 5px;" href="{{ path('typetable') }}" class="btn btn-primary" >
+        Retour
+    </a>
+    <div class="container">
+        <h2>Alias de l'activité {{ entity.typeTable }}</h2>
+        <fieldset>
+            <legend>Nouvel alias</legend>
+            {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_row(form.alias) }}
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            {{ form_end(form) }}
+        </fieldset>        
+    </div>
+    <br>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Alias</th>
+                <th colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aliasActivite in aliasActivites %}
+                <tr>
+                    <td>{{ aliasActivite.alias }}</td>
+                    <td>
+                        <a class="btn btn-alert btn-danger" href="{{ path('alias_delete', { 'id': aliasActivite.id }) }}"> Supprimer </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

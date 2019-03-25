@@ -1,0 +1,204 @@
+<script type="text/javascript">
+	//création de la classe qui constituera chaque activité à une heure données
+        function DayPlanActivity(activite, heureDeb, heureFin, onUpdateCallBack, onDeleteCallback,others){
+            //var index = activityList.indexOf( activite );
+            //if( index > -1 ){
+                this.id = "#";
+                this.cellule = {};
+                //this.titre = titre;
+                this.activite = activite;
+                this.heureDebut = heureDeb;
+                this.heureFin = heureFin;
+                this.onUpdateCallBack = onUpdateCallBack;
+                this.onDeleteCallback = onDeleteCallback;
+                this.others = others;
+            /*}
+            else{
+                console.log("undefined activity");
+            }*/
+        }
+
+        //prototype du code à générer
+        DayPlanActivity.prototype.code = function(){
+            //var myUl = $('#'+this.Cellule.id+' ul');
+            var text = '<b>'+this.activite+'</b>/ '+this.heureDebut+' - '+this.heureFin;
+                var myLi = $('<li title="Cliquez pour modifier l\'activité '+ this.activite +'" id="'+ this.id +'" class="jplan-li"></li>').html( text );
+                // style="background: rgba(173,255,47, 0.75);"
+                    myLi.data('activity', this);
+
+                //console.log( myLi.css('background') );
+                myLi.css('cursor', 'pointer')
+                myLi.click(function() {
+                    //alert('vous avez cliqué sur l\'activité ' + $(this).data('activity').activite);
+                    var activity = $(this).data('activity');
+                    activity.onUpdateCallBack( activity );
+                    //console.log(  );
+                })
+                ;
+                return myLi;
+        }
+
+        //prototype du code à générer
+        DayPlanActivity.prototype.selfRemove = function(){
+        	var myLiId = this.id;
+
+        	$('#'+this.id).remove();
+
+        	// get index of dayPLanActivity in cel
+			var removeIndex = this.cellule.activites.map(function(activity) { return activity.id; }).indexOf( this.id );
+
+			// remove the dayPLanActivity
+			this.cellule.activites.splice(removeIndex, 1);
+            //return myLi;
+            this.onDeleteCallback(this);
+        }
+
+        //prototype d'ajout de cellule
+        DayPlanActivity.prototype.addTo = function( cellule ){
+                cellule.addDayPlanActivity(this);
+                var myLi = this.code();
+                //console.log( myLi ); 
+                var myUl = $('#' + this.cellule.id+" ul");
+                myUl.append( myLi );
+                return this;
+        }
+
+        //création de la classe cellule
+        function Cellule(jour, onAddActivityCallBack, iothers){
+            this.id = "#";
+            this.ligne = {};
+            this.activites = [];
+            this.jour = jour;
+            this.iothers = iothers;
+            this.onAddActivity = onAddActivityCallBack;
+        }
+
+        //prototype d'ajout d'une activité
+        Cellule.prototype.addDayPlanActivity = function( activity ){
+            this.activites.push(activity);
+            activity.cellule = this;
+            activity.id = "activite-"+(this.activites.length + 20 +  (Math.random() * 10) )+"-cellule-"+this.id;
+        };
+
+        //prototype du code à générer
+        Cellule.prototype.code = function(){
+            //console.log(this);
+            var myTd = $('<td style="width:1%; white-space:nowrap; min-width: 75px;" id='+this.id+'></td>');
+            var div1 = $('<div></div>');
+            var div2 = $('<div></div>');
+            var myUl = $('<ul class="nav nav-pills nav-stacked"  style="margin: 0px;"></u>');
+            if(this.activites.length != []){
+                for (var i = 0; i < this.activites.length; i++) {
+                    var activity = this.activites[i];
+                    var code = activity.code();
+                    //console.log( activity );
+                    myUl.append( code );
+                    //myUl.append($('<br>'));
+                }
+            }
+            div1.append(myUl);
+
+            var plus = $('<button class="btn btn-info btn-xs" style="display: none;"></button>');
+                plus.data('cellule', this);
+
+                plus.click(function(){
+                    var cellule = $(this).data('cellule');
+                        cellule.onAddActivity( cellule );
+                        //$('#'+cellule.ligne.plan.dialogId).dialog('open').data('cellule', cellule);
+                });
+
+                myTd.mouseover(function(){
+                    plus.css('display', '');
+                });
+
+                myTd.mouseout(function(){
+                    plus.css('display', 'none');
+                });
+
+                plus.append(    $('<i>+</i>')    );
+            div2.append(plus);
+
+            /*div2.append('<a href="#" class="btn btn-success"><i>modifier<i></a>'):
+            div2.append('<a href="#" class="btn btn-success"><i>-<i></a>'):
+            */
+            myTd.append( div1 );
+            myTd.append( div2 );
+            return myTd;
+        };
+
+        //création de la classe de la ligne
+        function Ligne( nom, plan, others, iothers ){
+            this.nom = nom;
+            this.cellules = []; 
+            this.isAdded = 0;
+            this.plan = plan;
+            this.others = others;
+            this.iothers = iothers;
+            this.id = "ligne-plan-"+this.plan.lignes.length+"-plan-"+this.plan.id;
+        }
+
+        /*Ligne.prototype.reinitialiser: function(){
+            //réinitialisation des données
+        }*/
+
+        Ligne.prototype.ajouterCellule = function( cel ){
+            
+            if( this.cellules.length == 8 ){
+                console.log('The Cellule number must not exceed 8');
+            }
+
+            else{
+                this.cellules.push( cel );
+                cel.ligne = this;
+                cel.id = "cel-"+this.cellules.length+"ligne-"+this.id;
+                for (var i = 0; i < cel.activites.length; i++) {
+                    cel.activites[i].id = "activite-"+cel.activites.length+"-cellule-"+cel.id;
+                }
+
+            }
+
+        };
+
+        //code de création de ligne
+        Ligne.prototype.createLigne = function(){
+            if( this.cellules.length >= 7 ){
+                var body_id =   this.plan.id;
+                var myTr = $('<tr></tr>');
+                //ajout du nom
+                myTr.append("<td>"+this.nom+"</td>")
+                
+                //undefined
+                for (var i = 0; i < this.cellules.length; i++) {
+                    var code = this.cellules[i].code();
+                    myTr.append( code ) ;
+                }
+                for (var i = 0; i < this.others.length; i++) {
+                    myTr.append( "<td>"+this.others[i]+"</td>" );
+                }
+                $('#'+body_id).append(myTr);
+            }
+            else{
+                console.log('The cellule number must be at least 7');
+            }
+        }
+
+        // Création de la classe qui représentera un planning
+        function Plan( id ){
+            this.id = id;
+            this.lignes = [];
+        }
+
+        //Ajout de ligne au plan
+        Plan.prototype.addLigne = function( ligne ){
+            this.lignes.push( ligne );
+            ligne.plan = this;
+            ligne.id = "ligne-plan-"+this.lignes.length+"plan-"+this.id;
+            ligne.createLigne();
+            ligne.isAdded = 1;
+        };
+
+        function addDayPlanActivity( cel ){
+            var myUl = $('#'+cel.id+' ul.nav');
+                console.log( myUl );
+        }	
+</script>

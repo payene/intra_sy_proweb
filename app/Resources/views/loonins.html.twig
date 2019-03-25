@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block container %}
+    <aside class="sidebar">
+        {% block sidebar %}
+
+        {% endblock %}
+    </aside>
+
+    <section class="main-col" style="">
+        {% block main %} 
+            {% block body %}<br>ll{% endblock %}
+        {% endblock %}
+
+    </section>
+{% endblock %}
+

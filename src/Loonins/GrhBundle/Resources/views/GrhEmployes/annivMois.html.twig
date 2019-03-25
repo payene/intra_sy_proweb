@@ -1,0 +1,62 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+
+{% block body -%}
+    
+    
+    
+    <div class="col-md-12" >
+        <div class="form-group" >
+            <label>Anniversaires du mois de</label>
+            <select class="form-control" onchange=" window.location = '{{ path('grhemployes_anniv_mail_sending_bymonth', {'month' : 'null'}) }}'.replace('null', this.value);        ">
+                <option value="1" {% if num ==1 %}selected{% endif %} >Janvier</option>
+                <option value="2" {% if num ==2 %}selected{% endif %}>Février</option>
+                <option value="3" {% if num ==3 %}selected{% endif %}>Mars</option>
+                <option value="4" {% if num ==4 %}selected{% endif %}>Avril</option>
+                <option value="5" {% if num ==5 %}selected{% endif %}>Mai</option>
+                <option value="6" {% if num ==6 %}selected{% endif %}>Juin</option>
+                <option value="7" {% if num ==7 %}selected{% endif %}>Juillet</option>
+                <option value="8" {% if num ==8 %}selected{% endif %}>Août</option>
+                <option value="9" {% if num ==9 %}selected{% endif %}>Septembre</option>
+                <option value="10" {% if num ==10 %}selected{% endif %}>Octobre</option>
+                <option value="11" {% if num ==11 %}selected{% endif %}>Novembre</option>
+                <option value="12" {% if num ==12 %}selected{% endif %}>Décembre</option>
+            </select>
+        </div>
+    </div>
+
+        
+    <div class="tab-content">
+        <h1>Les anniversaires du mois de {{ mois }}</h1>
+          <div id="contrat" class="tab-pane fade in active">
+              <table class="table table-bordered records_list">
+                <thead>
+                    <tr>
+                        <th style="border-radius: 0 style="padding:0px;vertical-align:middle;"px 0px;padding:0px;vertical-align:middle;">Nom</th>
+                        <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">Prenoms</th>
+                        <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">Sexe</th>
+                        <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">Numéro de téléphone</th>
+                        <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in annivMois %}
+                        <tr>
+                            <td style="padding:0px;vertical-align:middle;">{{ entity.nom }}</td>
+                            <td style="padding:0px;vertical-align:middle;">{{ entity.prenoms }}</td>
+                            <td style="padding:0px;vertical-align:middle;">{{ entity.sexe.sexe }}</td>
+                            <td style="padding:0px;vertical-align:middle;">{{ entity.phone }}</td>
+                            <td style="padding:0px;vertical-align:middle;">{% if entity.datenaiss %}{{entity.datenaiss|date('d F')}}{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          </div>
+      
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+    <legend> <b> {{ employe.nom }} {{ employe.prenoms }} </b> :  Ajouter un &eacute;l&eacute;ment dans la fiche salari&eacute; </legend>
+
+
+    <form action="{{ path('grhfichesalarie_create') }}" method="POST">
+        <div>
+            {{ form_label(form.titre, "Titre") }}
+            {{ form_errors(form.titre) }}
+            {{ form_widget(form.titre) }}
+        </div>
+
+        <div>
+            {{ form_label(form.contenu, "Contenu") }}
+            {{ form_errors(form.contenu) }}
+            {{ form_widget(form.contenu) }}
+        </div>
+
+        <div>
+            {{ form_label(form.type) }}
+            {{ form_errors(form.type) }}
+            {{ form_widget(form.type) }}
+        </div>
+
+        {# <div>
+             {{ form_label(form.employe) }}
+             {{ form_errors(form.employe) }}
+             {{ form_widget(form.employe , {'attr':{'readonly':'readonly'} } ) }}
+         </div>#}
+
+        {#
+                <div>
+                    {{ form_widget(form.date , {'attr':{'class':'hidden'} } ) }}
+                </div>#}
+        {{ form_widget(form.submit , {'attr':{'class':'btn btn-success'} } ) }}
+        {{ form_rest(form) }}
+    </form>
+
+
+    {#    {{ form(form) }}#}
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('grhemployes_fiche',{'id':entity.employe.id}) }}">
+                Retourner sur la fiche salari&eacute;
+            </a>
+        </li>
+    </ul>
+{% endblock %}

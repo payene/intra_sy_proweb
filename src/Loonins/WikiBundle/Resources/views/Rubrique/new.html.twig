@@ -1,0 +1,34 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1>Rubrique creation</h1>
+{{ form_start(form) }}
+
+<div>
+    {{ form_label(form.titre, "Titre rubrique") }}
+    {{ form_errors(form.titre) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.titre) }} 
+</div>
+
+<div>
+    {{ form_label(form.rubCat, "Catégorie") }}
+    {{ form_errors(form.rubCat) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.rubCat) }} 
+</div>
+
+<div>
+        {# Génération de l'input. #}
+    {{ form_widget(form.submit, { 'attr': {'class':'btn btn-success'} }) }} 
+</div> 
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('rubrique') }}">
+            Liste des rubriques
+        </a>
+    </li>
+</ul>
+{% endblock %}

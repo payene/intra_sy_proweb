@@ -1,0 +1,113 @@
+{% extends 'LooninsIncidentBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h1>Nouvel Incident</h1>
+
+    <br/>
+    <form action="{{ path('gdpincident_create') }}" method="post">
+
+
+        {% if(reqEmpError == 1 ) %}
+            <p> <span class="alert alert-danger" >  Pour ce type d'incident veuillez préciser l'employé concerné </span> </p>
+        {% endif %}
+
+        <div class="span3" style="margin-left:0;">
+            {{ form_label(form.employe, "Employe concerné par l'incident") }}
+            {{ form_errors(form.employe, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.employe) }} 
+        </div>
+
+        <div class="span3" style="margin-left:0;">
+            {{ form_label(form.titre, "Titre") }}
+            {{ form_errors(form.titre, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.titre) }} 
+        </div>
+
+        <div class="span3">
+            {{ form_label(form.categorie, "Catégorie de l'incident") }}
+            {{ form_errors(form.categorie, {'attr': {'class': 'alert alert-error', 'value':'08:00'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.categorie) }} 
+        </div>
+
+        <br style="clear:both;" />
+
+        <div class="span3" style="margin-left:0;">
+            {{ form_label(form.date, "Date incident") }}
+            <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                {# Génération de l'input. #}
+                {{ form_errors(form.date) }}
+                {{ form_widget(form.date, {'attr': {'class':'span9' }}) }}
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </div>
+
+        <div class="span2">
+            {{ form_label(form.duree, "Duree incident") }}
+            <div id="dureeIncid" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input2" data-link-format="hh:ii">
+                {# Génération de l'input. #}
+                {{ form_errors(form.duree) }}
+                {{ form_widget(form.duree, {'attr': {'class':'span9' }}) }}
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </div>
+         {% if(reqTmError is defined ) %}
+            {% if(reqTmError == 1 ) %}
+                <div class="span4">
+                    <label>&nbsp;</label>
+                    <span class="alert alert-danger" >  Pour ce type d'incident veuillez en préciser la duree  </span> 
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <br style="clear:both;" />
+
+        <div class="span10" style="margin-left:0;">
+            {{ form_label(form.description, "Description") }}
+            {{ form_errors(form.description, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.description, {'attr': {'class':'span10', 'style':'height:180px;' }}) }}
+        </div>
+
+        <div>
+        </div>
+        <br style="clear:both;" />
+        {{ form_widget(form.submit , {'attr': {'class':'btn btn-success'} }) }} 
+        {{ form_rest(form) }}
+    </form>
+</ul>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+
+        .datetimepicker-minutes>.table-condensed>thead>tr>th.switch{
+            color: #fff;
+            background: #fff;
+            opacity: 0;
+        }
+
+       
+
+    </style>
+{% endblock %}
+
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script type="text/javascript">
+        function setIncidentTitre() {
+            var str = $("#loonins_incidentbundle_gdpincident_employe :selected").text();
+            $("#loonins_incidentbundle_gdpincident_titre").val(str);
+        }
+
+        $('#loonins_incidentbundle_gdpincident_employe').on("change", setIncidentTitre);
+    </script>
+{% endblock %}

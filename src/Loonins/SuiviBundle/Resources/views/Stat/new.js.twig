@@ -1,0 +1,38 @@
+<script type="text/javascript">
+	function sendExplain(a_id, id){
+		var tab = [];
+		tab[0] = id;
+		$.ajax({
+                 type: 'POST',
+                 url: '{{path('stat_ask_explain_mail_sender')|escape('js')}}',//l'url
+                 data: {list: tab},
+                 dataType: 'text',
+                 beforeSend: function(){
+                 	//alert( $('#'+a_id).html() );
+                 	$('#'+a_id).html('Envoi en cours ...');
+                 	//alert( $('#'+a_id).text() );
+                 },
+                 success: function(data){
+                    if( data == "good" ){
+                        
+                        alert("Demande d'explication envoyée avec succès!")
+                        
+                        $('#'+a_id).html("Demande d'explication envoyée");
+
+                        setTimeout(function(){ 
+                        	$('#'+a_id).html("Envoyer demander d'explication."); 
+                        }, 5000);
+
+                    }
+                 },
+                 error: function() {
+                        $('#'+a_id).html("Erreur d'envoi! Vérifiez votre connexion et réessayez.");
+                        setTimeout(function(){
+                        	$('#'+a_id).html("Envoyer demander d'explication.");
+                        }, 5000);
+                         //alert('La requête n\'a pas abouti'); 
+                 }
+             });
+	}
+
+</script>

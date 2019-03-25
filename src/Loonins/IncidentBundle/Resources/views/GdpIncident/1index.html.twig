@@ -1,0 +1,109 @@
+{% extends 'LooninsIncidentBundle::layout.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dtpicker/js/jquery.datetimepicker.css') }}" />
+{% endblock %}
+
+{% block body -%}
+    {#<input type="text" id="datetimepicker1"/><br><br>#}
+    <div class="well" style="width: auto;">
+        <legend>Rechercher </legend>
+        <form method="post" action="{{ path('gdpincident') }}" >
+            <div class="span3">
+                {{ form_label(form.debut, "Date création comprise entre") }}
+                <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.debut) }}
+                    <span class="add-on"><i class="icon-remove"></i></span>
+                    <span class="add-on"><i class="icon-th"></i></span>
+                </div>
+            </div>
+            <div class="span3">
+                {{ form_label(form.fin, "Et") }}
+                <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.fin) }}
+                    <span class="add-on"><i class="icon-remove"></i></span>
+                    <span class="add-on"><i class="icon-th"></i></span>
+                </div>
+            </div>
+
+            <div class="span2">
+                {{ form_label(form.status, "Status") }}
+                {{ form_errors(form.status) }}    
+                {{ form_widget(form.status, {'attr':{'class':'span2'}}) }}    
+                
+            </div>
+            <div class="span1">
+                <label>&nbsp;</label>
+                <input type="submit" class="btn btn-primary" />  
+            </div>
+            {{ form_rest(form) }}    
+        </form>
+        <br style="clear:both" />
+    </div>
+
+    <legend>Liste  des incidents</legend>
+    <p>
+        <b> Afficher les incidents par cat&eacute;gorie </b>
+        {% for cat in categ %}
+            <a class="btn btn-primary" href="{{ path('gdp_classeur',{'classeur':cat.id}) }}"> {{ cat.type }} </a>
+        {% endfor %}
+        <a class="btn btn-success" href="{{ path('gdpincident') }}"> Afficher tout </a>
+    </p>
+    <a href="{{ path('gdpexport') }}"> <i class="icon icon-download-alt" > </i> T&eacute;l&eacute;charger la liste en CSV </a>
+    <table style="width:auto;" id="tablePage" class="table table-bordered table records_list">
+        <thead class="alert alert-info">
+            <tr>
+		<th> Num&eacute;ro d&apos;enregistrement</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Catégorie</th>
+                <th>Status</th>
+                <th style="width:30%;"> D&eacute;tails </th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr {% if entity.status.num ==3 %} class="alert alert-danger" {% endif %}>
+			                    <td>{{ entity.id }}</td>                    
+		<td>{{ entity.titre }}</td>
+                    <td>{{ entity.description }}</td>
+                    <td>
+                        {% if(entity.categorie) %}
+                            {{ entity.categorie.type }}
+                        {% endif %}
+                    </td>
+                    <td>{% if entity.status %}{{ entity.status.status }}{% endif %}</td>
+                    <td> 
+                        {% if entity.date %}
+                            Cr&eacute;&eacute; le {{ entity.dateEnreg|date('Y-m-d H:i:s') }}
+                            
+                        {% endif %}
+
+                        {% if entity.proprio %}
+                            Par {{ entity.proprio.username }}
+                        {% endif %}
+                        <br/>
+                        {% if entity.clotureDate %}
+                            Clotur&eacute; le {{ entity.clotureDate|date('Y-m-d H:i:s') }}
+                        {% endif %}
+                        {% if entity.closer %}
+                            Par {{ entity.closer.username }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('gdpincident_show', { 'id': entity.id }) }}"> En savoir plus </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

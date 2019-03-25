@@ -1,0 +1,60 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+
+{% block legend -%}
+    {{ dateStat }} / {{ table }}
+{% endblock %}
+
+{% block body -%}
+    
+    {% include  'LooninsSuiviBundle:Stat:search_form.html.twig' %}
+   
+    <table class="table table-striped  table-hover">
+        <thead >
+            <tr class="alert-info">
+                <td colspan="3"> Date :  {{ dateStat }} </td>
+                <td colspan="4">   {{ table }} </td>
+            </tr>
+            <tr>
+                <th>Login</th>
+                <th>Messages/heure</th>
+                <th>Total</th>
+                <th>Programm&eacute;</th>
+                <th>R&eacute;eel</th>
+                <th>Animatrice</th>
+                <th>Actions </th>
+            </tr>
+        </thead>
+        <tbody class="tbody" >
+            {% for ligne in stats %}
+            <tr>
+                <td> {{ ligne.animatrice.login }} </td>
+                <td> {{ ligne.msgParHeure }} </td>
+                <td> {{ ligne.total }} </td>
+                <td> {{ ligne.programmed }} </td>
+                <td> 
+                {% if ligne.retard == 1 %}
+                        <span style="padding:2px;border-radius:0px;background-color:  rgba(185, 74, 72, 0.77);color: white;">
+                            {% else %}
+                        <span  style="padding:2px;border-radius:0px;background-color: rgba(70, 136, 71, 0.77);color: white;">
+                    {% endif %}
+
+                         {{ ligne.reel }}
+                        </span>
+                 </td>
+                <td> {{ ligne.animatrice.employe }} </td>
+                <td> 
+                    <a href="{{path('stat_edit', {'id': ligne.id, 'from':'null'})}}" class="btn btn-warning">  Editer </a> 
+                    <a href="{{path('stat_view', {'id': ligne.id, 'from':'null' })}}" class="btn btn-danger">  Supprimer </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if journal is not null %}
+        {% if journal.dateFinModif is  null %}
+            <a class="btn btn-warning" href="{{ path('stat_new') }}"> Reprendre la saisie statistique </a>
+            <a style="float: right;" href="{{ path('tech_end', {'stat': journal.dateStat|date('Ymd') }) }}" class="btn btn-danger"> Terminer la saisie statistique </a>
+        {% endif %}
+    {% endif %}
+{% endblock %}

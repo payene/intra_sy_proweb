@@ -1,0 +1,68 @@
+{% extends 'LooninsIncidentBundle::layout.html.twig' %}
+
+{% block body -%}
+<h3>Evolution :<a href="{{ path('gdpincident_show', {'id':entity.incident.id}) }}">{{ entity.incident.titre }}</a></h3>
+
+<table class="table table-striped record_properties">
+    <tbody>
+        <tr>
+            <th>Description</th>
+            <td>{{ entity.description }}</td>
+        </tr>
+        <tr>
+            <th>Propri&eacute;taire</th>
+            <td>{{ entity.proprio.username }}</td>
+        </tr>
+        {% if entity.date %}
+        <tr>
+            <th>Date</th>
+            <td>{{ entity.date|date('d-m-Y') }} &agrave; {{ entity.date|date('H:i:s') }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.updateDate %}
+        <tr>
+            <th>Modifi&eacute; le </th>
+            <td>{{ entity.updateDate|date('d-m-Y') }} &agrave; {{ entity.updateDate|date('H:i:s') }}</td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}
+{% block sidebar%}
+    {{ parent()}}
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('gdpversions_new', { 'incid': entity.id }) }}">
+            <button class="btn btn-primary"> <i class="icon-white icon-plus"> </i> Nouvelle &eacute;volution</button>
+        </a>
+    </li>
+    {% if user == entity.proprio %}
+    <li>
+        <a href="{{ path('gdpversions_edit', { 'id': entity.id }) }}">
+            <button class="btn btn-warning"> <i class="icon-white icon-edit"></i> Modifier l&apos;&eacute;volution courante  </button>
+        </a>
+    </li> 
+    <li>
+        <form action="{{ path('gdpversions_delete',{'id': entity.id})  }}" method="post">
+            <div>
+                    {# Génération de l'input. #}
+                {{ form_widget(delete_form.submit,{ 'attr': {'class':'btn btn-danger'} }) }} 
+            </div>
+        </form>
+
+    </li>
+    {% endif %}
+</ul>
+{% if user == entity.incident.proprio %}
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('gdpincident_cloture', { 'id': entity.incident.id }) }}">
+            <button class="btn btn-danger"> 
+                <i class="icon-white icon-lock"></i> Cloturer l&apos;incident sur <br/>
+                <i> &laquo; {{ entity.incident.titre}} &raquo;</i>
+            </button>
+        </a>
+    </li> 
+</ul>
+{% endif %}
+{% endblock %}

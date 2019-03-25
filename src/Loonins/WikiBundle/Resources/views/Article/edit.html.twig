@@ -1,0 +1,14 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+
+
+    <h1>Modification d&apos;article </h1>
+    
+
+    
+{{ form(edit_form) }}
+
+
+<a class="btn btn-warning" href="{{ path('article_show', {'id':entity.id}) }}"> Annuler les modifications </a>
+{% endblock %}

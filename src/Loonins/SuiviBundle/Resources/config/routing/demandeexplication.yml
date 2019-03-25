@@ -1,0 +1,24 @@
+demandeexplication_index:
+    path:     /
+    defaults: { _controller: "LooninsSuiviBundle:DemandeExplication:index" }
+    methods:  GET
+
+demandeexplication_show:
+    path:     /{id}/show
+    defaults: { _controller: "LooninsSuiviBundle:DemandeExplication:show" }
+    methods:  GET
+
+demandeexplication_new:
+    path:     /new
+    defaults: { _controller: "LooninsSuiviBundle:DemandeExplication:new" }
+    methods:  [GET, POST]
+
+demandeexplication_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LooninsSuiviBundle:DemandeExplication:edit" }
+    methods:  [GET, POST]
+
+demandeexplication_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LooninsSuiviBundle:DemandeExplication:delete" }
+    methods:  DELETE

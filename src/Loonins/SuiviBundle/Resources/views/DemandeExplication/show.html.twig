@@ -1,0 +1,32 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block body %}
+    <h3>Details login</h3>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Login</th>
+                <td>{{ loginAnim.login }}</td>
+            </tr>
+            <tr>
+                <th>Login cr&eacute;e depuis le </th>
+                <td>{% if loginAnim.dateCreation %}{{ loginAnim.dateCreation|date('d-m-Y H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="alert alert-danger">
+        <h4> Etes-vous s&ucirc;r de vouloir supprimer ce login? Cette operation est irreversible. Vous pouvez simplement faire une modification du login en question ! </h4>
+        <br style="clear:both;" />
+        <a style="width:100px;" class="btn btn-warning" href="{{ path('loginanim_edit', { 'id': loginAnim.id }) }}"> Modifier </a>
+        <br style="clear:both;" />
+        <br style="sclear:both;" />
+        {{ form_start(delete_form) }}
+            <input style="width:125px;" class="btn btn-danger" type="submit" value="Supprimer">
+        {{ form_end(delete_form) }}
+
+        <a style="width:100px;"  class="btn btn-info" href="{{ path('loginanim_index') }}"> Index des logins </a>
+    </div>
+        
+{% endblock %}

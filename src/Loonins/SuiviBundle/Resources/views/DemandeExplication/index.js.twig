@@ -1,0 +1,104 @@
+<script>
+    $("#selectAllLate").click(function(){
+        if( $("#selectAllLate").prop("checked") ){
+            $(".ckeckLate").prop("checked", true);
+        } else{
+            $(".ckeckLate").prop("checked", false);
+        }
+        
+        controlBoutton();
+        
+    });
+    
+    controlBoutton();
+    
+    $('#selection-action').click(function(){
+       
+        var tab = [];
+        var i=0;
+         $(".ckeckLate").each(function(index){
+            if( $(this).prop("checked")  )
+            {
+                tab[i] = $(this).val();
+                //alert(id);
+                i++;
+            }
+         });
+            
+        if( $('#selection-action').val() == 1 )
+       {
+            
+            
+            $.ajax({
+                 type: 'POST',
+                 url: '{{path('resend_demande_explication')|escape('js')}}',//l'url
+                 data: {list: tab},
+                 dataType: 'text',
+                 success: function(data){
+                    if( data == "good" ){
+                        
+                        for( var j= 0; j<tab.length; j++ ){
+                            
+                            $('#nbtd'+tab[j]).text( parseInt($('#nbtd'+tab[j]).text())+1);
+                            
+                        }
+                        $('#selection-action').val(0);
+                        alert("Email renvoyé avec succès");
+                    }
+                 },
+                 error: function() {
+                         //alert('La requête n\'a pas abouti'); 
+                 }
+             });
+           
+       }
+       else if( $('#selection-action').val() == 2 ){
+            $.ajax({
+                 type: 'POST',
+                 url: '{{path('respond_demande_explication')|escape('js')}}',//l'url
+                 data: {list: tab},
+                 dataType: 'text',
+                 success: function(data){
+                    if( data == "good" ){
+                        
+                        for( var j= 0; j<tab.length; j++ ){
+                            
+                            $('#statustd'+tab[j]).text( "Répondu" );
+                            $('#checktd'+tab[j]).html("");
+                            
+                        }
+                        $('#selection-action').val(0);
+                        alert("Modification réussie");
+                        
+                    }
+                 },
+                 error: function() {
+                         //alert('La requête n\'a pas abouti'); 
+                 }
+             });
+       }
+      
+    });
+    
+    $(".ckeckLate").click(function(){
+        controlBoutton();
+    });
+    
+    function controlBoutton(){
+        var existe = false;
+        $(".ckeckLate").each(function(index){
+           if( $(this).prop("checked")  )
+               existe=true;
+        });
+        
+        if(existe == true){
+            $("#selection-action").prop("disabled", false);
+        }
+        else{
+            $("#selection-action").prop("disabled", true);
+        }    
+    }
+    
+        
+    
+</script>

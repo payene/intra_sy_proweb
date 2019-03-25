@@ -1,0 +1,32 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1> <a href="{{ path('article_show', {'id': entity.secArt.id }) }}"> {{ entity.secArt.artTitre }} </a> : Section creation</h1>
+<form action="{{ path('section_create') }}" method="post">
+    <div>
+    {{ form_label(form.secOrdre, "Position de la section") }}
+    {{ form_errors(form.secOrdre) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.secOrdre, { 'attr': {'style': 'display:inline'} }) }}
+    </div>
+    <div> {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-success'} }) }} </div> 
+        {# Génération de l'input. #}
+
+    <div>
+{#    {{ form_label(form.secArt, "Article Parent") }}#}
+    {{ form_errors(form.secArt) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.secArt, { 'attr': {'class': 'hidden'} }) }}
+    </div> 
+ {{ form_widget(form.secDel, { 'attr': {'class': 'hidden'} }) }}
+    
+    {{ form_rest(form) }}
+</form>
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('section') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

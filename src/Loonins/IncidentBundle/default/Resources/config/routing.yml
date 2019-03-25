@@ -1,0 +1,3 @@
+loonins_incident_homepage:
+    path:     /
+    defaults: { _controller: LooninsIncidentBundle:Default:index }

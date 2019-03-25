@@ -1,0 +1,101 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block branch %}
+    
+    <a  href="{{ path('grhcontrats_new') }}">
+        <button style="margin:5px;" class="btn btn-primary"> <i class="icon-white icon-plus"> </i> Ajouter un contrat</button>
+    </a>
+{% endblock %}
+
+{% block body -%}
+    <!-- <legend> Liste des contrats</legend> -->
+    <div class="tab-pane active" id="contrats">
+        <table class="table table-bordered table-striped records_list" style="border-radius: 0px 0px;" id="tableContrats">
+            <thead class="alert-success" style="border-radius: 0px 0px;" >
+                <tr style="border-radius: 0px 0px;" >
+                    <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">Type</th>
+                    <th style="padding:0px;vertical-align:middle;">Employ&eacute;</th>
+                    <th style="padding:0px;vertical-align:middle;">Debut</th>
+                    <th style="padding:0px;vertical-align:middle;">Dur&eacute;e</th>
+                    <th style="padding:0px;vertical-align:middle;">Fin</th>
+                    <th style="padding:0px;vertical-align:middle;">Date enregistrement</th>
+                    <th style="padding:0px;vertical-align:middle;">Status</th>
+                    <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    {% set today =  "now"|date('Y-m-d') %}
+                    {% if entity.finReel %}
+                        {% if (entity.type.duree > 0)  and (entity.finReel|date('Y-m-d') < today|date('Y-m-d') ) %}
+                        <tr class="alert alert-danger">
+                        {% else %}
+                        <tr>
+                        {% endif %}
+                    {% else %}
+                    <tr>
+                        {% endif %}
+                            <td style="padding:0px;vertical-align:middle;">{% if entity.type %} {{ entity.type.type }}  {% endif %}</td>
+                            <td style="padding:0px;vertical-align:middle;">{% if entity.employe %}{{ entity.employe }}{% endif %}</td>
+                            <td style="padding:0px;vertical-align:middle;">{% if entity.debut %}{{ entity.debut|date('d-m-Y') }}{% endif %}</td>
+                            <td style="padding:0px;vertical-align:middle;">
+                                {% if entity.type %}
+                                    {{  entity.type.duree == 0 ? "-" :  entity.type.duree }}
+                                {% endif %}
+                            </td>
+                            {% if entity.type  %}
+
+                                <td style="padding:0px;vertical-align:middle;">
+                                    {% if entity.type.duree == 0 %}
+                                        {{"Indefini"}}
+                                    {% else %}
+                                        {% if entity.finReel %} {{ entity.finReel|date('d-m-Y') }} {% endif %} 
+                                    {% endif %}
+                                </td>
+
+                            {% endif %}
+                            <td style="padding:0px;vertical-align:middle;">{% if entity.date %}{{ entity.date|date('d-m-Y') }}{% endif %}</td>
+                            <td style="padding:0px;vertical-align:middle;">
+                                {% if entity.status == 1 %}
+                                    En cours
+                                {#{% elseif entity.status == 2 %}
+                                    Suspendu;
+                                {% elseif entity.status == 3 %}
+                                    R&eacute;sili&eacute;#}
+                                {% elseif entity.status == 4     %}
+                                    A terme
+                                {% endif %}
+
+                            </td>
+                            <td style="padding:0px;vertical-align:middle;">
+                                {% if entity.status == 4 %}
+                                    <a class="alert-danger" href="{{path('grh_renew', {'employee': entity.employe.id }) }}" > 
+                                        <i class="icon icon-refresh"> </i> 
+                                        Renouveler le contrat </a>
+                                    {% else %}
+                                    <a href="{{ path('grhcontrats_show', { 'id': entity.id }) }}"> <i class="icon icon-eye-open"> </i> Afficher</a>
+                                {% endif %}
+                            </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        <ul>
+            {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+            {#{% for p in range(1, nombrePage) %}
+                <li{% if p == page %} class="active"{% endif %}>
+                    <a class="alert" href="{{ path('grhcontrats', {'page': p}) }}"> {{ p }} </a>
+                </li>
+            {% endfor %}#}
+        </ul>
+    </div>
+    {% endblock %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <style type="text/css">
+          
+        </style>
+    {% endblock %}

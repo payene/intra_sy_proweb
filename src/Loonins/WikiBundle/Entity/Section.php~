@@ -1,0 +1,196 @@
+<?php
+
+namespace Loonins\WikiBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Section
+ *
+ * @ORM\Table(name="section", indexes={@ORM\Index(name="sec_art_id", columns={"sec_art_id"})})
+ * @ORM\Entity
+ */
+class Section {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="Id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sec_ordre", type="integer", nullable=true)
+     */
+    private $secOrdre;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sec_del", type="integer", nullable=false)
+     */
+    private $secDel = '0';
+
+    /**
+     * @var \Article
+     *
+     * @ORM\ManyToOne(targetEntity="Article")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sec_art_id", referencedColumnName="Id")
+     * })
+     */
+    private $secArt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Loonins\WikiBundle\Entity\Version", mappedBy="Section")
+     */
+    private $versions;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="update_date", type="datetime", nullable=false)
+     */
+    private $updateDate;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set secOrdre
+     *
+     * @param integer $secOrdre
+     * @return Section
+     */
+    public function setSecOrdre($secOrdre) {
+        $this->secOrdre = $secOrdre;
+
+        return $this;
+    }
+
+    /**
+     * Get secOrdre
+     *
+     * @return integer 
+     */
+    public function getSecOrdre() {
+        return $this->secOrdre;
+    }
+
+    /**
+     * Set secDel
+     *
+     * @param integer $secDel
+     * @return Section
+     */
+    public function setSecDel($secDel) {
+        $this->secDel = $secDel;
+
+        return $this;
+    }
+
+    /**
+     * Get secDel
+     *
+     * @return integer 
+     */
+    public function getSecDel() {
+        return $this->secDel;
+    }
+
+    /**
+     * Set secArt
+     *
+     * @param \Loonins\WikiBundle\Entity\Article $secArt
+     * @return Section
+     */
+    public function setSecArt(\Loonins\WikiBundle\Entity\Article $secArt = null) {
+        $this->secArt = $secArt;
+
+        return $this;
+    }
+
+    /**
+     * Get secArt
+     *
+     * @return \Loonins\WikiBundle\Entity\Article 
+     */
+    public function getSecArt() {
+        return $this->secArt;
+    }
+
+    public function __toString() {
+        return (string) $this->getId();
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->versions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add versions
+     *
+     * @param \Loonins\WikiBundle\Entity\Version $versions
+     * @return Section
+     */
+    public function addVersion(\Loonins\WikiBundle\Entity\Version $versions) {
+        $this->versions[] = $versions;
+
+        return $this;
+    }
+
+    /**
+     * Remove versions
+     *
+     * @param \Loonins\WikiBundle\Entity\Version $versions
+     */
+    public function removeVersion(\Loonins\WikiBundle\Entity\Version $versions) {
+        $this->versions->removeElement($versions);
+    }
+
+    /**
+     * Get versions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVersions() {
+        return $this->versions;
+    }
+
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     * @return Section
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime 
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+}

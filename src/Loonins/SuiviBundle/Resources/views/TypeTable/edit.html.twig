@@ -1,0 +1,12 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block legend %}
+    Modification type table
+{% endblock %}
+
+{% block body -%}
+
+    {{ form(edit_form) }}
+
+  <a class="btn btn-info" href="{{ path('typetable') }}"> Retour </a>
+{% endblock %}

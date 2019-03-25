@@ -1,0 +1,43 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h3> Fiche salari&eacute; de
+        <i> {{ entity.employe.nom  }}  {{ entity.employe.prenoms  }} </i>
+    </h3>
+
+    <form action="{{ path('grhfichesalarie_update', {'id':entity.id}) }}" method="POST">
+        <div>
+            {{ form_label(edit_form.titre, "Titre") }}
+            {{ form_errors(edit_form.titre) }}
+            {{ form_widget(edit_form.titre) }}
+        </div>
+
+        <div>
+            {{ form_label(edit_form.contenu, "Contenu") }}
+            {{ form_errors(edit_form.contenu) }}
+            {{ form_widget(edit_form.contenu) }}
+        </div>
+
+        <div>
+            {{ form_label(edit_form.type) }}
+            {{ form_errors(edit_form.type) }}
+            {{ form_widget(edit_form.type) }}
+        </div>
+
+{#        {{ form_widget(edit_form.submit , {'attr':{'class':'btn btn-success'} } ) }}#}
+        {{ form_rest(edit_form) }}
+    </form>
+
+
+    {#  {{ form(edit_form) }}#}
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('grhemployes_fiche',{'id':entity.employe.id}) }}">
+                Retourner sur la fiche salari&eacute;
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+
+{% endblock %}

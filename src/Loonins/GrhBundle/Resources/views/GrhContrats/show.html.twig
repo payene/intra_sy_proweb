@@ -1,0 +1,92 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+    <legend> D&eacute;tails contrat</legend>
+
+    <table class="table table-striped record_properties">
+        <tbody>
+            <tr>
+                <th>Type</th>
+                <td>{{ entity.type.type }}</td>
+            </tr>
+            <tr>
+                <th>Debut</th>
+                <td>{{ entity.debut|date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <th>Dur&eacute;e  en mois</th>
+                <td>
+                    {% if entity.type %}
+                        {{  entity.type.duree == 0 ? "Indefinie" :  entity.type.duree }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Fin pr&eacute;vue</th>
+                <td>
+                    {% if entity.type %}
+                        {{  entity.type.duree == 0 ? "Indefinie" :   finPrevu  }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% if entity.status == 3 %}
+                <tr class="alert alert-danger">
+                    <th>Fin du contrat</th>
+                    <td>{{ entity.finReel|date('Y-m-d') }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>Employ&eacute;</th>
+                <td>{{ entity.employe.mle }} : {{ entity.employe.nom }} {{ entity.employe.prenoms }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>
+                    {% if entity.status == 1 %}
+                        <span class="alert alert-success"> En cours</span>
+                    {% elseif entity.status == 2 %}
+                        <span class="alert alert-alert"> Mise en disponibilit&eacute; </span>
+                    {% elseif entity.status == 3 %}
+                        <span class="alert alert-danger"> Rompu </span>
+                    {% elseif entity.status == 4 %}
+                        <span class="alert alert-info" style="font-weight: bold;color: white;background: coral"> A terme </span>
+                    {% elseif entity.status == 5 %}
+                        <span class="alert alert-danger" style="font-weight: bold;color: white;background: red;"> termin&eacute; puis renouvell&eacute;</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% if is_granted('ROLE_GRH') %}
+                <tr>
+                    <th>Commentaire</th>
+                    <td>{{ entity.commentaire }}</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    {% if entity.status == 1 or entity.status == 2 %}
+        <ul class="record_actions">
+            <li>
+                <a href="{{ path('grhcontrats_edit', { 'id': entity.id }) }}">
+                    <button class="btn btn-warning"> <i class="icon-white icon-pencil"></i> Editer </button>
+                </a>
+            </li>
+            <li>
+                <br/>
+                <div class="btn-group" >            
+                    <a style="width:195px;" class="btn btn btn-info dropdown-toggle" data-toggle="dropdown" href="#"> 
+                        Action sur le contrat<span class="caret"></span> 
+                    </a>
+                    <ul class="dropdown-menu">        
+                        <li class="alert alert"><a class="needConfirm" href="{{ path('grhcontrats_dispo', { 'id': entity.id }) }}" > Suspension </a></li>
+                        <li class="alert alert-danger"><a class="needConfirm" href="{{ path('grhcontrats_rupture', { 'id': entity.id }) }}" > Rupture </a></li>              
+                    </ul>
+                </div>
+
+            </li>
+            <li>{% include 'LooninsGrhBundle:GrhContrats:delete.html.twig' %}</li>
+        </ul>
+    {% endif %}
+    <a href="{{ path('grhcontrats_new') }}">
+        <button class="btn btn-primary"> <i class="icon-white icon-plus"> </i> Ajouter un contrat</button>
+    </a>
+{% endblock %}

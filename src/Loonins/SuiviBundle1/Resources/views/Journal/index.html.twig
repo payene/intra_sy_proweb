@@ -1,0 +1,42 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block body -%}
+    <!-- <h1>Journal list</h1> -->
+    <legend> 
+        Index des historiques 
+        <a style="float: right" href="{{ path('journal_export') }}" class="btn btn-primary"  >
+            Exporter
+        </a>
+        <!-- <a class="btn btn-primary" style="float: right" href="{{ path('animatrice_new') }}"> Nouvelle entree de stat</a> -->
+    </legend>
+    <table class="table ">
+        <thead class="alert alert-info">
+            <tr>
+                <th>Utilisateur</th>
+                <th>Action </th>
+                <th> Business date</th>
+                <th>Date intervention. </th>
+                <th>Type intervention. </th>
+                <th> Intervention. </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.auteur.username }}</td>
+                <td>{{ entity.ligneStat.type }} </td>
+                <td>{% if entity.ligneStat.dateStat %}{{ entity.ligneStat.dateStat|date('Ymd') }}{% endif %} </td>
+                <td>{% if entity.dateModif %}{{ entity.dateModif|date('d/m/Y H:i:s') }}{% endif %}</td>
+                <td> {{ entity.action }} </td>
+                <td>
+                    Prog : {{ entity.ligneStat.programmed }} &nbsp;-&nbsp; Reel : {{ entity.ligneStat.reel }} <br/>
+                    Msg/H : {{ entity.ligneStat.msgParHeure }} &nbsp;-&nbsp; Animatrice : {{ entity.ligneStat.animatrice }}
+
+                </td>
+               
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+       
+    {% endblock %}

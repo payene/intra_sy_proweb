@@ -1,0 +1,38 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block legend %}
+     Animatrice
+{% endblock %}
+
+{% block body -%}
+
+    <label> Login : {{ entity.login }} </label>
+    <label> employe : {{ entity.employe }} </label>
+    <label> Debut Affectation : {{ entity.debutAffectation|date('Y-m-d H:i:s') }} </label>
+    <br/>
+    <br/>
+    <div class="alert alert-danger span9">
+        Imposssible de modifier une affectation qui est dejà reli&eacute;e des stats existantes. Si vous souhaitez modifier l'attribution du login veillez cloturer d'abord cette affection ci.
+       
+       <br/>
+       <form action="{{ path('animatrice_delete',{'id':entity.id}) }}" method="POST">
+
+
+            <div class="span12" style="display: inline;float: left;width:100%">
+                {{ form_label(delete_form.finAffectation, "Date Fin Affectation") }}
+                    <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        {# Génération de l'input. #}
+                        {{ form_widget(delete_form.finAffectation, {'attr' : {'style' : '', 'type':'text'}}) }}
+                        <!-- <span class="add-on"><i class="icon-remove"></i></span> -->
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+            </div> 
+            
+            {{ form_widget(delete_form.submit , {'attr': {'class':'btn btn-large span7 btn-danger'} }) }} 
+            
+            <a class="btn btn-info btn-large span7" style="margin-top: 10px;" href="{{ path('animatrice') }}"> Annuler  </a>
+            {{ form_rest(delete_form) }}
+        </form>
+
+    </div>
+{% endblock %}

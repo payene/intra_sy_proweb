@@ -1,0 +1,23 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+{% block sidebar %}
+    {{ parent()}}
+{% endblock %}
+{% block body -%}
+<h1> S&eacute;lectionnez une cat&eacute;gorie pour en afficher les articles</h1>
+<table class="table table-striped record_properties">
+    <tbody>
+        {% for element in catrubs %}
+        <tr>
+            <td colspan="2">
+                {{ element[0].cat }}
+                {% for rub in element[1] %}
+                <ul>
+                    <li> <a href="{{ path('article_rublist', {'id':rub.id}) }}"> {{ rub.titre }} </a></li>
+                </ul>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

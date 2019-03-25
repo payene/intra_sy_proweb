@@ -1,0 +1,200 @@
+<?php
+
+namespace Loonins\WikiBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+
+/**
+ * Categorie
+ *
+ * @ORM\Table(name="categorie", indexes={@ORM\Index(name="cat_creator", columns={"cat_creator"})})
+ * @ORM\Entity
+ */
+//define('ladate', new \DateTime());
+class Categorie {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="Id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cat", type="string", length=255, nullable=true)
+     */
+    private $cat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+//    /**
+//     * @var Collection
+//     *  * @ORM\Column(name="rubriques", type="text", nullable=true)
+//     */
+//    private $rubriques;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="cat_date", type="datetime", nullable=false)
+     */
+    private $catDate = '0000-00-00 00:00:00';
+
+    /**
+     * @var \Loonins\UserBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\UserBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cat_creator", referencedColumnName="id")
+     * })
+     */
+    private $catCreator;
+
+    /**     
+     * @ORM\OneToMany(targetEntity="Loonins\WikiBundle\Entity\Rubrique", mappedBy="Categorie")
+    */
+    private $rubriques;
+
+    function __construct() {
+        $this->catDate = new \DateTime;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set cat
+     *
+     * @param string $cat
+     * @return Categorie
+     */
+    public function setCat($cat) {
+        $this->cat = $cat;
+
+        return $this;
+    }
+
+    /**
+     * Get cat
+     *
+     * @return string 
+     */
+    public function getCat() {
+        return $this->cat;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Categorie
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+    /**
+     * Set catDate
+     *
+     * @param \DateTime $catDate
+     * @return Categorie
+     */
+    public function setCatDate($catDate) {
+        $this->catDate = $catDate;
+
+        return $this;
+    }
+
+    /**
+     * Get catDate
+     *
+     * @return \DateTime 
+     */
+    public function getCatDate() {
+        return $this->catDate;
+    }
+
+    /**
+     * Set catCreator
+     *
+     * @param \Loonins\UserBundle\Entity\User $catCreator
+     * @return Categorie
+     */
+    public function setCatCreator(\Loonins\UserBundle\Entity\User $catCreator = null) {
+        $this->catCreator = $catCreator;
+
+        return $this;
+    }
+
+
+    /**
+     * Get catCreator
+     *
+     * @return \Loonins\UserBundle\Entity\User 
+     */
+    public function getCatCreator() {
+        return $this->catCreator;
+    }
+
+
+
+    /**
+     * Add rubriques
+     *
+     * @param \Loonins\WikiBundle\Entity\Rubrique $rubriques
+     * @return Categorie
+     */
+    public function addRubrique(\Loonins\WikiBundle\Entity\Rubrique $rubriques)
+    {
+        $this->rubriques[] = $rubriques;
+
+        return $this;
+    }
+
+    /**
+     * Remove rubriques
+     *
+     * @param \Loonins\WikiBundle\Entity\Rubrique $rubriques
+     */
+    public function removeRubrique(\Loonins\WikiBundle\Entity\Rubrique $rubriques)
+    {
+        $this->rubriques->removeElement($rubriques);
+    }
+
+    /**
+     * Get rubriques
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRubriques()
+    {
+        return $this->rubriques;
+    }
+}

@@ -1,0 +1,77 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+<legend> Modifier un employ&eacute;</legend>
+    <form action="{{ path('grhemployes_update', {'id':entity.id}) }}" method="POST">
+        <div>
+                {{ form_label(edit_form.mle, "Matricule") }}
+                {{ form_errors(edit_form.mle) }}
+                {{ form_widget(edit_form.mle) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.nom, "Nom") }}
+                {{ form_errors(edit_form.nom) }}
+                {{ form_widget(edit_form.nom) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.prenoms, "Prenoms") }}
+                {{ form_errors(edit_form.prenoms) }}
+                {{ form_widget(edit_form.prenoms) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.phone, "Contact") }}
+                {{ form_errors(edit_form.phone) }}
+                {{ form_widget(edit_form.phone) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.email, "Email") }}
+                {{ form_errors(edit_form.email) }}
+                {{ form_widget(edit_form.email) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.dateentree) }}
+                {{ form_errors(edit_form.dateentree) }}
+                {{ form_widget(edit_form.dateentree) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.assurance) }}
+                {{ form_errors(edit_form.assurance) }}
+                {{ form_widget(edit_form.assurance) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.datenaiss, "Date de naissance") }}
+                {{ form_errors(edit_form.datenaiss) }}
+                {{ form_widget(edit_form.datenaiss) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.lieuNaiss, "Lieu de naissance") }}
+                {{ form_errors(edit_form.lieuNaiss) }}
+                {{ form_widget(edit_form.lieuNaiss) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.sexe, "Sexe") }}
+                {{ form_errors(edit_form.sexe) }}
+                {{ form_widget(edit_form.sexe) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.sitMat, "Situation matrimoniale") }}
+                {{ form_errors(edit_form.sitMat) }}
+                {{ form_widget(edit_form.sitMat) }}
+        </div>
+        <div>
+                {{ form_label(edit_form.departement, "Département") }}
+                {{ form_errors(edit_form.departement) }}
+                {{ form_widget(edit_form.departement) }}
+        </div>
+
+        {{ form_rest(edit_form) }}
+
+        {{ form_widget(edit_form.submit , {'attr':{'class':'btn btn-warning'} } ) }}
+        
+    </form>
+{#    {{ form(edit_form) }}
+#}
+<ul class="record_actions">
+    <li>{% include 'LooninsGrhBundle:GrhEmployes:delete.html.twig'%}</li>
+</ul>
+{% endblock %}

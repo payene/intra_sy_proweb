@@ -1,0 +1,12 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block body %}
+    <h3> Nouveau login </h3>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-success" type="submit" value="Enregisstrer" />
+        <a href="{{ path('animatrice') }}"> Annuler </a>
+    {{ form_end(form) }}
+
+{% endblock %}

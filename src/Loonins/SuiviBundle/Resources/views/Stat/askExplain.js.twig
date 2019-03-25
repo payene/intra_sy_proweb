@@ -1,0 +1,70 @@
+<script>
+    $("#selectAllLate").click(function(){
+        if( $("#selectAllLate").prop("checked") ){
+            $(".ckeckLate").prop("checked", true);
+        } else{
+            $(".ckeckLate").prop("checked", false);
+        }
+        
+       // controlBoutton();
+        
+    });
+    
+    $('#selection-action').click(function(){
+       
+        if( $('#selection-action').val() == 1 )
+       {
+           var tab = [];
+           var i=0;
+            $(".ckeckLate").each(function(index){
+               if( $(this).prop("checked")  )
+               {
+                   tab[i] = $(this).val();
+                   //alert(id);
+                   i++;
+               }
+            });
+            
+            
+            
+            $.ajax({
+                 type: 'POST',
+                 url: '{{path('stat_ask_explain_mail_sender')|escape('js')}}',//l'url
+                 data: {list: tab},
+                 dataType: 'text',
+                 success: function(data){
+                    if( data == "good" ){
+                        alert("Email envoyé avec succès")
+                    }
+                 },
+                 error: function() {
+                         //alert('La requête n\'a pas abouti'); 
+                 }
+             });
+           
+       }
+       
+    });
+    
+    /*$(".ckeckLate").click(function(){
+        controlBoutton();
+    });*/
+    
+    function controlBoutton(){
+        var existe = false;
+        $(".ckeckLate").each(function(index){
+           if( $(this).prop("checked")  )
+               existe=true;
+        });
+        
+        if(existe == true){
+            $("#checked-supp-button").prop("disabled", false);
+        }
+        else{
+            $("#checked-supp-button").prop("disabled", true);
+        }    
+    }
+    
+        
+    
+</script>

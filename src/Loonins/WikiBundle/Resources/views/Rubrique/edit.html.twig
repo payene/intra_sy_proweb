@@ -1,0 +1,38 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1>Rubrique edit</h1>
+
+{{ form_start(edit_form) }}
+{#Methodologie Archivage#}
+
+    <div>
+    {{ form_label(edit_form.titre, "Titre rubrique") }}
+    {{ form_errors(edit_form.titre) }}
+        {# Génération de l'input. #}
+    {{ form_widget(edit_form.titre) }} 
+    </div>
+
+    <div>
+    {{ form_label(edit_form.rubCat, "Catégorie") }}
+    {{ form_errors(edit_form.rubCat) }}
+        {# Génération de l'input. #}
+    {{ form_widget(edit_form.rubCat) }} 
+    </div>
+
+    <div>
+        {# Génération de l'input. #}
+    {{ form_widget(edit_form.submit, { 'attr': {'class':'btn btn-success'} }) }} 
+    </div> 
+    {{ form_rest(edit_form) }}
+
+{{ form_end(edit_form) }}
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('rubrique') }}">
+            Retour sur la liste
+        </a>
+    </li>
+</ul>
+{% endblock %}

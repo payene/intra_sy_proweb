@@ -1,0 +1,52 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+{% block sidebar %}
+<table class="table table-bordered record_properties">
+    <tbody>
+        {% for cat in categories %}
+        <tr>
+            <td colspan="2">
+                <a href="{{ path('article_catlist', {'id':cat.id}) }}"> {{ cat.cat }} </a>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                <ul class="record_actions">
+                    <li>
+                        <a href="{{ path('article_new') }}">
+                            <button class="btn btn-success"> <i class="icon-white icon-file"></i> Nouvel article </button>
+                        </a>
+                        <a href="{{ path('categorie_new') }}">
+                            <button class="btn btn-success"> <i class="icon-white icon-tasks"></i> Nouvelle cat&eacute;gorie </button>
+                        </a>
+                    </li>
+                </ul>  
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+{% block body -%}
+<h1> {{ categorie.cat }} </h1>
+<table class="table table-striped record_properties">
+    <thead>
+        <tr>
+            <th>Article</th>
+            <th> Cr&eacute;&eacute; par </th>
+            <th> Mise &agrave; jour </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in entities %}
+        <tr>
+            <td colspan>
+                <a href="{{ path('article_show', {'id':article.id}) }}"> {{ article.artTitre }} </a>
+            </td>
+            <td colspan>
+                <a href="{{ path('article_show', {'id':article.id}) }}"> {{ article.artCreator.username }} </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="GrhEmployes" table="grh_employes">
+    <indexes>
+      <index name="departement" columns="departement"/>
+    </indexes>
+    <id name="id" type="integer" column="Id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nom" type="string" column="nom" length="255" nullable="false"/>
+    <field name="prenoms" type="string" column="prenoms" length="255" nullable="false"/>
+    <field name="datenaiss" type="date" column="datenaiss" nullable="false"/>
+    <field name="lieuNaiss" type="string" column="lieu_naiss" length="255" nullable="true"/>
+    <field name="sexe" type="string" column="sexe" length="1" nullable="false"/>
+    <field name="sitMat" type="string" column="sit_mat" length="1" nullable="false"/>
+    <many-to-one field="departement" target-entity="GrhDepartement">
+      <join-columns>
+        <join-column name="departement" referenced-column-name="Id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

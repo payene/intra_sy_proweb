@@ -1,0 +1,37 @@
+{% extends '::loonins.html.twig' %}
+{% block module_name %} Wiki - {{ Corp }}{% endblock module_name %}
+{% block titre %} {{ Corporation }} - Intranet {% endblock%}
+{% block menuhor %}
+<form method='POST' id='rech_form' action='{{ path('search_simple') }}' class="form-search" style='width:50%;float:right;margin: auto;margin-top:15px;position:relative;'>
+{#    <div class="input-append">#}
+    <center>
+        <input required placeholder="Rechercher un article" type="text" id='rech_wiki' name='rech' value="" style='width:100%;' >
+    </center>
+{#        <button class="btn btn-primary" onclick='' type="submit">Recherche</button>#}
+{#    </div>#}
+</form>
+{% endblock %}
+
+{% block body -%}
+
+{% endblock %}
+{% block sidebar %}
+<ul class="record_actions" >
+    <li>
+        <a href="{{ path('article_new') }}">
+            <button class="btn btn-success"> <i class="icon-white icon-file"></i> Nouvel article </button>
+        </a>
+        {% if is_granted('ROLE_ADMIN') %} 
+        <a href="{{ path('rubrique_new') }}">
+            <button class="btn btn-success"> <i class="icon-white icon-tags"></i> G&eacute;rer les rubriques </button>
+        </a>
+        <a href="{{ path('categorie_new') }}">
+            <button class="btn btn-success"><i class="icon-white icon-tags"></i> <i class="icon-white icon-tags"></i> G&eacute;rer les cat&eacute;gories </button>
+        </a>
+        {% endif %}
+        <a href="{{ path('article') }}">
+            <button class="btn btn-primary"> <i class="icon-white icon-home"></i> Accueil wiki </button>
+        </a>
+    </li>
+</ul>
+{% endblock %}

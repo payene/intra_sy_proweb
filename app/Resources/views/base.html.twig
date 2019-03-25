@@ -1,0 +1,194 @@
+{% set Corporation = "Proweb" %}
+{% set Corp  = "Proweb" %}
+{% set Provider = "HERPA Solutions" %}
+
+{# empty Twig template #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html"; charset="utf-8" />
+        <title> {% block titre %} Proweb - Intranet {% endblock%}</title>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        {% block stylesheets %}
+           <!--  <link href='http://fonts.googleapis.com/css?family=Irish+Grover' rel='stylesheet' type='text/css'>
+            <link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
+ -->
+            <!-- Fav and touch icons -->
+            <link rel="stylesheet" type="text/css" title="style" href="{{ asset('css/bootstrap/css/bootstrap.css')}}" />
+            <link rel="stylesheet" type="text/css" title="style" href="{{ asset('css/bootstrap/css/bootstrap-responsive.min.css')}}" />
+            <link rel="stylesheet" type="text/css" title="style" href="{{ asset('css/bootstrap/css/bootstrap.min.css')}}" />
+            <link rel="stylesheet" type="text/css" title="style" href="{{ asset('css/bootstrap/css/bootstrap-responsive.css')}}" />
+            <link href="{{ asset('css/css.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('date_picker/bootstrap-datetimepicker.min.css') }}" type="text/css" rel="stylesheet" />
+
+            <style type="text/css">
+                li.alert.alert-danger{
+                    /*background: #000;
+                    border: solid 1px;
+                    color: white;
+                    padding: 0;
+                    text-align: left;*/
+                    width: auto;
+                }
+            </style>
+
+        {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+
+
+    </head>
+    <body>
+        <section id="wrapper">
+            <header id="header">
+                <div class="top" style="margin-bottom: 80px;">
+                    <div class="navbar navbar-inverse navbar-fixed-top">
+                        <div class="navbar-inner nav-collapse collapse">
+                            <div class="container" style="float:left;width: auto;">
+                                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+
+                                <h3 style="color:white;">
+                                    &nbsp; &nbsp; &nbsp;<a href="{{ path('intranet') }}"> Intranet ::</a>
+                                    <span style="font-size: 14px;" >{% block module_name %}{% endblock %} </span>
+                                </h3>
+
+                            </div>
+                            <ul class="nav" style="float: right;margin-top:0px;display: block;">
+                                <li>
+                                    {% block navigation %}
+                                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                            <ul class="nav" style="float: right;margin-top:12px;display: block;right: 0px;">
+                                                <li class="dropdown active" style="margin-right: 40px;">
+                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-white"> </i> Bienvenue   {{ app.user.username }}  <b class="caret"></b></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="{{ path('fos_user_profile_show') }}"> <i class="icon-user"></i> Mon profil </a></li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="{{ path('fos_user_change_password') }}"> <i class="icon-lock"> </i> Changer mon mot de passe </a></li>
+                                                        <li class="divider"></li>
+                                                            {% if is_granted("ROLE_ADMIN") %}
+                                                            <li><a href="{{ path('fos_user_profile_list') }}">  <i class="icon-wrench"></i>  Gestion des utilisateurs</a></li>
+                                                            <li class="divider"></li>
+                                                                {#<li><a href="{{ path('fos_user_registration_register') }}">  <i class="icon-wrench"></i>  Gestion des utilisateurs</a></li>
+                                                                <li class="divider"></li>#}
+                                                            {% endif %}
+                                                        <li class="divider"></li>
+                                                        <li> <a href="{{ path('fos_user_security_logout') }}"> <i class="icon-off"> </i>  D&eacute;connexion</a></li>
+                                                        <li class="divider"></li>
+                                                    </ul>
+                                                </li>
+
+                                            </ul>
+                                        {% endif %}
+
+
+                                        {# Le menu de navigaation dans l'application. Il change en fonction des droits#}
+                                    {% endblock navigation%}
+                                </li>
+
+                            </ul>
+                            {% block menuhor %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+
+            </header>
+
+            {% block container %}
+                
+            {% endblock %}
+            
+
+            <div id="footer">
+                <br/>
+                {% block footer %}
+                    <!-- Intranet - {{ Corporation }} &copy; Copyright 2014 powered by <a href=""> {{ Provider }}</a> -->
+                {% endblock %}
+            </div>
+        </section>
+
+        {% block javascripts %}
+
+            <script src="{{ asset('css/bootstrap/js/jquery.js') }}"></script>
+            <script src="{{ asset('css/bootstrap/js/bootstrap.js')}}"></script>
+            <script src="{{ asset('css/bootstrap/js/bootstrap-transition.js')}}"></script>
+            <script src="{{ asset('css/bootstrap/js/bootstrap-alert.js')}}"></script>
+            <script src="{{ asset('js/jpaginate.js')}}"></script>
+            <script src="{{ asset('js/ckeditor.js')}}"></script>
+            <script src="{{ asset('date_picker/bootstrap-datetimepicker.js')}}"></script>
+            <script src="{{ asset('date_picker/locales/bootstrap-datetimepicker.fr.js')}}"></script>
+            {#<script src="{{ asset('css/bootstrap/js/bootstrap-modal.js')}}"></script>#}
+
+            <script type="text/javascript">
+                $('.form_datetime').datetimepicker({
+                    //language:  'fr',
+                    weekStart: 1,
+                    todayBtn:  1,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 2,
+                    forceParse: 0,
+                    showMeridian: 1
+                });
+                $('.form_date').datetimepicker({
+                    language:  'fr',
+                    weekStart: 1,
+                    todayBtn:  1,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 2,
+                    minView: 2,
+                    forceParse: 0
+                });
+                $('.form_time').datetimepicker({
+                    language:  'fr',
+                    weekStart: 0,
+                    todayBtn:  0,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 0,
+                    minView: 0,
+                    maxView: 0,
+                    forceParse: 1
+                });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                $('form div ul li').addClass('alert alert-danger');
+                $(".page").click(function () {
+                    alert('fdg');
+                    $(".page").css('background-color', 'white');
+                    $(this).css('background-color', 'orange');
+                });
+                pagine();
+
+
+                $('#open-stat').click(function(){
+                    $('#stat-modal').show('slow');
+                });
+
+                $('#close-stat-modal').click(function(){
+                    $('#stat-modal').hide('slow');
+                });
+            </script>
+        {% endblock %}
+
+    </body>
+</html>

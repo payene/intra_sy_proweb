@@ -1,0 +1,50 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block legend %}
+    Nouveau Type table
+{% endblock %}
+
+{% block body %}
+
+    
+    <form class="form_horizontal" action="{{ path('typetable_create') }}" method="post">
+        <div class="form-row">
+            {{ form_label(form.code, "Code de la table") }}
+            {{ form_errors(form.code, {'attr': {'class': 'alert alert-error', 'style':'width:40px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.code, {'attr': {'class': 'span1', 'style':'width:210px'} }) }} 
+        </div>
+    	<div class="form-row">
+            {{ form_label(form.typeTable, "Nom de la table") }}
+            {{ form_errors(form.typeTable, {'attr': {'class': 'alert alert-error', 'style':'width:40px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.typeTable, {'attr': {'class': 'span1', 'style':'width:210px'} }) }} 
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.msgByConvRequired, "Message par conversation obligatoire") }}
+            {{ form_errors(form.msgByConvRequired, {'attr': {'class': 'alert alert-error', 'style':'width:40px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.msgByConvRequired, {'attr': {'class': 'span1', 'style':'width:80px'} }) }} 
+        </div>
+        
+        <div class="form-row">
+        	<label>&nbsp;</label>
+        	{{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'} }) }} 
+        </div>
+
+        <br/>
+        <br/>
+
+        {{ form_rest(form) }}
+    </form>
+      <br/>
+      <hr/>
+        <br/>
+    <a class="btn btn-info" href="{{ path('typetable') }}">
+		&lArr;Retour
+    </a>
+<!-- OK! Autre chose qui me tracasse c'est que je ne sais pas comment ni quand mon voeu va se realiser.
+Permet moi de dire ceci :meme si l'ange Redouane descend sur terre pour réaliser mon voeux il y aura toujours une personne dont l'accord reste indispensable. -->
+{% endblock %}
+

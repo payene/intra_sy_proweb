@@ -1,0 +1,104 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block sidebar %}
+<table class="table table-striped record_properties">
+    <tbody>
+                    
+        {% if entity.artEditable  == false or entity.artCreator.id  == app.user.id or is_granted("ROLE_ADMIN") %} 
+            <tr>
+                <td colspan="2">
+                    <ul class="record_actions">
+                        <li>
+                            <a href="{{ path('article_edit', { 'id': entity.id }) }}">
+                                <button class="btn btn-warning">
+                                    <i class="icon-white icon-pencil"></i> Editer l'article courant
+                                </button>
+                            </a>
+                        </li>
+
+                        <li>
+                            <form action="{{ path('article_delete',{'id': entity.id})  }}" method="post">
+                                <div>
+                                        {# Génération de l'input. #}
+                                    {{ form_widget(delete_form.submit,{ 'attr': {'class':'btn btn-danger','caption':'DDD'} }) }} 
+                                </div>
+                            </form>
+                            {#{{ form(delete_form,{ 'attr': {'class':''} }) }}#}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>
+                {{ parent() }}
+            </td>
+        </tr>
+        {% for element in catrubs %}
+        <tr>
+            <td colspan="2">
+                {{ element[0].cat }}
+                {% for rub in element[1] %}
+                    <ul>
+                        <li> <a href="{{ path('article_rublist', {'id':rub.id}) }}"> {{ rub.titre }} </a></li>
+                    </ul>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+{% endblock %}
+
+{% block body -%}
+<!-- {#<div class="container">   #} -->
+<!-- {#<hr/>#} -->
+    <table style="width: 70%">
+            <tr>
+                <td>
+                    <h2>
+                        <a href="{{ path('article_rublist', {'id':entity.artRub.id}) }}">
+                            {{ entity.artRub.rubCat.cat }} >> {{ entity.artRub.titre }}
+                        </a>
+                        : <i>{{ entity.artTitre }} </i>
+                    </h2>
+                </td>
+            </tr>
+            <tr>
+                <td> 
+                    <a href="{{ path('version_new', {'art':entity.id}) }}"> Nouvelle section</a>
+                </td>
+            </tr>
+        {% for section in sections %}
+            <tr style="border-bottom: 1px dashed;">
+                <td style="padding-bottom: 20px;">
+                    <span id="ver{{ section.id }}" class="titre_section">  {{ section.verTitre }} 
+                        {% if section.verEditable == 0 or section.verCreator.id == app.user.id %}
+                            <a style="font-size:12px;float:right;"  href="{{ path('version_archives', {'id':section.id}) }}">
+                                    <i class="icon icon-book">  </i>historique
+                            </a>
+                            <a style="font-size:12px;float:right;margin-right: 5px;" href="{{ path('version_edit', {'id':section.id}) }}">
+                                    <i class="icon icon-pencil">  </i>editer
+                            </a>
+                        {% endif %}
+                    </span>
+                    <br/>
+                    <span class="corps_section">
+                        {{ section.verContent|raw }} 
+                        {% if section.attachement %}
+                            <center>
+                                <img style="width:700px;height:100px;" src="{{ asset(section.attachement)}}" />
+                            </center>
+                        {% endif %}
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+<!-- {#</div>#} -->
+
+
+{% endblock %}

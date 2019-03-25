@@ -1,0 +1,31 @@
+{% extends 'LooninsIncidentBundle::layout.html.twig' %}
+
+{% block body -%}
+<legend>Modifier un &eacute;tat d&apos;avancement</legend>
+
+{#    {{ form(edit_form) }}#}
+<form action="{{ path('gdpversions_update', {'id':entity.id}) }}" method="post">
+{#    {{ form(form) }}#}
+{#Methodologie Archivage#}
+    <h3><a href="{{ path('gdpincident_show', {'id':entity.incident.id}) }}">{{ entity.incident.titre }}</a></h3>
+    <div>
+        {{ form_label(edit_form.description, "Description") }}
+        {{ form_errors(edit_form.description, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+        {{ form_widget(edit_form.description) }} 
+    </div>
+    <br/>
+{{ form_widget(edit_form.submit, {'attr': {'class': 'btn btn-success'} }) }} 
+
+{{ form_rest(edit_form) }}
+</form>
+{#
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('gdpversions') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>#}
+</ul>
+{% endblock %}

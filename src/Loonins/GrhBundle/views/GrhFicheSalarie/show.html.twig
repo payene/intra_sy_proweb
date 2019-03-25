@@ -1,0 +1,94 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h3> Fiche salari&eacute; de
+        <a href="{{ path('grhemployes_show', {'id':employe.id}) }}" > <i> {{ employe.nom  }}  {{ employe.prenoms  }} </i> </a>
+        <br/>
+        <a href="{{ path('grhfichesalarie_new')}}" class="btn btn-primary"> <i class="icon-white icon-plus"></i> Ajouter un nouvel &eacute;l&eacute;ment </a>
+    </h3>
+
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            {% for type in type_fiche %}
+                <li class="alert alert-success">
+                    <a class="alert-success" href="#tf_{{ type.id }}" style="color: blue;" data-toggle="tab"> 
+                        {{ type.type }} 
+                        {% if fiches[type.id]|length > 0 %}
+                            | {{ fiches[type.id]|length }}
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% for type in type_fiche %}
+                <div class="tab-pane active" style="overflow-y: scroll;height: 400px;" id="tf_{{type.id}}"> 
+                    {% set fiche = fiches[type.id] %}
+                    {% for f in fiche %}
+                        <div class="panel alert alert-info">
+                            Le {{  f.date|date("d-m-Y a H:i:s") }} |<i> {{ f.titre }} </i>
+                            <p> {{ f.contenu }} </p>
+                            <a href="{{ path('grhfichesalarie_edit', {'id':f.id}) }}" class="btn btn-warning" ><i class="icon icon-edit"></i> </a>
+                            
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {#                <h1> {{ fiches[1]}} </h1>#}
+    {# <table class="record_properties">
+         <tbody>
+             <tr>
+                 <th>Id</th>
+                 <td>{{ entity.id }}</td>
+             </tr>
+             <tr>
+                 <th>Titre</th>
+                 <td>{{ entity.titre }}</td>
+             </tr>
+             <tr>
+                 <th>Contenu</th>
+                 <td>{{ entity.contenu }}</td>
+             </tr>
+             <tr>
+                 <th>Date</th>
+                 <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
+             </tr>
+         </tbody>
+     </table>#}
+
+    {#<ul class="record_actions">
+<li>
+    <a href="{{ path('grhfichesalarie') }}">
+        Back to the list
+    </a>
+</li>
+<li>
+    <a href="{{ path('grhfichesalarie_edit', { 'id': entity.id }) }}">
+        Edit
+    </a>
+</li>
+<li>{{ form(delete_form) }}</li>
+</ul>#}
+{% endblock %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        #encours, #suspendu, #resilie, #aterme {
+            height:400px;
+            border: solid 1px silver;
+            overflow-y: scroll;
+        }
+
+    </style>
+    {#    <script type="text/javascript">
+            pagineOneTable("");
+             pagineOneTable("tableDispo");
+             pagineOneTable("tableRompus");
+        </script>#}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block legend %}
+     Nouvelle animatrice
+{% endblock %}
+
+{% block body %}
+   	
+   	<form action="{{ path('animatrice_create') }}" method="post">
+    	<div>
+            {{ form_label(form.employe, "Nom et prénoms Animatrice") }}
+            {{ form_errors(form.employe, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.employe) }} 
+        </div>
+
+        <div>
+            {{ form_label(form.login, "Login Animatrice") }}
+            {{ form_errors(form.login, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.login) }} 
+        </div>
+
+        <div class="" style="background-color:#fff;display: inline;float: left;width:100%">
+            {{ form_label(form.debutAffectation, "Debut Affectation") }}
+                <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.debutAffectation, {'attr' : {'style' : '', 'type':'text'}}) }}
+                    <!-- <span class="add-on"><i class="icon-remove"></i></span> -->
+                    <span class="add-on"><i class="icon-th"></i></span>
+                </div>
+        </div>    
+
+     	{{ form_widget(form.submit , {'attr': {'class':'btn btn-success'} }) }} 
+        <a href="{{ path('animatrice') }}"> Annuler </a>
+    	{{ form_rest(form) }}
+    </form>
+        
+{% endblock %}

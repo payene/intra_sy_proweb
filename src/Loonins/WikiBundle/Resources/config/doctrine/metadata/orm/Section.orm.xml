@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Section" table="section">
+    <indexes>
+      <index name="sec_art_id" columns="sec_art_id"/>
+    </indexes>
+    <id name="id" type="integer" column="Id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="secOrdre" type="integer" column="sec_ordre" nullable="true"/>
+    <field name="secDel" type="integer" column="sec_del" nullable="false"/>
+    <many-to-one field="secArt" target-entity="Article">
+      <join-columns>
+        <join-column name="sec_art_id" referenced-column-name="Id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

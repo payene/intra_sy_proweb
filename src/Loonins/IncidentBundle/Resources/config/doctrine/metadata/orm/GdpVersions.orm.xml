@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="GdpVersions" table="gdp_versions">
+    <indexes>
+      <index name="index2" columns="proprio"/>
+      <index name="index3" columns="incident"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="description" type="text" column="description" nullable="true"/>
+    <field name="date" type="datetime" column="date" nullable="true"/>
+    <many-to-one field="proprio" target-entity="User">
+      <join-columns>
+        <join-column name="proprio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="incident" target-entity="GdpIncident">
+      <join-columns>
+        <join-column name="incident" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

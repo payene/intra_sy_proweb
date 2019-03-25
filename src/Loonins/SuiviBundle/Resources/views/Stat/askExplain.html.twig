@@ -1,0 +1,160 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+
+{% block legend %}
+    Index des statistiques 
+        <button style="float: right;margin-left: 5px;" class="btn btn-primary" id="open-stat" >
+            Stat en retard des animatrices
+        </button>
+         <br style="clear:both;">
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent()}}
+   
+{% endblock %}
+
+{% block body %}
+    
+    <form class="form_horizontal form-inline" action="{{ path('stat_ask_explain') }}" method="post" style="display: inline;">
+        <div class="form-row"> Debut </div>
+        <div class="form-row">
+            {# Génération de l'input. #}
+            {{ form_widget(askExpForm.debut, {'attr':{ }}) }}
+        </div>
+
+        <div class="form-row"> Fin </div>
+        <div class="form-row ">
+            {# Génération de l'input. #}
+            {{ form_widget(askExpForm.fin, {'attr':{ }}) }}
+        </div>
+
+        <div class="form-row">
+            {{ form_label(askExpForm.type, "Activité") }}
+            {{ form_errors(askExpForm.type, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(askExpForm.type, {'attr': {'style':'width:100px;'} }) }} 
+        </div>
+
+        <div class="form-row">
+            {{ form_widget(askExpForm.submit , {'attr': { 'class':'btn btn-success'} }) }} 
+        </div>
+    </form>
+
+    <div class="form-row" style="display: inline;float: right;">
+        <select id = "selection-action">
+            <option value="0"> Action sur la selection</option>
+            <option value="1"> Envoyer les demandes d'explications </option>
+            <option value="2">  </option>
+        </select>
+    </div>
+
+    <br style="clear:both;" />
+
+    <style type="text/css">
+        
+        td{
+            vertical-align: middle;
+        }
+    </style>
+    <table class="table table-striped  table-hover" >
+        <thead class="alert alert-info">
+            <tr style="height:15px;">
+                <td> <input type="checkbox" id="selectAllLate" name=""> </td>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">BUSDT  </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Login  </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Animatrice  </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Messages/heure</th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Total</th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Programm&eacute;</th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">R&eacute;el</th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;"> Prime </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Message/conv </th>
+                
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for lateStat in arrayLateStat %}
+            <tr>
+                <td> <input type="checkbox" value="{{ lateStat.id }}" name="" class="ckeckLate"> </td>
+                <td style="padding:0px;vertical-align:middle">{{ lateStat.dateStat|date('Ymd')}}</td>
+                <td style="padding:0px;vertical-align:middle;">{% if lateStat.animatrice is not null %}{{ lateStat.animatrice.login }}{% else %}-{% endif %}</td>
+                <td style="padding:0px;vertical-align:middle;">{% if lateStat.animatrice is not null %}{{ lateStat.animatrice.employe }}{% else %}-{% endif %}</td>
+                <td style="padding:0px;vertical-align:middle;text-align:center" >{{ lateStat.msgParHeure }}</td>
+                <td style="padding:0px;vertical-align:middle;text-align:center;">{{ lateStat.total|number_format(0, ',', ' ') }}</td>
+                <td style="padding:0px;vertical-align:middle;text-align:center;">{{ lateStat.programmed }}</td>
+                
+                <td  style="padding:0px;vertical-align:middle;text-align:right;text-align:center;"> 
+                    <span style="padding:0px;border-radius:0px;background-color:  rgba(185, 74, 72, 0.77);color: white;">
+                        {{ lateStat.reel }}
+                    </span>
+                </td>
+                <td style="padding:0px;vertical-align:middle;text-align:center;">
+                    {{ lateStat.prime }}
+                </td>
+                
+                    <!-- <th> Message/conv </th> -->
+                <td style="padding:0px;vertical-align:middle;text-align:center;"> {{ lateStat.msgParConv }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+
+
+
+
+
+
+    <style type="text/css">
+
+        select, .btn-success {
+            height:25px;
+        }
+
+        #form_debut_day{
+            width: 40px;
+            height: 25px;
+            padding: 0px;
+        }
+
+        #form_debut_month{
+            width: 40px;
+            padding:0px;
+            height: 25px;
+        }
+        #form_debut_year{
+            width: 55px;
+            padding:0px;
+            height: 25px;
+        }
+
+        #form_fin_year{
+            width: 55px;
+            padding:0px;
+            height: 25px;
+        }
+
+        #form_fin_day{
+            width: 40px;
+            height: 25px;
+            padding: 0px;
+        }
+
+        #form_fin_month{
+            width: 40px;
+            padding:0px;
+            height: 25px;
+        }
+
+    </style>
+    
+    
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% include "LooninsSuiviBundle:Stat:askExplain.js.twig" %}
+{% endblock %}

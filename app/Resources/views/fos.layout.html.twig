@@ -1,0 +1,268 @@
+{% set Corporation = "Proweb" %}
+{% set Corp  = "Proweb" %}
+{% set Provider = "HERPA Solutions" %}
+
+
+
+{# empty Twig template #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html"; charset="utf-8" />
+        <title> {% block titre %} Proweb - Intranet {% endblock%}</title>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        {% block stylesheets %}
+           <!--  <link href='http://fonts.googleapis.com/css?family=Irish+Grover' rel='stylesheet' type='text/css'>
+            <link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>-->
+            <!-- Fav and touch icons -->
+            <link rel="stylesheet" type="text/css" title="style" href="{{ asset('css/bootstrap/css/bootstrap.css')}}" />
+            <link rel="stylesheet" type="text/css" title="style" href="{{ asset('css/bootstrap/css/bootstrap-responsive.min.css')}}" />
+            <link rel="stylesheet" type="text/css" title="style" href="{{ asset('css/bootstrap/css/bootstrap.min.css')}}" />
+            <link rel="stylesheet" type="text/css" title="style" href="{{ asset('css/bootstrap/css/bootstrap-responsive.css')}}" />
+            <link href="{{ asset('css/css.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('date_picker/bootstrap-datetimepicker.min.css') }}" type="text/css" rel="stylesheet" />
+
+            <style type="text/css">
+                html, body{
+                    background: #EEEEEE;
+                    padding: 0px;
+                    margin: 0px;
+                }
+
+                li.alert.alert-danger{
+                    /*background: #000;
+                    border: solid 1px;
+                    color: white;
+                    padding: 0;
+                    text-align: left;*/
+                    width: auto;
+                }
+
+                #modules{
+                    /*padding: 10px;*/
+                    background: #EEEEEE;
+                }
+
+                a:hover{
+                    text-decoration: none;
+                }
+                #modules a:hover{
+                    text-decoration: none;
+                }
+
+                #modules a{
+                    list-style: none;
+                    display: inline-block;
+                    list-style: circle;
+                    background: #00c8e8;
+                    color: white;
+                    margin: 5px 5px 5px 0px;
+                    vertical-align: center;
+                    cursor: pointer;
+                    text-align: center;
+                    border-radius: 5px;
+                    border: solid 1px #00c8e8;
+                    padding:  3px 10px;
+                }
+
+                #sidebar-nav li{
+                    list-style: none;
+                    border-bottom: solid 1px silver;
+                    padding: 4px 0px;
+                }
+
+                #branch{
+                    padding: 0.5em;
+                    font-size: 14pt;
+                    font-weight: bold;
+                    /*color: #000; */
+                }
+
+                #branch a{
+                    float: right;
+                }
+               
+
+                #leftNavUl {
+                    margin-left:0px;
+                }
+                #leftNavUl li {
+                    margin-left: 4px;
+                }
+            </style>
+
+        
+
+        {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+
+    </head>
+    <body>
+
+            <div class="container-fluid" style="padding:0;">
+                <div class="row-fluid" style="">
+                    <div class="span12" style="background: white;">
+                        <div class="span9" style="background: white;">
+                            <p style="color:blue;font-size:22px;padding:5px;">
+                                &nbsp; &nbsp; &nbsp;<a href="{{ path('intranet') }}"> Intranet {{ Corp}} </a>
+                            </p>
+                        </div>
+                        <div class="span3" style="background: white;text-align:right;">
+                            <div class="dropdown">
+                                <button class="dropdown-toggle" style="background: white;border:none;margin-top:8px;" type="button" data-toggle="dropdown"> <i class="icon icon-user"></i> Mon compte
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('fos_user_profile_show') }}"> <i class="icon-user"></i> Mon profil </a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{{ path('fos_user_change_password') }}"> <i class="icon-lock"> </i> Changer mon mot de passe </a></li>
+                                    <li class="divider"></li>
+                                        {% if is_granted("ROLE_ADMIN") %}
+                                        <li><a href="{{ path('fos_user_profile_list') }}">  <i class="icon-wrench"></i>  Gestion des utilisateurs</a></li>
+                                        <li class="divider"></li>
+                                            {#<li><a href="{{ path('fos_user_registration_register') }}">  <i class="icon-wrench"></i>  Gestion des utilisateurs</a></li>
+                                            <li class="divider"></li>#}
+                                        {% endif %}
+                                    <li class="divider"></li>
+                                    <li> <a href="{{ path('fos_user_security_logout') }}"> <i class="icon-off"> </i>  D&eacute;connexion</a></li>
+                                    <li class="divider"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="row-fluid" style="background:;">                
+                        {% set module = "" %}
+                        {% block navbar %}
+                        <div id="modules" class="span12">
+                            &nbsp;<a id="wiki" href="{{ path('loonins_wiki') }}"> Wiki {{Corp}} </a> 
+                            <a id="sar" href="{{ path('stat_search') }}"> Suivi des Activit&eacute;s &agrave; Risque </a> 
+                            <a id="grh"  href="{{ path('grh') }}"> Gestion des Ressources Humaines </a> 
+                            <a id="gdi" href="{{ path('loonins_gdpincident_homepage') }}"> Gestion des Incidents </a> 
+                        </div>
+                        {% endblock %}
+
+
+                        <div class="row-fluid" style="box-shadow: 15px -10px 12px 0px silver;">
+                            
+                            <div class="span10 offset1 alert-info" style="background:white;font-size:12px;border: solid 1px gray;border-radius: 3px 3px 0px 0px;padding: 5px 15px;height: auto;">
+                                {% for message in app.session.flashbag.get('info') %}
+                            <div class="alert alert-success">
+                                {{ message }}            
+                            </div>
+                        {% endfor %}
+                        {% for message in app.session.flashbag.get('error') %}
+                            <div class="alert alert-error">
+                                {{ message }}            
+                            </div>
+                        {% endfor %}
+                                {% block container %}
+                                    {% block fos_user_content %}
+                                    {% endblock fos_user_content %}
+                                {% endblock %}
+                            </div>
+                        </div>
+
+                    </div>
+
+            </div>
+
+
+
+        
+           
+            
+
+            <div id="footer">
+                {% block footer %}
+                    Intranet - {{ Corporation }} &copy; Copyright 2014 powered by <a href=""> {{ Provider }}</a>
+                {% endblock %}
+            </div>
+    
+        
+
+        {% block javascripts %}
+
+            <script src="{{ asset('css/bootstrap/js/jquery.js') }}"></script>
+            <script src="{{ asset('css/bootstrap/js/bootstrap.js')}}"></script>
+            <script src="{{ asset('css/bootstrap/js/bootstrap-transition.js')}}"></script>
+            <script src="{{ asset('css/bootstrap/js/bootstrap-alert.js')}}"></script>
+            <script src="{{ asset('css/bootstrap/js/bootstrap-modal.js')}}"></script>
+            <script src="{{ asset('js/jpaginate.js')}}"></script>
+            <script src="{{ asset('js/ckeditor.js')}}"></script>
+            <script src="{{ asset('date_picker/bootstrap-datetimepicker.js')}}"></script>
+            <script src="{{ asset('date_picker/locales/bootstrap-datetimepicker.fr.js')}}"></script>
+
+            <script type="text/javascript">
+                $('.form_datetime').datetimepicker({
+                    //language:  'fr',
+                    weekStart: 1,
+                    todayBtn:  1,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 2,
+                    forceParse: 0,
+                    showMeridian: 1
+                });
+                $('.form_date').datetimepicker({
+                    language:  'fr',
+                    weekStart: 1,
+                    todayBtn:  1,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 2,
+                    minView: 2,
+                    forceParse: 0
+                });
+                $('.form_time').datetimepicker({
+                    language:  'fr',
+                    weekStart: 0,
+                    todayBtn:  0,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 0,
+                    minView: 0,
+                    maxView: 0,
+                    forceParse: 1
+                });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                $('form div ul li').addClass('alert alert-danger');
+                $(".page").click(function () {
+                    alert('fdg');
+                    $(".page").css('background-color', 'white');
+                    $(this).css('background-color', 'orange');
+                });
+                pagine();
+
+
+                $('#open-stat').click(function(){
+                    $('#stat-modal').show('slow');
+                });
+
+                $('#close-stat-modal').click(function(){
+                    $('#stat-modal').hide('slow');
+                });
+                {% block jsnavbar %}
+                $("#{{module}}").css('background',"#FF6D06");
+                $("#{{module}}").css('border',"solid 1px #FF6D06");
+                {% endblock %}
+            </script>
+        {% endblock %}
+
+    </body>
+</html>

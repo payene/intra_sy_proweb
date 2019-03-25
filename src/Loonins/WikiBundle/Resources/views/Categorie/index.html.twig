@@ -1,0 +1,49 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h3>Toutes les cat&eacute;gories</h3>
+{% if(entities) %}
+<table style="width: auto;" class="table table-hover table-striped table-bordered alert-info records_list">
+    <thead class="">
+        <tr>
+            <th>#</th>
+            <th>Cat&eacute;gorie</th>
+            <th>Description</th>
+            <th>Cr&eacute;&eacute; le</th>
+            <th> </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{#<a href="{{ path('categorie_show', { 'id': entity.id }) }}">{{ entity.id }}</a>#}</td>
+                <td>{{ entity.cat }}</td>
+                <td>{{ entity.description }}</td>
+                <td>{% if entity.catDate %}{{ entity.catDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul style="list-style: none;margin:0px;">
+                        <li>
+                            <a href="{{ path('categorie_show', { 'id': entity.id }) }}"><i class="icon icon-eye-open"> </i> Afficher </a>
+                        </li>
+                 {#   <li>
+                        <a href="{{ path('categorie_edit', { 'id': entity.id }) }}"> <i class="icon icon-remove"> </i>Supprimer </a>
+                    </li>#}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+<div class="alert alert"> Aucune cat&eacute;gorie disponible </div>
+{% endif %}
+
+    <ul>
+        <li>
+            <a href="{{ path('categorie_new') }}">
+                Ajouter une cat&eacute;gorie
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+    
+    {% block legend %}
+        Index des statistiques 
+        <button style="float: right;margin-left: 5px;" class="btn btn-primary" id="open-stat" >
+            Nouvelle entr&eacute;e statistique
+        </button>
+    {% endblock %}
+
+{% block body -%}
+
+        {% include  'LooninsSuiviBundle:Stat:search_form.html.twig' %}
+        
+        {% if notif is defined %}
+            <span class="span2 alert alert-info"> {{ notif }} </span>
+        {% endif %}
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Login</th>
+                    <th> Messages/heure </th>
+                    <th> Total </th>
+                    <th> Progrmm&eacute; </th>
+                    <th> R&eacute;eel </th>
+                    <th > Animatrice </th>
+                    <th> Actions </th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for s in stats %}
+                    {% set entity = s %}
+                        <tr>
+                            <td style="vertical-align: middle;">{{ entity.animatrice.login }}</td>
+                            <td style="vertical-align: middle;">{{ entity.msgParHeure }}</td>
+                            <td style="vertical-align: middle;">{{ entity.total }}</td>
+                            <td style="vertical-align: middle;">{{ entity.programmed }}</td>
+                            <td  style="vertical-align: middle;">
+                                {% if entity.retard == 1 %}
+                                    <span style="padding:2px;border-radius:0px;background-color:  rgba(185, 74, 72, 0.77);color: white;">
+                                        {% else %}
+                                    <span  style="padding:2px;border-radius:0px;background-color: rgba(70, 136, 71, 0.77);color: white;">
+                                {% endif %}
+
+                                     {{ entity.reel }}
+                                    </span>
+                            </td>
+                            <td style="vertical-align: middle;">{{ entity.animatrice.employe }}</td>
+                            <td> 
+                                <a href="{{path('stat_edit', {'id': entity.id })}}" class="btn btn-warning">  Editer </a> 
+                                <a href="{{path('stat_view', {'id': entity.id })}}" class="btn btn-danger">  Supprimer </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+     
+    <!-- </div> --> 
+        {#
+        <div id="stat-modal" tabindex="-1">
+            <div class="modal" >
+                <div class="modal-header">
+                    <h3 id="myModalLabel">Nouvelle entr&eacute;e de statistique</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="" action="{{ path('stat') }}" method="post">
+                       
+                        <div class="form-row" style="display: inline;float: left;">
+                            {{ form_label(form.dateStat, "Date statistique") }}
+                                <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                    {# Génération de l'input. #}
+                                    {{ form_widget(form.dateStat) }}
+                                    <span class="add-on"><i class="icon-remove"></i></span>
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                </div>
+                        </div>                    
+
+                        <div  class="form-row"  style="display: inline;float: right;">
+                            {{ form_label(form.type, "Table Statistique") }}
+                            {{ form_errors(form.type, {'attr': {'class': 'alert alert-error'} }) }}
+                            {# Génération de l'input. #}
+                            {{ form_widget(form.type) }} 
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" >
+                        Commencer la saisie des statistiques
+                    </button>
+                    <button id="close-stat-modal" class="btn btn-warning" type="reset">Annuler</button>
+                </div>
+                 {{ form_rest(form) }}
+                    </form>
+            </div>
+        </div>
+        #}
+
+       
+    {% endblock %}

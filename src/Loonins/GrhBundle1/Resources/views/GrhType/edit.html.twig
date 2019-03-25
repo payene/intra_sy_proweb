@@ -1,0 +1,24 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+<legend> Modifier un type de contrat</legend>
+<form action="{{ path('grhtype_update', {'id':entity.id}) }}" method="POST">
+    <div>
+        {{ form_label(edit_form.type, "Libellé") }}
+        {{ form_errors(edit_form.type) }}
+        {{ form_widget(edit_form.type) }}
+    </div>
+    <div>
+        {{ form_label(edit_form.duree, "Durée du contrat en mois (0 Si indéterminée)") }}
+        {{ form_errors(edit_form.duree) }}
+        {{ form_widget(edit_form.duree) }}
+    </div>
+    {{ form_widget(edit_form.submit, {'attr':{'class':'btn btn-warning'} }) }}
+    {{ form_rest(edit_form) }}
+</form>
+{#    {{ form(edit_form) }}#}
+
+<ul class="record_actions">
+    <li>{% include 'LooninsGrhBundle:GrhType:delete.html.twig' %}</li>
+</ul>
+{% endblock %}

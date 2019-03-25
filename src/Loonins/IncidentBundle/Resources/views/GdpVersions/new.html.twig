@@ -1,0 +1,33 @@
+{% extends 'LooninsIncidentBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1><a href="{{ path('gdpincident_show', {'id':incident.id}) }}">{{ incident.titre}}</a></h1> <h4>
+>> Nouvelle Evolution</h4> 
+<form action="{{ path('gdpversions_create', {'incid':incident.id}) }}" method="post">
+{#    {{ form(form) }}#}
+{#Methodologie Archivage#}
+    
+    <div>
+    {{ form_label(form.description, "Description") }}
+    {{ form_errors(form.description, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.description) }} 
+    </div>
+   
+    <br/>
+{{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'} }) }} 
+
+{{ form_rest(form) }}
+</form>
+
+<a class="btn btn-info" href="{{ path('gdpincident_show', {'id':incident.id}) }}">
+    &llarr; Retourner &agrave; l&apos;incident 
+</a>
+    {#<ul class="record_actions">
+        <li>
+            <a href="{{ path('gdpversions') }}">
+                Back to the list
+            </a>
+        </li>
+    </ul>#}
+{% endblock %}

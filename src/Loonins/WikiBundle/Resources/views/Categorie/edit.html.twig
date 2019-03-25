@@ -1,0 +1,36 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1>Modification</h1>
+{{ form_start(edit_form) }}
+    <div>
+    {{ form_errors(edit_form) }}
+    </div>
+    <div>
+    {{ form_label(edit_form.cat, "Catégorie") }}
+    {{ form_errors(edit_form.cat) }}
+{#         Génération de l'input. #}
+    {{ form_widget(edit_form.cat) }} 
+    </div>
+
+    <div>
+    {{ form_label(edit_form.description, "Description") }}
+    {{ form_errors(edit_form.description) }}
+{#         Génération de l'input. #}
+    {{ form_widget(edit_form.description) }} 
+    </div>   
+    {{ form_widget(edit_form.submit, {'attr':{'class':'btn btn-warning'} }) }} 
+
+    <div>
+{{ form_rest(edit_form) }}
+    </div>
+{{ form_end(edit_form) }}
+<ul class="record_actions" style="list-style: none;">
+    <li>
+        <a href="{{ path('categorie') }}">
+            Liste des Catégories
+        </a>
+    </li>
+{#{#    <li>{{ form(delete_form) }}</li>#}
+</ul>
+{% endblock %}

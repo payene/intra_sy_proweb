@@ -1,0 +1,4 @@
+<form action="{{ path('grhtype_delete', {'id':entity.id} ) }}" method="POST">
+            {{ form_widget(delete_form.submit, {'attr':{'class':'deleter btn btn-danger'} })}}
+            {{ form_rest(delete_form) }}
+</form>

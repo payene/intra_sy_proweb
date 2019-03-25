@@ -1,0 +1,36 @@
+loonins_suivi_login_anim:
+    resource: "@LooninsSuiviBundle/Controller/LoginAnimController.php"
+    type:     annotation
+
+loonins_suivi:
+    resource: "@LooninsSuiviBundle/Resources/config/routing.yml"
+    prefix:   /sar
+
+loonins_incident:
+    resource: "@LooninsIncidentBundle/Resources/config/routing.yml"
+    prefix:   /gdp
+
+loonins_grh:
+    resource: "@LooninsGrhBundle/Resources/config/routing.yml"
+    prefix:   /grh
+
+loonins_wiki:
+    resource: "@LooninsWikiBundle/Resources/config/routing.yml"
+    prefix:   /wiki
+
+# loonins_user:
+#     resource: "@LooninsUserBundle/Resources/config/routing.xml"
+#     prefix:   /
+
+intranet:
+    path: /
+    defaults: { _controller: FOSUserBundle:Security:login }
+    requirements:
+        _method:  GET
+
+# app:
+#     resource: "@AppBundle/Controller/"
+#     type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

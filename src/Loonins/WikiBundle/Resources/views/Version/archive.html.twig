@@ -1,0 +1,53 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h3> Ancienne version de la section <a href="{{ path('version_show', {'id':entity.verVersion.id}) }}"> {{ entity.verVersion.verTitre }} </a></h3>
+
+    <table class="table record_properties">
+        <tbody>
+            <tr>
+           {#     <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>#}
+            {#<tr>
+                <th>Versecid</th>
+                <td>{#{{ entity.article.artTitre }}#}</td>
+{#            </tr>#}
+            <tr>
+                <th>Titre</th>
+                <td>{{ entity.verTitre }}</td>
+            </tr>
+            <tr>
+                <th>Cr&eacute;ation</th>
+                <td>{{ entity.verDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            {#<tr>
+                <th>Verseceditable</th>
+                <td>{{ entity.verEditable }}</td>
+            </tr>#}
+            <tr>
+                <td colspan="2"><b>Contenu</b><br/>
+           <br/> {{ entity.verContent }}
+                    </td>
+            </tr>
+            {#<tr>
+                <th>Versecdel</th>
+                <td>{{ entity.verDel }}</td>
+            </tr>#}
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('version_archives', { 'id': entity.Id}) }}">
+            Liste des autres anciennes versions
+        </a>
+    </li>
+    {#<li>
+        <a href="{{ path('version_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>#}
+{#    <li>{{ form(delete_form) }}</li>#}
+</ul>
+{% endblock %}

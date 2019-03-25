@@ -1,0 +1,80 @@
+<?php
+
+namespace Loonins\GrhBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Article
+ *
+ * @ORM\Table(name="article", indexes={@ORM\Index(name="IDX_23A0E66842EB1F", columns={"art_creator"}), @ORM\Index(name="IDX_23A0E66CFFA5CE7", columns={"art_rub"})})
+ * @ORM\Entity
+ */
+class Article
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="Id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="art_titre", type="string", length=255, nullable=true)
+     */
+    private $artTitre;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="art_date_create", type="datetime", nullable=true)
+     */
+    private $artDateCreate;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="art_editable", type="boolean", nullable=true)
+     */
+    private $artEditable;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="art_del", type="integer", nullable=false)
+     */
+    private $artDel;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="update_date", type="datetime", nullable=false)
+     */
+    private $updateDate;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="art_creator", referencedColumnName="id")
+     * })
+     */
+    private $artCreator;
+
+    /**
+     * @var \Rubrique
+     *
+     * @ORM\ManyToOne(targetEntity="Rubrique")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="art_rub", referencedColumnName="Id")
+     * })
+     */
+    private $artRub;
+
+
+}

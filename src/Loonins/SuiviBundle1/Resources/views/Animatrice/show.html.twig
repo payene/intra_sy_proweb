@@ -1,0 +1,32 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block legend %}
+     Animatrice
+{% endblock %}
+
+{% block body -%}
+
+    <label> Login : {{ entity.login }} </label>
+    <label> employeye : {{ entity.employe }} </label>
+    <br/>
+    <br/>
+    <ul class="record_actions">
+   
+        <li class="alert alert-danger span9">
+            Etes-vous s&ucirc;r de vouloir supprimer cette animatrice ? Cette op&eacute;ration est irr&eacute;versible et  entrainera un suppression en cascade des statistiques de l'animatrice.
+           
+           <br/>
+           <form action="{{ path('animatrice_delete',{'id':entity.id}) }}" method="POST">
+                
+                {{ form_widget(delete_form.submit , {'attr': {'class':'btn btn-large span12 btn-danger'} }) }} 
+                
+                <a class="btn btn-info btn-large span2" style="margin-top: 10px;" href="{{ path('animatrice') }}"> Annuler la suppression </a>
+                {{ form_rest(delete_form) }}
+            </form>
+
+        </li>
+        <li>
+
+        </li>
+    </ul>
+{% endblock %}

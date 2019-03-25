@@ -1,0 +1,69 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block legend %}
+    Details  statistique  {{ entity.dateStat|date('Ymd') }} / {{ entity.type }} / {{ entity.animatrice }}
+{% endblock %}
+
+{% block body -%}
+
+{{ form_start(edit_form, {'attr':{'class':'form_horizontal'}}) }}
+	
+
+	<div class="form-row">
+        {{ form_label(edit_form.nbCaractere, "Nb. caractères") }}
+        {{ form_errors(edit_form.nbCaractere, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.nbCaractere, {'attr': {'class': 'span1'} } ) }} 
+	</div>
+
+    <div class="form-row">
+        {{ form_label(edit_form.totalRecu, "Total Recu") }}
+        {{ form_errors(edit_form.totalRecu, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.totalRecu, {'attr': {'class': 'span2'} } ) }} 
+    </div>
+
+    <div class="form-row">
+        {{ form_label(edit_form.nbInscTrait, "Nombre Inscri. Traités ") }}
+        {{ form_errors(edit_form.nbInscTrait, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.nbInscTrait, {'attr': {'class': 'span2'} } ) }} 
+    </div>
+
+    <div class="form-row">
+        {{ form_label(edit_form.nbAbonnes, "Nombre d'Abonnés ") }}
+        {{ form_errors(edit_form.nbAbonnes, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.nbAbonnes, {'attr': {'class': 'span2'} } ) }} 
+    </div>
+
+    <div class="form-row">
+        {{ form_label(edit_form.heureAbs, "Heures d'absence ") }}
+        {{ form_errors(edit_form.heureAbs, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.heureAbs, {'attr': {'class': 'span2'} } ) }} 
+    </div>
+
+    <div class="form-row">
+        {{ form_label(edit_form.noteCoach, "Note Coatch.") }}
+        {{ form_errors(edit_form.noteCoach, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.noteCoach, {'attr': {'class': 'span2'} } ) }} 
+    </div>
+
+    <div class="form-row">
+        {{ form_label(edit_form.commentaire, "Commentaires") }}
+        {{ form_errors(edit_form.commentaire, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.commentaire, {'attr': {'class': 'span4'} } ) }} 
+    </div>
+ 
+    <div style="clear:both;">
+        {{ form_widget(edit_form.submit , {'attr': {'style':'float:left;', 'class':'btn btn-success'} }) }}
+    </div>
+	{{ form_rest(edit_form) }}
+
+{{ form_end(edit_form) }}
+
+
+{% endblock %}

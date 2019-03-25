@@ -1,0 +1,53 @@
+{% extends '::grh.layout.html.twig' %}
+{% block module_name %} GRH - {{ Corp }}{% endblock module_name %}
+{% block titre %} {{ Corporation }} - Intranet {% endblock%}
+
+{% set module = "wiki" %}
+
+
+{% block sidebar %}
+<ul id="leftNavUl" >
+    {% if is_granted('ROLE_GRH') %}
+        <li>
+            <a href="{{ path('article_new') }}">
+                <i class="icon-black icon-file"></i> Nouvel article
+            </a>
+        </li>
+        {% if is_granted('ROLE_ADMIN') %} 
+        <li>
+            <a href="{{ path('rubrique_new') }}">
+                <i class="icon-black icon-tag"></i> G&eacute;rer les rubriques
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('categorie_new') }}">
+                <i class="icon-black icon-tags"></i> G&eacute;rer les cat&eacute;gories
+            </a>
+        </li>
+        {% endif %}
+        <li>
+            <a href="{{ path('article') }}">
+                <i class="icon-black icon-home"></i> Accueil wiki
+            </a>
+        </li>
+    {% endif %}
+    
+</ul>
+{% endblock %}
+
+{# empty Twig template #}
+{% block javascripts %}
+    {{ parent() }}
+<script>
+    $('.deleter').click(function() {
+        if (!confirm("Vous sur le point de supprimer une entité. Voulez vous continuer ?")) {
+            return false;
+        }
+    });
+    $('.needConfirm').click(function() {
+        if (!confirm("L'opération que vous allez exécuter est irréversible. Voulez vous continuer ?")) {
+            return false;
+        }
+    });
+</script>
+{% endblock %}

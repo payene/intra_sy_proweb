@@ -1,0 +1,78 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+{% block sidebar %}
+    {{ parent()}}
+{% endblock %}
+{% block body -%}
+
+<p> 
+    Resultats de la recherche <i style="color:blue">&laquo; {{ rech }} &raquo; </i>
+    <br/>
+    <a href="{{ path('advanced_search') }}"> Recherches avanc&eacute;es </a>
+</p>
+
+
+<ul class="table ">
+    <p class="alert alert-info" style="width: 90%;">R&eacute;sultas dans les versions courantes</p>
+    <li>
+        Correspondances dans les titres d&apos;articles
+{#    {{ dump(resultats.titre_art) }}#}
+        <ul>
+{% for articles in resultats.titre_art %}
+{% for article in articles %}
+
+            <li>
+                <a href="{{ path('article_show', {'id':article.id}) }}"> {{ article.artTitre }} </a>
+            </li>
+ {% endfor %}
+ {% endfor %}
+        </ul>
+    </li>
+    <li>Correspondances dans les titres de sections
+        <ul>
+{% for sections in resultats.titre_ver %}
+{% for section in sections %}
+            <li>
+                <a href="{{ path('version_show', {'id':section.id}) }}"> {{ section.verArticle.artTitre}} : {{ section.verTitre }} </a>
+            </li>
+ {% endfor %}
+ {% endfor %}
+        </ul>
+    </li>
+    <li>Correspondances dans les contenus de sections 
+               <ul>
+{% for sections in resultats.content_ver %}
+            {% for section in sections %}
+            <li>
+                <a href="{{ path('version_show', {'id':section.id}) }}">  {{ section.verArticle.artTitre}} : {{ section.verTitre }} </a>
+            </li>
+ {% endfor %}
+ {% endfor %}
+        </ul>
+    </li>
+</ul>
+<ul>
+    <p style="width: 90%;" class="alert alert-info">R&eacute;sultas dans les versions pr&eacute;c&eacute;dantes</p>
+    <li>Correspondances dans les titres de sections
+    <ul>
+{% for archives in resultats.titre_archive %}
+{% for archive in archives %}
+            <li>
+                <a href="{{ path('archive_show', {'id':archive.id}) }}">  {{ archive.verArticle.artTitre}} : {{ archive.verTitre }}{{ archive.verTitre }} </a>
+            </li>
+ {% endfor %}
+ {% endfor %}
+        </ul>
+    </li>
+    <li>Correspondances dans les contenus de sections
+     <ul>
+{% for archives in resultats.content_archive %}
+            {% for archive in archives %}
+            <li>
+                <a href="{{ path('archive_show', {'id':archive.id}) }}"> {{ archive.verArticle.artTitre}} : {{ archive.verTitre }} </a>
+            </li>
+ {% endfor %}
+ {% endfor %}
+        </ul>
+    </li>
+</ul>
+{% endblock %}

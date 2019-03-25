@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="GrhContrats" table="grh_contrats">
+    <indexes>
+      <index name="type" columns="type"/>
+      <index name="employe" columns="employe"/>
+    </indexes>
+    <id name="id" association-key="true"/>
+    <field name="type" type="integer" column="type" nullable="false"/>
+    <field name="debut" type="date" column="debut" nullable="false"/>
+    <field name="finReel" type="date" column="fin_reel" nullable="false"/>
+    <field name="motifRupture" type="text" column="motif_rupture" nullable="true"/>
+    <field name="commentaire" type="text" column="commentaire" nullable="true"/>
+    <field name="status" type="integer" column="status" nullable="false"/>
+    <one-to-one field="id" target-entity="GrhType">
+      <join-columns>
+        <join-column name="Id" referenced-column-name="Id"/>
+      </join-columns>
+    </one-to-one>
+    <many-to-one field="employe" target-entity="GrhEmployes">
+      <join-columns>
+        <join-column name="employe" referenced-column-name="Id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,144 @@
+{% extends 'LooninsIncidentBundle::layout.html.twig' %}
+
+{% block body -%}
+    <legend>Modifier un Incident</legend>
+
+    {% if(reqEmpError == 1 ) %}
+        <p> <span class="alert alert-danger" >  Pour ce type d'incident veuillez préciser l'employé concerné </span> </p>
+    {% endif %}
+
+
+    <form action="{{ path('gdpincident_update', {'id':entity.id}) }}" method="post">
+        {#        {{  entity.id }}#}
+
+        <div class="span3" style="margin-left:0;">
+            {{ form_label(edit_form.employe, "Employe concerné par l'incident") }}
+            {{ form_errors(edit_form.employe, {'attr': {'class': 'alert alert-error'} }) }}
+            {#             Génération de l'input. #}
+            {{ form_widget(edit_form.employe) }} 
+        </div>
+
+        <div class="span3" style="margin-left:0;">
+            {{ form_label(edit_form.titre, "Titre") }}
+            {{ form_errors(edit_form.titre, {'attr': {'class': 'alert alert-error'} }) }}
+            {#             Génération de l'input. #}
+            {{ form_widget(edit_form.titre) }} 
+        </div>
+
+        <div class="span3" style="margin-left:0;">
+            {{ form_label(edit_form.categorie, "Catégorie de l'incident") }}
+            {{ form_errors(edit_form.categorie, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(edit_form.categorie, {'attr': { 'readonly':'readonly'} }) }} 
+        </div>
+
+        <br style="clear:both;" />
+
+        <div class="span3" style="margin-left:0;">
+            {{ form_label(edit_form.date, "Date incident") }}
+            <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                {# Génération de l'input. #}
+                {{ form_errors(edit_form.date) }}
+                {{ form_widget(edit_form.date, {'attr': {'class':'span9' }}) }}
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </div>
+
+        <div class="span2">
+            {{ form_label(edit_form.duree, "Duree incident") }}
+            <div id="dureeIncid" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input2" data-link-format="hh:ii">
+                {# Génération de l'input. #}
+                {{ form_errors(edit_form.duree) }}
+                {{ form_widget(edit_form.duree, {'attr': {'class':'span9' }}) }}
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </div>
+         {% if(reqTmError == 1 ) %}
+            <div class="span4">
+                <label>&nbsp;</label>
+                <span class="alert alert-danger" >  Pour ce type d'incident veuillez en préciser la duree  </span> 
+            </div>
+        {% endif %}
+
+        <br style="clear:both;" />
+
+        <div class="span10" style="margin-left:0;">
+            {{ form_label(edit_form.description, "Description") }}
+            {{ form_errors(edit_form.description, {'attr': {'class': 'alert alert-error'} }) }}
+            {#             Génération de l'input. #}
+            {{ form_widget(edit_form.description, {'attr': {'class':'span10', 'style':'height:180px;' }}) }}
+        </div>
+
+        {#
+        <div>
+            {{ form_widget(edit_form.date, {'attr': {'class':'hidden'} }) }} 
+            {{ form_widget(edit_form.status, {'attr': {'class':'hidden'} }) }} 
+            {{ form_widget(edit_form.proprio, {'attr': {'class':'hidden'} }) }} 
+            {{ form_widget(edit_form.updateDate, {'attr': {'class':'hidden'} }) }} 
+        </div>
+        #}
+
+        {{ form_widget(edit_form.submit , {'attr': {'class':'btn btn-warning'} }) }} 
+        <div>
+            {{ form_rest(edit_form) }}
+        </div>
+    </form>
+    <a class="btn btn-primary" href="{{ path('gdpincident_show', {'id':entity.id}) }}"> Annuler les modifications </a>
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+
+    <ul id="leftNavUl" >
+        <li>
+            <a href="{{ path('gdpversions_new', { 'incid': entity.id }) }}">
+                <i class="icon-black icon-plus"> </i> Nouvelle &eacute;volution
+            </a>
+        </li>
+        {% if entity.proprio.id == app.user.id or is_granted("ROLE_ADMIN") %}
+
+            <li>
+                <a href="{{ path('gdpincident_edit', { 'id': entity.id }) }}">
+                    <i class="icon-black icon-edit"> </i> Editer l&apos;incident courant
+                </a>
+            </li>
+        {% endif %}
+        {% if entity.proprio.id == app.user.id or is_granted("ROLE_ADMIN") %}
+            <li>
+                <a href="{{ path('gdpincident_cloture', { 'id': entity.id }) }}">
+                        <i class="icon-black icon-lock"></i> Cloturer l&apos;incident sur <br/>
+                        <i> &laquo; {{ entity.titre}} &raquo;</i>
+                </a>
+            </li>
+        
+        {% endif %}
+        <li>
+            <br/>
+            {% if is_granted("ROLE_SUPER_ADMIN") %}
+                <form action="{{ path('gdpincident_delete',{'id': entity.id})  }}" method="post">
+                    <div>
+                        {# Génération de l'input. #}
+                        {{ form_widget(delete_form.submit,{ 'attr': {'class':'btn btn-danger delIncident'} }) }} 
+                    </div>
+                    {{ form_rest(delete_form)}}
+                </form>
+            {% endif %}
+        </li>
+    </ul>
+
+    
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function setIncidentTitre() {
+            var str = $("#loonins_incidentbundle_gdpincident_employe :selected").text();
+            $("#loonins_incidentbundle_gdpincident_titre").val(str);
+        }
+        $('#loonins_incidentbundle_gdpincident_employe').on("change", setIncidentTitre);
+    </script>
+{% endblock %}

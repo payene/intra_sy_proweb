@@ -1,0 +1,12 @@
+﻿# This file is auto-generated during the composer install
+parameters:
+    database_host: localhost
+    database_port: 3306
+    database_name: smartbtp
+    database_user: osmtlqzh_sources
+    database_password: osmtlqzh_sources     
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: fd3469dfbbb8c46b5981aa44ee09ac20ef4778e6

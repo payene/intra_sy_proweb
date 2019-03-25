@@ -1,0 +1,168 @@
+{% extends 'LooninsIncidentBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h1>Incident <i> {{ entity.categorie.type }} </i>
+
+    {% if(entity.categorie.type == 'Absence') %}
+        <span class="alert alert-danger" style="font-size:14px;" >
+            <b> 
+                Absence de {{ entity.employe }}  - le {{ entity.date|date('d/m/Y') }} - pendant - {{ entity.duree }} 
+            </b>
+        </span>
+        
+    {% endif %}
+    </h1>
+    <table class="table record_properties">
+        <tbody>
+            <tr>
+                <th>Titre</th>
+                <td>{{ entity.titre }}</td>
+            </tr>
+            <tr>
+                <th>Date Incident </th>
+                <td>{{ entity.date|date('l d-m-Y H:i:s'   ) }}</td>
+            </tr>
+            {% if(updateDate) %}
+                <tr>
+                    <th>
+                        {% if entity.status.num == 3 %} Clotur&eacute; le 
+                        {% else %} Modifi&eacute; le  {% endif %}
+                    </th>
+                    <td>{{ updateDate|date('l d-m-Y H:i:s') }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>Description</th>
+                <td>{{ entity.description }} </td>
+            </tr>
+            <tr>
+                <th colspan="2"> Fait le {{ entity.dateEnreg|date('d/m/Y') }} par {{ entity.proprio.username }}</th>
+            </tr>
+        </tbody>
+    </table>
+    {#    <legend> <i class="icon icon-calendar"></i> Evolution chronologique de l&apos;incident </legend>#}
+    {#{% for evolut in evolution %}
+        <span style="padding:5px;width:190px;height:auto;overflow: hidden;box-shadow: 1px 2px 3px silver;" class="alert alert-info span" >
+            {{ evolut.incident.date|date('d-m-Y H:i:s') }}    
+            
+            {{ evolut.updateDate|date('d-m-Y H:i:s') }} - {{ evolut.date|date('d-m-Y H:i:s') }} 
+        </span>
+    {% endfor %}#}
+
+    <legend> <i class="icon icon-calendar"></i> Evolution chronologique de l&apos;incident </legend>
+    {% for evolut in evolution %}
+        {#        {% evolutar = evolut.id %}#}
+        <span style="padding:5px;width:190px;height:auto;overflow: hidden;box-shadow: 1px 2px 3px silver;" class="alert alert-info span" >
+            Auteur : {{  evolut.proprio.username }} <br/>
+            {#            {{ dump(evolutar) }}#}
+            Date : {{ evolut.date|date('d-m-Y')}} &agrave; {{evolut.date|date('H:i:s') }}
+            {#{% if evolut.updateDate %}
+                Modifi&eacute; le {{ evolut.updateDate|date('d-m-Y')}} &agrave; {{evolut.updateDate|date('H:i:s') }}
+            {% endif %}#}
+            <button class="btn show-version" id="{{evolut.id}}" > Afficher </button>
+            <div id="{{evolut.id}}Modal" class="modal hide fade">
+                <div class="modal-header">
+                    {#            <button type="button" data-dismiss="modal" aria-hidden="true">&times;</button>#}
+                    <h3> {{ evolut.incident.titre }}</h3><br/>
+                    <span class="alert alert-success">
+                        Etat d&apos;avancement &agrave; la date du 
+                        {% if evolut.date %}
+                        {#    {{ evolut.updateDate|date('d-m-Y')}} &agrave; {{evolut.updateDate|date('H:i:s') }} 
+                        {% else %}#}
+                            {{ evolut.date|date('d-m-Y')}} &agrave; {{evolut.date|date('H:i:s') }}
+                        {% endif %}
+                        Par {{ evolut.proprio.username  }}
+                    </span>
+                </div>
+                <div class="modal-body">
+                    {{ evolut.description }}
+                </div>
+                <div class="modal-footer">
+                    {% if is_granted("ROLE_SUPER_ADMIN")  and entity.status.num != 3 %}
+                        <a href="{{ path('gdpversions_edit', { 'id': evolut.id }) }}">
+                            <button class="btn btn-warning" > Editer cet &eacute;tat d&apos;avancement </button>
+                        </a>
+                        <br/>
+                        <br/>
+                        <form action="{{ path('gdpversions_delete',{'id': evolut.id})  }}" method="post">
+                            <div>
+                                {# Génération de l'input. #}
+                                <button class="delevolut btn btn-danger" type="submit"> Supprimer cet &eacute;tat d&apos;avancement </button>
+                                {#                {{ form_widget(delete_form.submit,{ 'attr': {'class':'btn btn-danger'} }) }} #}
+                            </div>
+                        </form>
+                    {% endif %}
+                    <button class="btn btn-primary" data-dismiss="modal" type="button"> Fermer l&apos;aper&ccedil;u </button>
+                </div>
+            </div>
+        </span>
+    {% endfor %}
+
+
+
+
+
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}  
+
+    {% if entity.status.num != 3 %}
+        <ul id="leftNavUl" >
+            <li>
+                <a href="{{ path('gdpversions_new', { 'incid': entity.id }) }}">
+                    <i class="icon-black icon-plus"> </i> Nouvelle &eacute;volution
+                </a>
+            </li>
+            {% if entity.proprio == user or is_granted("ROLE_ADMIN") %}
+
+                <li>
+                    <a href="{{ path('gdpincident_edit', { 'id': entity.id }) }}">
+                        <i class="icon-black icon-edit"> </i> Editer l&apos;incident courant
+                    </a>
+                </li>
+            {% endif %}
+            {% if entity.proprio == user or is_granted("ROLE_ADMIN") %}
+                <li>
+                    <a href="{{ path('gdpincident_cloture', { 'id': entity.id }) }}">
+                            <i class="icon-black icon-lock"></i> Cloturer l&apos;incident sur <br/>
+                            <i> &laquo; {{ entity.titre}} &raquo;</i>
+                    </a>
+                </li>
+            
+            {% endif %}
+            <li>
+                <br/>
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+                    <form action="{{ path('gdpincident_delete',{'id': entity.id})  }}" method="post">
+                        <div>
+                            {# Génération de l'input. #}
+                            {{ form_widget(delete_form.submit,{ 'attr': {'class':'btn btn-danger delIncident'} }) }} 
+                        </div>
+                        {{ form_rest(delete_form)}}
+                    </form>
+                {% endif %}
+            </li>
+        </ul>
+
+        {% endif %}
+        {% endblock %}
+            {% block javascripts %}
+                {{ parent() }}
+                <script>
+                    $('.show-version').click(function () {
+                        var id = $(this).attr('id');
+                        $('#' + id + 'Modal').modal('show');
+                    });
+                    $('.delevolut').click(function () {
+                        if (!confirm('Vous êtes sur le point d\'effectuer une suppression. \n Cette opération est irréversible. voulez-vous vraiment continuer ?')) {
+                            return false;
+                        }
+                    });
+                    $('.delIncident').click(function () {
+                        if (!confirm('Si vous supprimez cet incident, toutes les évolutions enrégistrées seront également supprimées. Cette opération est irréversible.\n Cette opération est irréversible. voulez-vous vraiment continuer ?')) {
+                            return false;
+                        }
+                    })
+                </script>
+            {% endblock %}

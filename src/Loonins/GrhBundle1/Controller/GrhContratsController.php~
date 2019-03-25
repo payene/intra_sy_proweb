@@ -1,0 +1,385 @@
+<?php
+
+namespace Loonins\GrhBundle\Controller;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Loonins\GrhBundle\Entity\GrhContrats;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
+use Loonins\GrhBundle\Form\GrhContratsType;
+
+/**
+ * GrhContrats controller.
+ *
+ * @Route("/grhcontrats")
+ */
+class GrhContratsController extends Controller {
+
+    /**
+     * Lists all GrhContrats entities.
+     *
+     * @Route("/", name="grhcontrats")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexAction($page) {
+        if (empty($page)) {
+            $page = 1;
+        }
+        $nbrParPage = 2;
+        /* $em = $this;->getDoctrine()->getManager();
+
+          $entities = $em->getRepository('LooninsGrhBundle:GrhContrats')->findAll();
+
+          return array(
+          'entities' => $entities,
+          ); */
+
+        $entities = $this->getContrats($nbrParPage, $page);
+
+        return $this->render('LooninsGrhBundle:GrhContrats:index.html.twig', array(
+                    'entities'
+                    => $entities,
+                    'page'
+                    => $page,
+                    'nombrePage' => ceil(count($entities) / $nbrParPage)
+        ));
+    }
+
+    public function getContrats($nombreParPage, $page) {
+        $em = $this->getDoctrine()->getManager();
+        if ($page < 1) {
+            //throw new \InvalidArgumentException('L\'argument $page ne peut être inférieur à 1 (valeur : "' . $page . '").');
+            $page= 1;            
+        }
+        $query = $em->createQueryBuilder()
+                ->select('c')
+                ->from('LooninsGrhBundle:GrhContrats', 'c')
+                ->getQuery();
+        $query->setFirstResult(($page - 1) * $nombreParPage)
+                ->setMaxResults($nombreParPage);
+        return new Paginator($query);
+    }
+
+    /**
+     * Creates a new GrhContrats entity.
+     *
+     * @Route("/", name="grhcontrats_create")
+     * @Method("POST")
+     * @Template("LooninsGrhBundle:GrhContrats:new.html.twig")
+     */
+    public function createAction(Request $request) {
+        $entity = new GrhContrats();
+        $entity->setDate(new \DateTime());
+        $form = $this->createCreateForm($entity);
+        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+//        $fin = $entity->getFinReel();
+        $debut = $entity->getDebut();
+        $type = $entity->getType();
+        $duree = $type->getDuree();
+//        var_dump($debut < $fin);
+        $db = $debut->format("Y-m-d");
+//        $fn = $fin->format("Y-m-d");
+
+        $fn = date("Y-m-d", strtotime("+$duree months", strtotime($db)));
+        $tab = explode("-", $fn);
+        $dfn = new \DateTime;
+        $dfn->setDate($tab[0], $tab[1], $tab[2]);
+        $dfn->setTime("00", "00", "00");
+        $entity->setFinReel($dfn);
+        $entity->setStatus(1);
+//        if($fn2 != $fn){
+//            $badDateFin = "La date de fin de contrat est incompatible avec la du"
+//        }
+//        var_dump($db);
+//        var_dump($fn);
+//        var_dump($entity->getType());
+//        var_dump($entity);
+//        die('ff');
+        if ($form->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+//die('valid');
+            return $this->redirect($this->generateUrl('grhcontrats_show', array('id' => $entity->getId())));
+        }
+//die('No valid');
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Creates a form to create a GrhContrats entity.
+     *
+     * @param GrhContrats $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(GrhContrats $entity) {
+        $form = $this->createForm(new GrhContratsType(), $entity, array(
+            'action' => $this->generateUrl('grhcontrats_create'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Enregistrer'));
+
+        return $form;
+    }
+
+    /**
+     * Displays a form to create a new GrhContrats entity.
+     *
+     * @Route("/new", name="grhcontrats_new")
+     * @Method("GET")
+     * @Template()
+     */
+    public function newAction() {
+        $entity = new GrhContrats();
+        $form = $this->createCreateForm($entity);
+
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Finds and displays a GrhContrats entity.
+     *
+     * @Route("/{id}", name="grhcontrats_show")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('LooninsGrhBundle:GrhContrats')->find($id);
+
+        $debut = $entity->getDebut();
+        $type = $entity->getType();
+        $duree = $type->getDuree();
+//        var_dump($debut < $fin);
+        $db = $debut->format("Y-m-d");
+//        $fn = $fin->format("Y-m-d");
+
+        $fn = date("Y-m-d", strtotime("+$duree months", strtotime($db)));
+
+
+        if (!$entity) {
+            throw $this->createNotFoundException('L\'entité   GrhContrats  n\'existe  pas ou plus .');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity' => $entity,
+            'finPrevu' => $fn,
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing GrhContrats entity.
+     *
+     * @Route("/{id}/edit", name="grhcontrats_edit")
+     * @Method("GET")
+     * @Template()
+     */
+    public function editAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('LooninsGrhBundle:GrhContrats')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('L\'entité   GrhContrats  n\'existe  pas ou plus .');
+        }
+
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Creates a form to edit a GrhContrats entity.
+     *
+     * @param GrhContrats $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(GrhContrats $entity) {
+        $form = $this->createForm(new GrhContratsType(), $entity, array(
+            'action' => $this->generateUrl('grhcontrats_update', array('id' => $entity->getId())),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Enregistrer les modifications'));
+
+        return $form;
+    }
+
+    /**
+     * Edits an existing GrhContrats entity.
+     *
+     * @Route("/{id}", name="grhcontrats_update")
+     * @Method("PUT")
+     * @Template("LooninsGrhBundle:GrhContrats:edit.html.twig")
+     */
+    public function updateAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('LooninsGrhBundle:GrhContrats')->find($id);
+        //var_dump($entity);
+        if (!$entity) {
+            throw $this->createNotFoundException('L\'entité   GrhContrats  n\'existe  pas ou plus .');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($entity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('grhcontrats_show', array('id' => $id)));
+        }
+//        var_dump($entity);
+//        die('');
+        return array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a GrhContrats entity.
+     *
+     * @Route("/{id}", name="grhcontrats_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, $id) {
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('LooninsGrhBundle:GrhContrats')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('L\'entité   GrhContrats  n\'existe  pas ou plus .');
+            }
+
+//            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('grhcontrats'));
+    }
+
+    /**
+     * Creates a form to delete a GrhContrats entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id) {
+        return $this->createFormBuilder()
+                        ->setAction($this->generateUrl('grhcontrats_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Supprimer'))
+                        ->getForm()
+        ;
+    }
+
+    /**
+     *
+     * @Route("/", name="grhcontrats_dispo")
+     * @Method("GET")
+     * @Template()
+     */
+    public function dispoAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LooninsGrhBundle:GrhContrats')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('L\'entité   GrhContrats  n\'existe  pas ou plus .');
+        }
+        $entity->setStatus(2);
+        $em->flush($entity);
+        return $this->redirect($this->generateUrl('grhcontrats_show', array('id' => $id)));
+    }
+
+    /**
+     *
+     * @Route("/", name="grhcontrats_rupture")
+     * @Method("GET")
+     * @Template()
+     */
+    public function ruptureAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LooninsGrhBundle:GrhContrats')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('L\'entité   GrhContrats  n\'existe  pas ou plus .');
+        }
+        $entity->setStatus(3);
+        $entity->setFinReel(new \DateTime); //(3);
+        $em->flush($entity);
+        return $this->redirect($this->generateUrl('grhcontrats_show', array('id' => $id)));
+    }
+
+    /**
+     *
+     * @Route("/", name="grhparams")
+     * @Method("GET")
+     * @Template()
+     */
+    public function paramsAction() {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LooninsGrhBundle:GrhContrats')->find(2);
+        if (!$entity) {
+            throw $this->createNotFoundException('L\'entité   GrhContrats  n\'existe  pas ou plus .');
+        }
+        $entity->setStatus(3);
+        $em->flush($entity);
+//        return $this->redirect($this->generateUrl('grhparams'));
+        return array(
+            'entity' => $entity,
+        );
+    }
+
+    public function alertAction($absolute = null, $limit = null) {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQueryBuilder();
+        if (!$absolute instanceof \DateTime) {
+            $absolute = new \DateTime();
+            $absolute = date('Y-m-d H:i:s', $absolute->getTimestamp());
+        }
+        if (empty($limit)) {
+            $limit = 3;
+        }
+//                SELECT * FROM `grh_contrats` where TIMESTAMPDIFF(MONTH,date,'2018-01-17') = 3
+//        die('');
+        $query
+                ->select("c, DATEDIFF(c.date,'$absolute') as diff")
+                ->from('LooninsGrhBundle:GrhContrats', 'c')
+                ->where("c.status != 3")
+                ->andwhere("c.status != 4")
+                ->andwhere("c.diff < 145");
+//                ->andwhere(" TIMESTAMPDIFF(MONTH,c.date,'$absolute') = $limit");
+        $entities = $query->getQuery()->getResult();
+        var_dump($entities);
+        die('');
+    }
+
+}

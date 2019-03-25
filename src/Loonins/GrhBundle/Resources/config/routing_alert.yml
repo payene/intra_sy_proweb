@@ -1,0 +1,5 @@
+grhalert:
+    pattern:  /grh
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:alert}
+    requirements:
+        _method:  GET

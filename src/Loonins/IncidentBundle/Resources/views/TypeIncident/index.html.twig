@@ -1,0 +1,37 @@
+{% extends 'LooninsIncidentBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h1>TypeIncident list</h1>
+
+    <table class="records_list table table-stripped">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th> Employ&eacute; obligatoire </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.type }}</td>
+                <td>{% if entity.requireEmployee == 1  %} OUI {% else %}  NON {% endif %}</td>
+                <td>
+                <ul style="list-style:none;">
+                    <li>
+                        <a href="{{ path('typeincident_show', { 'id': entity.id }) }}">Afficher</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('typeincident_edit', { 'id': entity.id }) }}"> Modifier </a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-info" href="{{ path('typeincident_new') }}">
+        Nouvau type d&apos;incident
+    </a>
+    {% endblock %}

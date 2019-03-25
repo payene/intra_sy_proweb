@@ -1,0 +1,29 @@
+{% extends '::loonins.html.twig' %}
+{% block module_name %} GDI - {{ Corp }}{% endblock module_name %}
+{% block titre %} {{ Corporation }} - Intranet {% endblock%}
+{% block sidebar %}
+
+<style>
+    textarea{
+        width:450px;
+        height:90px;
+    }
+</style>
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('gdpincident') }}">
+            <button class="btn btn-info"> <i class="icon-white icon-home"> </i> Liste des Incidents</button>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('gdpincident_new') }}">
+            <button class="btn btn-success"> <i class="icon-white icon-plus"> </i> Nouvel Incident</button>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('typeincident') }}">
+            <button class="btn btn-warning"> <i class="icon-white icon-wrench"> </i> parametrer les types Incident</button>
+        </a>
+    </li>
+</ul>
+{% endblock %}

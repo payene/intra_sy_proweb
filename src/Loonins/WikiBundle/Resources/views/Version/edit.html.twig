@@ -1,0 +1,59 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h1>Version edit</h1>
+    {{ form_start(edit_form) }}
+    
+    <div>
+    {{ form_label(edit_form.verTitre, "Titre paragraphe") }}
+    {{ form_errors(edit_form.verTitre) }}
+        {# Génération de l'input. #}
+    {{ form_widget(edit_form.verTitre,{ 'attr': {'placeholder':'Titre'} }) }} 
+    </div>
+    <div>
+    {{ form_label(edit_form.verContent, "Contenu paragraphe") }}
+    {{ form_errors(edit_form.verContent) }}
+        {# Génération de l'input. #}
+    {{ form_widget(edit_form.verContent,{ 'attr': {'placeholder':'Contenu','class':'ckeditor'} }) }} 
+    </div>
+    <div>
+    {{ form_label(edit_form.attachement, "Nouvelle image") }}
+    {{ form_errors(edit_form.attachement) }}
+        {# Génération de l'input. #}
+    {{ form_widget(edit_form.attachement) }} 
+    </div>
+    <div>
+    {{ form_label(edit_form.verEditable, "Lecture seule") }}
+    {{ form_errors(edit_form.verEditable) }}
+        {# Génération de l'input. #}
+    {{ form_widget(edit_form.verEditable) }} 
+    </div>
+    {{ form_widget(edit_form.verArticle,{ 'attr': {'class':'hidden'} }) }} 
+    {{ form_widget(edit_form.verDel,{ 'attr': {'class':'hidden'} }) }} 
+    {{ form_widget(edit_form.verDate,{ 'attr': {'class':'hidden'} }) }} 
+    {{ form_widget(edit_form.verCreator,{ 'attr': {'class':'hidden'} }) }} 
+    <div>
+    {{ form_widget(edit_form.submit,{ 'attr': {'class':'btn btn-warning'} }) }} 
+    </div>
+    
+    {{ form_rest(edit_form) }}
+
+    {{ form_end(edit_form) }}
+</form>
+    
+    
+    
+    
+    
+    
+{#    {{ form(edit_form) }}#}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('article_show', {'id':entity.verArticle.id}) }}">
+            Retourner &agrave; l&apos;article
+        </a>
+    </li>
+{#    <li>{{ form(delete_form) }}</li>#}
+</ul>
+{% endblock %}

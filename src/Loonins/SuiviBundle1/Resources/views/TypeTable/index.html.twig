@@ -1,0 +1,40 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block legend %}
+    Type tables
+
+    <a style="float: right;margin-left: 5px;" href="{{ path('typetable_new') }}" class="btn btn-primary" >
+        Nouvelle table
+    </a>
+{% endblock %}
+
+{% block body -%}
+
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Type Table</th>
+                <th> Message / conversation </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.typeTable }}</td>
+                    <td>
+                        {% if entity.msgByConvRequired %}
+                            Obligatoire
+                        {% else %}
+                            Facultatif
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-alert btn-warning" href="{{ path('typetable_edit', { 'id': entity.id }) }}"> Editer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

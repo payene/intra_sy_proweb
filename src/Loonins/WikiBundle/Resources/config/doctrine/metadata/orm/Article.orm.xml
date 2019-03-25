@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Article" table="article">
+    <indexes>
+      <index name="art_creator" columns="art_creator"/>
+      <index name="art_rub" columns="art_rub"/>
+    </indexes>
+    <id name="id" type="integer" column="Id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="artTitre" type="string" column="art_titre" length="255" nullable="true"/>
+    <field name="artDateCreate" type="datetime" column="art_date_create" nullable="true"/>
+    <field name="artEditable" type="boolean" column="art_editable" nullable="true"/>
+    <field name="artDel" type="integer" column="art_del" nullable="false"/>
+    <many-to-one field="artRub" target-entity="Rubrique">
+      <join-columns>
+        <join-column name="art_rub" referenced-column-name="Id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="artCreator" target-entity="User">
+      <join-columns>
+        <join-column name="art_creator" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

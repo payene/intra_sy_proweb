@@ -1,0 +1,70 @@
+{% extends '::loonins.html.twig' %}
+{% block module_name %} GRH - {{ Corp }}{% endblock module_name %}
+{% block titre %} {{ Corporation }} - Intranet {% endblock%}
+
+
+
+{% block sidebar %}
+<ul>
+    {% if is_granted('ROLE_GRH') %} 
+    <li>
+        <a href="{{ path('grh') }}">
+            <span class=""> <i class="icon-black icon-on"></i> Personels </span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('grhsearch') }}">
+            <span class=""> <i class="icon-black icon-search"></i> Recherche </span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('grhemployes') }}">
+            <span class=""> <i class="icon-black icon-user"></i> Gestion des employ&eacute;s </span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('grhdepartement') }}">
+            <span class=""> <i class="icon-black icon-list"></i> Gestion des d&eacute;partements </span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('grhcontrats', {'page': 1}) }}">
+            <span class=""><i class="icon-black icon-file"></i>  Gestion des contrats </span>
+        </a>
+
+    </li>
+        <a href="{{ path('grhtype') }}">
+            <span class=""> <i class="icon-black icon-wrench"></i> Gestion des types de contrats </span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('grhtypefiche') }}">
+            <span class=""> <i class="icon-black icon-file"></i> Gestion des types de fiche salaire </span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('grhparams') }}">
+            <span class=""><i class="icon-black icon-wrench"></i> Param&egrave;tres </span>
+        </a>
+    </li>
+    {% endif %}
+    
+</ul>
+{% endblock %}
+
+{# empty Twig template #}
+{% block javascripts %}
+    {{ parent() }}
+<script>
+    $('.deleter').click(function() {
+        if (!confirm("Vous sur le point de supprimer une entité. Voulez vous continuer ?")) {
+            return false;
+        }
+    });
+    $('.needConfirm').click(function() {
+        if (!confirm("L'opération que vous allez exécuter est irréversible. Voulez vous continuer ?")) {
+            return false;
+        }
+    });
+</script>
+{% endblock %}

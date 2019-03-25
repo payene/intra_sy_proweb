@@ -1,0 +1,48 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+<legend>Renouvellement contrat</legend>
+
+<form action="{{ path('grhcontrats_create') }}" method="POST">
+    {{ err_doublon }}
+    <div>
+        {{ form_label(form.employe, "Matricule Employé")}}
+        {{ form_errors(form.employe)}}
+        {{ form_widget(form.employe)}}
+    </div>
+    <div>
+        {{ form_label(form.type, "Type de contrat")}}
+        {{ form_errors(form.type)}}
+        {{ form_widget(form.type)}}
+    </div>
+    <div>
+        {{ form_label(form.debut, "Date de debut du contrat")}}
+        {{ form_errors(form.debut)}}
+        {{ form_widget(form.debut)}}
+    </div>
+ 
+    <div>
+        {{ form_label(form.commentaire, "Commentaire")}}
+        {{ form_errors(form.commentaire)}}
+        {{ form_widget(form.commentaire)}}
+    </div>
+{#
+    <div>
+        {{ form_label(form.date, "Date enregistrement")}}
+        {{ form_errors(form.date)}}
+        {{ form_widget(form.date, {'attr':{'class':'hidden'} } )}}
+    </div>
+#}
+            {{ form_widget(form.submit, {'attr':{'class':'btn btn-success'} } )}}
+    {{ form_rest(form) }}
+</form>
+
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('grhcontrats',{'page':1}) }}">
+<h4>	Afficher la liste des contrats </h4>
+        </a>
+    </li>
+</ul>
+{% endblock %}

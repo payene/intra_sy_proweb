@@ -1,0 +1,238 @@
+loonins_wiki:
+    path:  /
+    defaults: { _controller: LooninsWikiBundle:Article:index }
+    requirements:
+        _method:  GET
+        
+article_new:
+    path:  /article/new
+    defaults: { _controller: LooninsWikiBundle:Article:new }
+    requirements:
+        _method:  GET
+
+categorie:
+    path:  /categorie
+    defaults: { _controller: LooninsWikiBundle:Categorie:index }
+    requirements:
+        _method:  GET
+
+
+categorie_new:
+    path:  /categorie/new
+    defaults: { _controller: LooninsWikiBundle:Categorie:new }
+    requirements:
+        _method:  GET
+
+categorie_create:
+    path:  /categorie/create
+    defaults: { _controller: LooninsWikiBundle:Categorie:create }
+    requirements:
+        _method:  POST
+
+categorie_show:
+    path:  /categorie/show/{id}
+    defaults: { _controller: LooninsWikiBundle:Categorie:show }
+    requirements:
+        _method:  GET
+
+categorie_edit:
+    path:  /categorie/edit/{id}
+    defaults: { _controller: LooninsWikiBundle:Categorie:edit }
+    requirements:
+        _method:  GET
+
+categorie_update:
+    path:  /categorie/update/{id}
+    defaults: { _controller: LooninsWikiBundle:Categorie:update }
+    requirements:
+        _method:  PUT|POST
+
+categorie_delete:
+    path:  /categorie/delete/{id}
+    defaults: { _controller: LooninsWikiBundle:Categorie:delete }
+    requirements:
+        _method:  POST
+        
+rubrique:
+    path: /rubrique
+    defaults: { _controller: LooninsWikiBundle:Rubrique:index }
+    requirements:
+        _method:  GET
+
+
+rubrique_new:
+    path:  /rubrique/new
+    defaults: { _controller: LooninsWikiBundle:Rubrique:new }
+    requirements:
+        _method:  GET
+
+rubrique_create:
+    path:  /rubrique/create
+    defaults: { _controller: LooninsWikiBundle:Rubrique:create }
+    requirements:
+        _method:  POST
+
+rubrique_show:
+    path:  /rubrique/show/{id}
+    defaults: { _controller: LooninsWikiBundle:Rubrique:show }
+    requirements:
+        _method:  GET
+
+rubrique_edit:
+    path:  /rubrique/edit/{id}
+    defaults: { _controller: LooninsWikiBundle:Rubrique:edit }
+    requirements:
+        _method:  GET
+
+rubrique_update:
+    path:  /rubrique/update/{id}
+    defaults: { _controller: LooninsWikiBundle:Rubrique:update }
+    requirements:
+        _method:  PUT|POST
+
+rubrique_delete:
+    path:  /rubrique/delete/{id}
+    defaults: { _controller: LooninsWikiBundle:Rubrique:delete }
+    requirements:
+        _method:  POST
+
+article:
+    path: /article/
+    defaults: { _controller: LooninsWikiBundle:Article:index }
+    requirements:
+        _method:  GET
+
+
+article_new:
+    path:  /article/new
+    defaults: { _controller: LooninsWikiBundle:Article:new }
+    requirements:
+        _method:  GET
+
+article_create:
+    path:  /article/create
+    defaults: { _controller: LooninsWikiBundle:Article:create }
+    requirements:
+        _method:  POST
+
+article_show:
+    path:  /article/show/{id}
+    defaults: { _controller: LooninsWikiBundle:Article:show }
+    requirements:
+        _method:  GET
+
+article_rublist:
+    path:  /article/rublist/{id}
+    defaults: { _controller: LooninsWikiBundle:Article:rublist }
+    requirements:
+        _method:  GET
+
+article_edit:
+    path:  /article/edit/{id}
+    defaults: { _controller: LooninsWikiBundle:Article:edit }
+    requirements:
+        _method:  GET
+
+article_update:
+    path:  /article/update/{id}
+    defaults: { _controller: LooninsWikiBundle:Article:update }
+    requirements:
+        _method:  PUT|POST
+
+article_delete:
+    path:  /article/delete/{id}
+    defaults: { _controller: LooninsWikiBundle:Article:delete }
+    requirements:
+        _method:  POST       
+        
+version:
+    path: /version/{art}
+    defaults: { _controller: LooninsWikiBundle:Version:index }
+    requirements:
+        _method:  GET
+
+
+version_new:
+    path:  /version/new/{art}
+    defaults: { _controller: LooninsWikiBundle:Version:new }
+    requirements:
+        _method:  GET
+
+version_create:
+    path:  /version/create/{art}
+    defaults: { _controller: LooninsWikiBundle:Version:create }
+    requirements:
+        _method:  POST
+
+version_show:
+    path:  /version/show/{id}
+    defaults: { _controller: LooninsWikiBundle:Version:show }
+    requirements:
+        _method:  GET
+
+version_catlist:
+    path:  /version/catlist/{id}
+    defaults: { _controller: LooninsWikiBundle:Version:catlist }
+    requirements:
+        _method:  GET
+
+version_edit:
+    path:  /version/edit/{id}
+    defaults: { _controller: LooninsWikiBundle:Version:edit }
+    requirements:
+        _method:  GET
+
+version_update:
+    path:  /version/update/{id}
+    defaults: { _controller: LooninsWikiBundle:Version:update }
+    requirements:
+        _method:  PUT|POST
+
+version_delete:
+    path:  /version/delete/{id}
+    defaults: { _controller: LooninsWikiBundle:Version:delete }
+    requirements:
+        _method:  POST
+
+version_archives:
+    path:  /version/archives/{id}
+    defaults: { _controller: LooninsWikiBundle:Version:archives }
+    requirements:
+        _method:  GET
+
+archive_restaure:
+    path:  /archive/restauration/{id}
+    defaults: { _controller: LooninsWikiBundle:Version:restaure }
+    requirements:
+        _method:  GET
+
+archive_restaure:
+    path:  /archive/restauration/{id}
+    defaults: { _controller: LooninsWikiBundle:Version:restaure }
+    requirements:
+        _method:  GET
+#        
+search_simple:
+    path:  /article/search
+    defaults: { _controller: LooninsWikiBundle:Article:search }
+    requirements:
+        _method:  POST
+
+advanced_search:
+    path:  /advanced/search
+    defaults: { _controller: LooninsWikiBundle:Article:adSearch }
+    requirements:
+        _method:  POST
+
+archive_show:
+    path:  /archive/{id}
+    defaults: { _controller: LooninsWikiBundle:Version:archive }
+    requirements:
+        _method:  GET
+
+#        
+#rubrique_new:
+#    path:  /rubrique/new
+#    defaults: { _controller: LooninsWikiBundle:Rubrique:new }
+#    requirements:
+#        _method:  GET

@@ -1,0 +1,53 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1>Article creation</h1>
+
+<form action="{{ path('article_create') }}" method="post">
+{#    {{ form(form) }}#}
+    <div>
+    {{ form_errors(form) }}
+    </div>
+    <div>
+    {{ form_label(form.artTitre, "Titre Article") }}
+    {{ form_errors(form.artTitre) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.artTitre,{ 'attr': {'placeholder':'Titre Article'} }) }} 
+    </div>
+
+    <div>
+    {{ form_label(form.artRub, "Rubrique") }}
+    {{ form_errors(form.artRub) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.artRub, { 'attr': {'required': 'required'} }) }}
+    </div>   
+
+    <div>
+    {{ form_label(form.artEditable, "Enregistrer cet article en lecture") }}
+    {{ form_errors(form.artEditable) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.artEditable, { 'attr': {'style': 'display:inline'} }) }}
+    </div> 
+    {#
+    {{ form_widget(form.artCreator, { 'attr': {'class':'hidden'} } ) }} 
+    {{ form_widget(form.artDateCreate, { 'attr': {'class': 'hidden'} }) }}
+    {{ form_widget(form.artDel, { 'attr': {'class': 'hidden'} }) }}
+    #}
+{#    {{ form_widget(form.save) }} #}
+    <div>
+        {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-success'} }) }}
+    </div>
+{{ form_rest(form) }}
+{#        <input type="submit" class="btn btn-primary" />#}
+</form>
+
+{#    {{ form(form) }}#}
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('article') }}">
+            Retour sur la liste
+        </a>
+    </li>
+</ul>
+{% endblock %}

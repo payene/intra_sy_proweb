@@ -1,0 +1,27 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1>D&eacute;tails param&egrave;tres</h1>
+
+<table class="table table-striped record_properties">
+    <tbody>
+        <tr>
+            <th>Param&egrave;tre</th>
+            <td>{{ entity.param }}</td>
+        </tr>
+        <tr>
+            <th>Valeur</th>
+            <td>{{ entity.valeur }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('grhparams_edit', { 'id': entity.id }) }}">
+            <button class="btn btn-warning"> <i class="icon-white icon-pencil"></i> Editer </button>
+        </a>
+    </li>
+{#    <li>{{ form(delete_form) }}</li>#}
+</ul>
+{% endblock %}

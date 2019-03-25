@@ -1,0 +1,40 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1>Historique</h1>
+<br/>
+
+<br/>
+<a href="{{ path('article_show', {'id':entity.verArticle.id}) }}"    > Retour sur l'article originale </a>
+<br/><br/>
+<table class="record_properties">
+    <tbody>
+            {% for section in archives %}
+            <tr style="border-bottom: 1px dashed;">
+                <td style="padding-bottom: 20px;">
+                    <span id="ver{{ section.id }}"  class="titre_section"> [ {{ section.verTitre }} ]</span>
+                    <a href="{{ path('archive_restaure', {'id':section.id}) }}"    >
+                        <i class="icon icon-refresh"></i> Restaurer le paragraphe &agrave; la                
+{% if section.verEditable == 0 %}
+                        Version &eacute;ditable
+                    {% else %}
+                        version en lecture seule
+                {% endif %}
+                        du 
+                    {{ section.verDate|date('d-m-Y H:i:s') }}
+                    </a>
+                    <br/>
+                    <span class="corps_section"> {{ section.verContent }} </span>
+                    <br/>
+                {% if section.attachement %}
+        <center>
+            <img style="width:700px;height:100px;" src="{{ asset(section.attachement)}}" />
+        </center>
+                {% endif %}
+    </td>
+</tr>
+            {% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

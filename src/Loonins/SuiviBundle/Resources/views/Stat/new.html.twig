@@ -1,0 +1,158 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+
+
+
+
+{% block body %}
+    <form class="form_horizontal" action="{{ path('stat_create') }}" method="post">
+    	<div class="form-row">
+            {{ form_label(form.msgParHeure, "Message/heure") }}
+            {{ form_errors(form.msgParHeure, {'attr': {'class': 'alert alert-error', 'style':'width:40px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.msgParHeure, {'attr': {'class': 'span1', 'style':'width:80px'} }) }} 
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.total, "Total") }}
+            {{ form_errors(form.total, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.total, {'attr': {'class': 'span1', 'style':'width:80px'} } ) }} 
+        </div>
+
+
+        <div class="form-row">
+            {{ form_label(form.programmed, "Programmé") }}
+            <div id="prg" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                {{ form_errors(form.programmed, {'attr': {'class': 'alert alert-error'} }) }}
+                {# Génération de l'input. #}
+                {{ form_widget(form.programmed, {'attr': {'class': 'span1','value':'08:00', 'style':'width:50px'} } ) }} 
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.reel, "Réeel") }}
+            {{ form_errors(form.reel, {'attr': { 'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.reel, {'attr': {'style':'width:100px;','readonly':'readonly'}}) }} 
+        </div>
+
+        {% if(typeTable.msgByConvRequired) %}
+            <div class="form-row">
+                {{ form_label(form.msgParConv, "Message/conv") }}
+                {{ form_errors(form.msgParConv, {'attr': { 'class': 'alert alert-error'} }) }}
+                {# Génération de l'input. #}
+                {{ form_widget(form.msgParConv, {'attr': {'style':'width:50px;'}}) }} 
+            </div>
+        {% endif %}
+
+        <div class="form-row">
+            {{ form_label(form.animatrice, "Animatrice") }}
+            {{ form_errors(form.animatrice, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.animatrice) }} 
+        </div>
+        
+        <div class="form-row">
+            {{ form_label(form.prime, "Prime") }}
+            {{ form_errors(form.prime, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.prime, {'attr': {'class': 'span1', 'style':'width:80px'} } ) }} 
+        </div>
+
+
+
+        <div class="form-row">
+            <label>&nbsp;</label>
+            {{ form_widget(form.submit , {'attr': {'style':'width:120px;', 'class':'btn btn-success'} }) }} 
+        </div>
+        <div class="form-row">
+        	<label>&nbsp;</label>
+     		<button class="btn btn-warning" type="reset"> Annuler </button>
+        </div>
+
+    	{{ form_rest(form) }}
+    	<br style="clear: both;" />
+
+        <!-- <hr/> -->
+       <!--  <div class="alert span4"> 
+            <span style="cursor: pointer;" onclick="optionAdvanced()"> &ddarr;</span> Renseigner les options avanc&eacute;es 
+        </div>  -->
+        <div class="hide" id="advanced" style="clear: both;" >
+            <pre>
+                %%%
+                Travaux en cours
+
+                %%%
+            </pre>
+            
+        </div>
+    </form>
+    <hr/>
+    
+
+    <div class="span10">
+    	<table class="table  table-hover">
+            <thead >
+            	<tr class="alert-info">
+            		<td colspan="3"> <b> Date :  {{ dateStat|date('Ymd') }} </b> </td>
+            		<td colspan="4"> <b>   {{ typeTable }} </b>
+                    <!-- <a style="float: right;" href="{{path('tech_end', {'stat': dateStat|date('Ymd') })}}" class="btn btn-danger"> Terminer la saisie statistique </a> -->
+                    </td>
+            	</tr>
+                <tr>
+                    <th style="padding:0px;vertical-align:middle">Login</th>
+                    <th style="padding:0px;vertical-align:middle">Messages/heure</th>
+                    <th style="padding:0px;vertical-align:middle">Total</th>
+                    <th style="padding:0px;vertical-align:middle">Programm&eacute;</th>
+                    <th style="padding:0px;vertical-align:middle">R&eacute;eel</th>
+                    <th style="padding:0px;vertical-align:middle">Animatrice</th>
+                    <th style="padding:0px;vertical-align:middle"> </th>
+                </tr>
+            </thead>
+            <tbody class="tbody" >
+            	{% for ligne in stats %}
+                	<tr>
+                		<td style="padding:0px;vertical-align:middle"> {{ ligne.animatrice.login }} </td>
+                		<td style="padding:0px;vertical-align:middle"> {{ ligne.msgParHeure }} </td>
+                		<td style="padding:0px;vertical-align:middle"> {{ ligne.total }} </td>
+                		<td style="padding:0px;vertical-align:middle"> {{ ligne.programmed }} </td>
+                		<td style="padding:0px;vertical-align:middle"> 
+                            {% if ligne.retard == 1 %}
+                                <span style="padding:2px;border-radius:0px;background-color:  rgba(185, 74, 72, 0.77);color: white;">
+                                    {% else %}
+                                <span  style="padding:2px;border-radius:0px;background-color: rgba(70, 136, 71, 0.77);color: white;">
+                            {% endif %}
+
+                            {{ ligne.reel }}
+                            </span>
+                        </td>
+                        <td style="padding:0px;vertical-align:middle"> {{ ligne.animatrice.employe }} </td>
+                		<td style="padding:0px;vertical-align:middle"> 
+                            <a href="{{path('stat_edit', {'id': ligne.id, 'from': 'null' })}}" class="alert-warning">  Editer </a> 
+                            <a href="{{path('stat_view', {'id': ligne.id, 'from': 'null' })}}" class="alert-danger">  Supprimer </a>
+                            <a href="#" class="alert-success" id="se{{ ligne.id }}" onclick="sendExplain(this.id, {{ligne.id}});">  Demander explication </a><span>({{ nbDemande[ligne.id] }} demandes déjà envoyées)</span>
+                        </td>
+                    </tr>
+            	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <script type="text/javascript">
+        
+        function optionAdvanced() {
+            //console.log($('#advanced').hide());
+            if($('#advanced').is(":visible")){
+                $('#advanced').hide('slow');
+            }
+            else{
+                $('#advanced').show('slow');
+            }
+        }
+    </script>
+    {% include "LooninsSuiviBundle:Stat:new.js.twig" %}   
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+
+{% block legend -%}
+    {{ entity.dateStat|date('Ymd') }} / {{ entity.type }}
+{% endblock %}
+
+{% block body %}
+    <table class="table">
+        <thead class="alert alert-info">
+            <tr>
+                <th>Login</th>
+                <th>Messages/heure</th>
+                <th>Total</th>
+                <th>Programm&eacute;</th>
+                <th>R&eacute;eel</th>
+                <th>Animatrice</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th> {{ entity.animatrice.login }} </th>
+                <th> {{ entity.msgParHeure }} </th>
+                <th> {{ entity.total }} </th>
+                <th> {{ entity.programmed  }}</th>
+                <th> 
+                    {% if entity.retard == 1 %}
+                        <span style="padding:2px;border-radius:0px;background-color:  rgba(185, 74, 72, 0.77);color: white;">
+                            {% else %}
+                        <span  style="padding:2px;border-radius:0px;background-color: rgba(70, 136, 71, 0.77);color: white;">
+                    {% endif %}
+                    {{ entity.reel }}
+                    </span>
+                </th>
+                <th> {{ entity.animatrice.employe }} </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+   
+        <li class="alert alert-danger span9">
+            Etes-vous s&ucirc;r de vouloir supprimer cette entr&eacute;e statistique ? Cette op&eacute;ration est irr&eacute;versible.
+           
+           <br/>
+           <form action="{{ path('stat_delete',{'id':entity.id}) }}" method="POST">
+                
+                {{ form_widget(delete_form.submit , {'attr': {'class':'btn btn-large span12 btn-danger'} }) }} 
+                
+                <a class="btn btn-info btn-large span2" style="margin-top: 10px;" 
+                href="{{ path('stat_show', {'table': entity.type.id, 'id':  entity.dateStat|date('Ymd')  }) }}" 
+                > Annuler la suppression </a>
+                {{ form_rest(delete_form) }}
+            </form>
+
+        </li>
+        <li>
+
+        </li>
+    </ul>
+    <!-- <a href="{{ path('stat_show', {'table': entity.type.id, 'id':  entity.dateStat|date('Ymd')  }) }}"> Retour </a> -->
+{% endblock %}

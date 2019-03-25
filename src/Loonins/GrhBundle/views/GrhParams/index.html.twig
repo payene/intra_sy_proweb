@@ -1,0 +1,31 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1>Param&egrave;tres</h1>
+<a href="{{ path('grhparams_new') }}">
+    <button class="btn btn-primary"> <i class="icon-white icon-plus"> </i> Nouvrau param&egrave;tre </button>
+</a>
+<br/>
+<br/>
+<br/>
+<table style="width: auto" class="table table-bordered records_list">
+    <thead>
+        <tr>
+            <th>Param&egrave;tres</th>
+            <th>Valeur</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities %}
+        <tr>
+            <td>{{ entity.param }}</td>
+            <td>{{ entity.valeur }}</td>
+            <td>
+                <a href="{{ path('grhparams_show', { 'id': entity.id }) }}"> Afficher </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    {% endblock %}

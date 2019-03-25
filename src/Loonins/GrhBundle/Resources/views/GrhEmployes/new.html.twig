@@ -1,0 +1,87 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+<h3>Nouvel Employe</h3>
+<form action="{{ path('grhemployes_create') }}" method="POST">
+    <div>
+            {{ form_label(form.mle, "Matricule") }}
+            {{ form_errors(form.mle) }}
+            {{ form_widget(form.mle) }}
+    </div>
+    <div>
+            {{ form_label(form.nom, "Nom") }}
+            {{ form_errors(form.nom) }}
+            {{ form_widget(form.nom) }}
+    </div>
+    <div>
+            {{ form_label(form.prenoms, "Prenoms") }}
+            {{ form_errors(form.prenoms) }}
+            {{ form_widget(form.prenoms) }}
+    </div>
+    <div>
+            {{ form_label(form.phone, "Contact") }}
+            {{ form_errors(form.phone) }}
+            {{ form_widget(form.phone) }}
+    </div>
+    <div>
+            {{ form_label(form.email, "Email") }}
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email) }}
+    </div>
+    <div class="form-row ">
+        {{ form_label(form.dateentree) }}
+        {{ form_errors(form.dateentree) }}
+        <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+            {# Génération de l'input. #}
+            {{ form_widget(form.dateentree) }}
+            <span class="add-on"><i class="icon-remove"></i></span>
+            <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+    </div>
+    <div>
+        {{ form_label(form.assurance) }}
+        {{ form_errors(form.assurance) }}
+        {{ form_widget(form.assurance, {attr: {novalidate: 'novalidate'}}) }}
+    </div>
+    <br/>
+    <div class="form-row ">
+        {{ form_label(form.datenaiss, "Date de naissance") }}
+        {{ form_errors(form.datenaiss) }}
+        <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+            {# Génération de l'input. #}
+            {{ form_widget(form.datenaiss) }}
+            <span class="add-on"><i class="icon-remove"></i></span>
+            <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+    </div>
+    <div>
+            {{ form_label(form.lieuNaiss, "Lieu de naissance") }}
+            {{ form_errors(form.lieuNaiss) }}
+            {{ form_widget(form.lieuNaiss) }}
+    </div>
+    <div>
+            {{ form_label(form.sexe, "Sexe") }}
+            {{ form_errors(form.sexe) }}
+            {{ form_widget(form.sexe) }}
+    </div>
+    <div>
+            {{ form_label(form.sitMat, "Situation matrimoniale") }}
+            {{ form_errors(form.sitMat) }}
+            {{ form_widget(form.sitMat) }}
+    </div>
+    <div>
+            {{ form_label(form.departement, "Département") }}
+            {{ form_errors(form.departement) }}
+            {{ form_widget(form.departement) }}
+    </div>
+    {{ form_widget(form.submit , {'attr':{'class':'btn btn-success'} } ) }}    
+
+    {{ form_rest(form) }}
+</form>
+
+{#<ul class="record_actions">
+    <li>
+        {% include 'LooninsGrhBundle:GrhEmployes:liste.html.twig'%}
+    </li>
+</ul>#}
+{% endblock %}

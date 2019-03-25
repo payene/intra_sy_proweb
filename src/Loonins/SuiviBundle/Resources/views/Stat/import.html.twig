@@ -1,0 +1,140 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block body %}
+    <form class="form_horizontal" action="{{ path('stat_import') }}" method="post" enctype="multipart/form-data">
+        <h4 style="color:black;border-bottom:solid 1px;"> Importation des stat d'animation</h4 style="color:black;">
+        <span class="span11 alert alert-info "> 
+            Importer les stat d'animation via un fichier CSV suivant le format ci-apr&egrave;s :
+            <b> <i> MSGH,TOTAL{#,PROG#},LOGIN </i> </b>   ;
+
+            &nbsp; <a href="#"> T&eacute;l&eacute;chargez un fichier exemple</a>
+        </span>
+        
+        <div class="span12">
+            <div class="span3">
+
+                {{ form_label(importForm.file, "Fichier des stat") }}
+                {{ form_errors(importForm.file) }}
+                {# Génération de l'input. #}
+                {{ form_widget(importForm.file) }} 
+            </div>
+
+            <div class="span3" >
+                {{ form_label(importForm.dateStat, "Date statistique") }}
+                <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                    {# Génération de l'input. #}
+                    {{ form_widget(importForm.dateStat, {'attr' : {'style' : 'width:120px;', 'type':'text'}}) }}
+                    <!-- <span class="add-on"><i class="icon-remove"></i></span> -->
+                    <span class="add-on"><i class="icon-th"></i></span>
+                </div>
+            </div>                    
+            <div class="span3">
+                {{ form_label(importForm.type, "Table Statistique") }}
+                {{ form_errors(importForm.type, {'attr': {'class': 'alert alert-error'} }) }}
+                {# Génération de l'input. #}
+                {{ form_widget(importForm.type, {'attr': {'style':'width:160px;padding:0px;'} }) }} 
+            </div>
+            <div class="span3">
+                <label>&nbsp;</label>
+                <button class="btn btn-success" type="submit">  Importer </button>
+            </div>
+        </div>
+    </form>
+
+    <hr style="clear:both;" />
+
+    {% if busdt   is defined  and typeTable is defined %}
+        {% if imported  is defined %}
+            <table class="table  table-hover">
+                <thead >
+                    <tr class="alert-info">
+                        <td colspan="3"> <b> BusDt :  {{ busdt }} </b> </td>
+                        <td colspan="4"> <b>   {{ typeTable }} </b>
+                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="padding:0px;vertical-align:middle">Login</th>
+                        <th style="padding:0px;vertical-align:middle">Messages/heure</th>
+                        <th style="padding:0px;vertical-align:middle">Total</th>
+                        <th style="padding:0px;vertical-align:middle">Programm&eacute;</th>
+                        <th style="padding:0px;vertical-align:middle">R&eacute;eel</th>
+                        <th style="padding:0px;vertical-align:middle">Animatrice</th>
+                        <th style="padding:0px;vertical-align:middle"> </th>
+                    </tr>
+                </thead>
+                <tbody class="tbody" >
+                    {% for ligne in imported %}
+                        <tr>
+                            <td style="padding:0px;vertical-align:middle"> {{ ligne.animatrice.login }} </td>
+                            <td style="padding:0px;vertical-align:middle"> {{ ligne.msgParHeure }} </td>
+                            <td style="padding:0px;vertical-align:middle"> {{ ligne.total }} </td>
+                            <td style="padding:0px;vertical-align:middle"> {{ ligne.programmed }} </td>
+                            <td style="padding:0px;vertical-align:middle"> 
+                                {% if ligne.retard == 1 %}
+                                    <span style="padding:2px;border-radius:0px;background-color:  rgba(185, 74, 72, 0.77);color: white;">
+                                        {% else %}
+                                    <span  style="padding:2px;border-radius:0px;background-color: rgba(70, 136, 71, 0.77);color: white;">
+                                {% endif %}
+
+                                {{ ligne.reel }}
+                                </span>
+                            </td>
+                            <td style="padding:0px;vertical-align:middle"> {{ ligne.animatrice.employe }} </td>
+                            <td style="padding:0px;vertical-align:middle"> 
+                                <!-- <a href="{{path('stat_edit', {'id': ligne.id, 'from': 'null' })}}" class="alert-warning">  Editer </a> 
+                                <a href="{{path('stat_view', {'id': ligne.id, 'from': 'null' })}}" class="alert-danger">  Supprimer </a> -->
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+
+        {% if failled  is defined %}
+            <table class="table  table-hover">
+                <thead >
+                    <tr class="alert-error">
+                        <td colspan="3"> <b> BusDt :  {{ busdt }} </b> </td>
+                        <td colspan="4"> <b>   {{ typeTable }} </b>
+                        
+                        </td>
+                    </tr>
+                    <tr class="alert-error">
+                        <th style="padding:0px;vertical-align:middle">Messages/heure (MSGPH)</th>
+                        <th style="padding:0px;vertical-align:middle">Total (TOTAL)</th>
+                        <th style="padding:0px;vertical-align:middle">Programm&eacute; (PROG)</th>
+                        <th style="padding:0px;vertical-align:middle">Login (LOGIN)</th>
+                        <th style="padding:0px;vertical-align:middle"> Motif </th>
+                    </tr>
+                </thead>
+                <tbody class="tbody alert" >
+                    {% for f in failled %}
+                        <tr>
+                            <td style="padding:0px;vertical-align:middle"> {{ f.ligne.0 }} </td>
+                            <td style="padding:0px;vertical-align:middle">{% if f.ligne.1 is defined %} {{ f.ligne.1 }} {% endif %}</td>
+                            <td style="padding:0px;vertical-align:middle">{% if f.prog is defined %} {{ f.prog }} {% endif %}</td>
+                            <td style="padding:0px;vertical-align:middle">{% if f.ligne.2 is defined %} {{ f.ligne.2 }} {% endif %}</td>
+                            <td style="padding:0px;vertical-align:middle"> {{ f.motif }} </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <style type="text/css">
+        #form_file{
+         /*   opacity: 0;
+            position: absolute;
+            z-inde*/x: -1;
+        }
+
+    </style>
+{% endblock %}

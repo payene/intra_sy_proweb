@@ -1,0 +1,46 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block panel_head %}
+    
+{% endblock %}
+
+{% block legend %}
+    Affectation des login aux animatrices
+{% endblock %}
+
+
+{% block body %}
+    <table class="table">
+        <thead>
+            <tr class="alert alert-info">
+                <th style="padding:0px;vertical-align:middle;text-align: center;" >Login</th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;" >Animatrice</th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;" >Debut affectation</th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;" >Fin affectation</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for affectationLogin in affectationLogins %}
+            <tr>
+                <td style="padding:0px;vertical-align:middle;text-align: center;" > {{ affectationLogin.loginAnim }} </td>
+                <td style="padding:0px;vertical-align:middle;text-align: center;" > {{ affectationLogin.employe }} </td>
+                <td style="padding:0px;vertical-align:middle;text-align: center;" >{% if affectationLogin.debutAffectation %}{{ affectationLogin.debutAffectation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td style="padding:0px;vertical-align:middle;text-align: center;" >
+                    {% if affectationLogin.finAffectation %}
+                        {{ affectationLogin.finAffectation|date('Y-m-d H:i:s') }}
+                        {% else %}
+                        <a class="alert-danger" href="{{ path('affectationlogin_edit', { 'id': affectationLogin.id }) }}"> Cloturer cette affectation </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('affectationlogin_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

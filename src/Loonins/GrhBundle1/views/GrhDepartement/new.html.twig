@@ -1,0 +1,21 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body -%}
+<legend>Nouveau d&eacute;partement</legend>
+
+    {{ form(form) }}
+<form action="{{ path('grhdepartement_create') }}" method="POST">
+    <div>
+    {{ form_label(form.departement, "Département")}}
+    {{ form_errors(form.departement)}}
+    {{ form_widget(form.departement)}}
+    </div>
+    {{ form_widget(form.submit, {'attr':{'class':'btn btn-warning'} })}}
+    {{ form_rest(form) }}
+</form>
+<ul class="record_actions">
+    <li>
+        {% include "LooninsGrhBundle:GrhDepartement:listeDepartement.html.twig" %}
+    </li>
+</ul>
+{% endblock %}

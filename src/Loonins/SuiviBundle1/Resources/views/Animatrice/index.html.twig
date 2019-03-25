@@ -1,0 +1,41 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block legend %}
+    Index des animatrices <a class="btn btn-primary" style="float: right" href="{{ path('animatrice_new') }}"> Nouvelle animatrice</a>
+{% endblock %}
+
+
+{% block body -%}
+    
+    <div style="height: 380px;overflow-y: scroll;">
+        <table class="table table-striped  table-hover">
+            <thead >
+                <tr>
+                    <th>LOGIN</th>
+                    <th>ANIMATRICE</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="tbody" >
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.login }}</td>
+                        <td>{{ entity.employe }}</td>
+                        <td>
+                            <a class="btn btn-warning" href="{{ path('animatrice_edit', { 'id': entity.id }) }}"> Editer </a>
+                            <a class="btn btn-danger" href="{{ path('animatrice_show', { 'id': entity.id }) }}"> Supprimer </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <thead>
+                <tr>
+                    <th>LOGIN</th>
+                    <th>ANIMATRICE</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+   
+    {% endblock %}

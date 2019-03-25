@@ -1,0 +1,3 @@
+loonins_grh_homepage:
+    path:     /
+    defaults: { _controller: LooninsGrhBundle:Default:index }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Categorie" table="categorie">
+    <indexes>
+      <index name="cat_creator" columns="cat_creator"/>
+    </indexes>
+    <id name="id" type="integer" column="Id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="cat" type="string" column="cat" length="255" nullable="true"/>
+    <field name="description" type="text" column="description" nullable="true"/>
+    <field name="catDate" type="datetime" column="cat_date" nullable="false"/>
+    <many-to-one field="catCreator" target-entity="User">
+      <join-columns>
+        <join-column name="cat_creator" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,23 @@
+<!-- <?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="loonins_wiki_homepage" path="/">
+        <default key="_controller">LooninsWikiBundle:Article:index</default>
+    </route>
+
+    <route id="article_rublist" path="/article/rublist/{id}">
+        <default key="_controller">LooninsWikiBundle:Article:rublist</default>
+    </route>
+
+    <route id="search_simple" path="/article/search" methods="POST">
+        <default key="_controller">LooninsWikiBundle:Article:search</default>
+    </route>
+
+    <route id="article_new" path="/article/new" methods="GET">
+        <default key="_controller">LooninsWikiBundle:Article:new</default>
+    </route>
+</routes>
+ -->

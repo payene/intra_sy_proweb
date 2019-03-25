@@ -1,0 +1,39 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h1>Rubrique</h1>
+
+    <table class="table table-striped record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ entity.titre }}</td>
+            </tr>
+            <tr>
+                <th>Cat&eacute;gorie</th>
+                <td>{{ entity.rubCat.cat }}</td>
+            </tr>
+            <tr>
+                <th>Cr&eacute;ée par </th>
+                <td>{{ entity.rubCreator.username}}  <b>Le</b> {{ entity.rubDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('rubrique') }}">
+            <button class="btn btn-primary">Liste des Rubriques</button>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('rubrique_edit', { 'id': entity.id }) }}">
+            <button class="btn btn-warning"> Editer la rubrique courante</button>
+        </a>
+    </li>
+</ul>
+{% endblock %}

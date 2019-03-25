@@ -1,0 +1,44 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+{% block body %}
+
+    <style type="text/css">
+                    
+        td{
+            vertical-align: middle;
+        }
+    </style>
+    
+    <div style="height: auto;overflow-y: scroll;">
+        <a class="btn btn-success" href="{{ path('loginanim_new') }}"> nouveau login </a>
+        <table class="table table-striped  table-hover">
+            <thead >
+                <tr>
+                    <th>LOGIN</th>
+                    <th> Date creation </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="tbody" >
+            {% for loginAnim in loginAnims %}
+                <tr>
+                    <td style="padding:0px;vertical-align:middle" >{{ loginAnim.login }}</td>
+                    <td style="padding:0px;vertical-align:middle" >{% if loginAnim.dateCreation %}{{ loginAnim.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td style="padding:0px;vertical-align:middle" >
+                        <a class="alert-warning" href="{{ path('loginanim_edit', { 'id': loginAnim.id }) }}"> Editer </a> &nbsp;|
+                        <a class="alert-danger" href="{{ path('loginanim_show', { 'id': loginAnim.id }) }}"> Supprimer </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <thead>
+                <tr>
+                    <th>LOGIN</th>
+                    <th>ANIMATRICE</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+{% endblock %}

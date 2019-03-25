@@ -1,0 +1,36 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1>Categorie creation</h1>
+<form action="{{ path('categorie_create') }}" method="post">
+{{ form_start(form) }}
+    <div>
+    {{ form_errors(form) }}
+    </div>
+    <div>
+    {{ form_label(form.cat, "Catégorie") }}
+    {{ form_errors(form.cat) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.cat) }} 
+    </div>
+
+    <div>
+    {{ form_label(form.description, "Description") }}
+    {{ form_errors(form.description) }}
+        {# Génération de l'input. #}
+    {{ form_widget(form.description) }} 
+    </div>   
+        {{ form_rest(form)}}
+{{ form_end(form) }}
+
+
+
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('categorie') }}">
+            Liste des cat&eacute;gories
+        </a>
+    </li>
+</ul>
+{% endblock %}

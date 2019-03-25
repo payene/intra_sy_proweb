@@ -1,0 +1,86 @@
+<form class="form_horizontal form-inline" action="{{ path('stat_search') }}" method="post" >
+	
+    <div class="form-row"> Debut </div>
+    <div class="form-row">
+        {# Génération de l'input. #}
+        {{ form_widget(formRech.debut, {'attr':{ }}) }}
+    </div>
+
+    <div class="form-row"> Fin </div>
+    <div class="form-row ">
+        {# Génération de l'input. #}
+        {{ form_widget(formRech.fin, {'attr':{ }}) }}
+    </div>
+
+    <div class="form-row">
+        {{ form_label(formRech.type, "Activité") }}
+        {{ form_errors(formRech.type, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+        {{ form_widget(formRech.type, {'attr': {'style':'width:100px;'}}) }} 
+    </div>
+
+    <div class="form-row">
+        {{ form_label(formRech.login, "Login") }}
+        {{ form_errors(formRech.login, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+        {{ form_widget(formRech.login, {'attr': {'style':'width:100px;'}}) }} 
+    </div>
+
+    <div class="form-row">
+        {{ form_label(formRech.animatrice, "Animatrice") }}
+        {{ form_errors(formRech.animatrice, {'attr': {'class': 'alert alert-error'} }) }}
+        {# Génération de l'input. #}
+        {{ form_widget(formRech.animatrice, {'attr': {'style':'width:100px;'}}) }} 
+    </div>
+
+    <div class="form-row">
+        {{ form_widget(formRech.submit , {'attr': { 'class':'btn btn-success'} }) }} 
+    </div>
+
+    {{ form_rest(formRech) }}
+	<br style="clear: both;" />
+</form>
+
+
+ <style type="text/css">
+
+        select, .btn-success {
+            height:25px;
+        }
+
+        #form_debut_day{
+            width: 40px;
+            height: 25px;
+            padding: 0px;
+        }
+
+        #form_debut_month{
+            width: 40px;
+            padding:0px;
+            height: 25px;
+        }
+        #form_debut_year{
+            width: 55px;
+            padding:0px;
+            height: 25px;
+        }
+
+        #form_fin_year{
+            width: 55px;
+            padding:0px;
+            height: 25px;
+        }
+
+        #form_fin_day{
+            width: 40px;
+            height: 25px;
+            padding: 0px;
+        }
+
+        #form_fin_month{
+            width: 40px;
+            padding:0px;
+            height: 25px;
+        }
+
+    </style>

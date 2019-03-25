@@ -1,0 +1,510 @@
+grh:
+    path:  /grh
+    defaults: { _controller: LooninsGrhBundle:GrhStart:index }
+    requirements:
+        _method:  GET
+
+loonins_grh_repertoire:
+    path:  /grh/repertoire
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:repertoire }
+    requirements:
+        _method:  GET
+
+grhsearch:
+    path:  /recherhce
+    defaults: { _controller: LooninsGrhBundle:GrhStart:search }
+    requirements:
+        _method:  GET
+
+grhsearch_advanced:
+    path: /recherhce/avancee
+    defaults: { _controller: LooninsGrhBundle:GrhStart:advancedSearch }
+    requirements:
+        _method:  GET
+
+
+grhresult:
+    path:  /result
+    defaults: { _controller: LooninsGrhBundle:GrhStart:result }
+    requirements:
+        _method:  POST        
+#
+#grhresultats:
+#    path:  /resultats
+#    defaults: { _controller: LooninsGrhBundle:GrhStart:resultats }
+#    requirements:
+#        _method:  GET     
+        
+grh_renew:
+    path:  /grh/renew/{employee}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:renew}
+    requirements:
+        _method:  GET
+
+grhstat:
+    path:  /grhstat
+    defaults: { _controller: LooninsGrhBundle:GrhStart:index }
+    requirements:
+        _method:  GET
+
+grhdepartement:
+    path:  /grhdepartement/
+    defaults: { _controller: LooninsGrhBundle:GrhDepartement:index }
+    requirements:
+        _method:  GET
+        
+grhdepartement_new:
+    path:  /grhdepartement/new
+    defaults: { _controller: LooninsGrhBundle:GrhDepartement:new }
+    requirements:
+        _method:  GET
+        
+grhdepartement_create:
+    path:  /grhdepartement/create
+    defaults: { _controller: LooninsGrhBundle:GrhDepartement:create }
+    requirements:
+        _method:  POST
+        
+grhdepartement_edit:
+    path:  /grhdepartement/edit/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhDepartement:edit}
+    requirements:
+        _method:  GET
+
+grhdepartement_update:
+    path:  /grhdepartement/update/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhDepartement:update}
+    requirements:
+        _method:  POST
+
+grhdepartement_show:
+    path:  /grhdepartement/show/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhDepartement:show}
+    requirements:
+        _method:  GET
+        
+grhdepartement_delete:
+    path:  /grhdepartement/delete/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhDepartement:delete}
+    requirements:
+        _method:  POST
+ 
+        
+
+grhtype:
+    path:  /grhtype/
+    defaults: { _controller: LooninsGrhBundle:GrhType:index }
+    requirements:
+        _method:  GET
+        
+grhtype_new:
+    path:  /grhtype/new
+    defaults: { _controller: LooninsGrhBundle:GrhType:new }
+    requirements:
+        _method:  GET
+        
+grhtype_create:
+    path:  /grhtype/create
+    defaults: { _controller: LooninsGrhBundle:GrhType:create }
+    requirements:
+        _method:  POST
+        
+grhtype_edit:
+    path:  /grhtype/edit/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhType:edit}
+    requirements:
+        _method:  GET
+
+grhtype_update:
+    path:  /grhtype/update/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhType:update}
+    requirements:
+        _method:  POST
+
+grhtype_show:
+    path:  /grhtype/show/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhType:show}
+    requirements:
+        _method:  GET
+        
+grhtype_delete:
+    path:  /grhtype/delete/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhType:delete}
+    requirements:
+        _method:  POST
+        
+
+
+grhemployes:
+    path:  /grhemployes/
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:index }
+    requirements:
+        _method:  GET
+        
+grhemployes_new:
+    path:  /grhemployes/new
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:new }
+    requirements:
+        _method:  GET
+        
+grhemployes_create:
+    path:  /grhemployes/create
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:create }
+    requirements:
+        _method:  POST
+        
+grhemployes_edit:
+    path:  /grhemployes/edit/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:edit}
+    requirements:
+        _method:  GET
+
+grhemployes_anniv_mail_sending:
+    path:  /grhemployes/anniversaire
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:anniv}
+
+grhemployes_anniv_mail_sending_test:
+    path:  /grhemployes/anniversaire/test
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:annivTest}
+
+grhemployes_anniv_mail_sending_bymonth:
+    path:  /grhemployes/anniversaire/bymonth/{month}
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:annivDuMois}
+    requirements:
+        month: '[1-9]|1[0-2]|null'
+
+grhemployes_update:
+    path:  /grhemployes/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:update}
+    requirements:
+        _method:  POST
+
+grhemployes_show:
+    path:  /grhemployes/show/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:show}
+    requirements:
+        _method:  GET
+
+grhemployes_trash:
+    path:  /grhemployes/trash/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:trash}
+    requirements:
+        _method:  GET
+        
+grhemployes_delete:
+    path:  /grhemployes/delete/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:delete}
+    requirements:
+        _method:  POST
+        
+
+grhtypefiche:
+    path:  /grhtypefiche
+    defaults: { _controller: LooninsGrhBundle:GrhTypeFiche:index}
+    requirements:
+        _method:  GET
+
+grhtypefiche_new:
+    path:  /grhtypefiche/new
+    defaults: { _controller: LooninsGrhBundle:GrhTypeFiche:new}
+    requirements:
+        _method:  GET
+        
+grhtypefiche_create:
+    path:  /grhtypefiche/create
+    defaults: { _controller: LooninsGrhBundle:GrhTypeFiche:create}
+    requirements:
+        _method:  POST
+        
+grhtypefiche_edit:
+    path:  /grhtypefiche/edit/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhTypeFiche:edit}
+    requirements:
+        _method:  GET
+        
+grhtypefiche_delete:
+    path:  /grhtypefiche/delete/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhTypeFiche:edit}
+    requirements:
+        _method:  DELETE
+
+grhtypefiche_update:
+    path:  /grhtypefiche/update/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhTypeFiche:update}
+    requirements:
+        _method:  PUT
+
+grhtypefiche_show:
+    path:  /grhtypefiche/show/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhType:show}
+    requirements:
+        _method:  POST
+
+grhfichesalarie:
+    path:  /grhemployes/
+    defaults: { _controller: LooninsGrhBundle:GrhEmployes:index }
+    requirements:
+        _method:  GET
+
+grhfichesalarie_show:
+    path:  /fichesalarie/show/fiche/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhFicheSalarie:fiche}
+    requirements:
+        _method:  GET
+        
+grhfichesalarie_edit:
+    path:  /fichesalarie/fiche/edit/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhFicheSalarie:edit}
+    requirements:
+        _method:  GET
+        
+grhfichesalarie_update:
+    path:  /fichesalarie/fiche/update/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhFicheSalarie:update}
+    requirements:
+        _method:  POST
+
+grhemployes_fiche:
+    path:  /fichesalarie/fiche/show/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhFicheSalarie:show}
+    requirements:
+        _method:  GET
+
+grhfichesalarie_new:
+    path:  /fichesalarie/new
+    defaults: { _controller: LooninsGrhBundle:GrhFicheSalarie:new}
+    requirements:
+        _method:  GET
+
+grhfichesalarie_create:
+    path:  /fichesalarie/create
+    defaults: { _controller: LooninsGrhBundle:GrhFicheSalarie:create}
+    requirements:
+        _method:  POST
+
+grhfichesalarie_delete:
+    path:  /fichesalarie/fiche/delete/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhFicheSalarie:delete}
+    requirements:
+        _method:  DELETE
+
+grhcontrats:
+    path:  /grhcontrats/page/{page}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:index }
+    requirements:
+        _method:  GET
+
+grhcontrats_from_employe:
+    path:  /grhcontrats/employe/all/contrats/{employe}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:employe }
+    requirements:
+        _method:  GET
+        
+grhcontrats_new:
+    path:  /grhcontrats/add/new/{employe}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:new, employe: '' }
+    requirements:
+        _method:  GET
+        
+grhcontrats_create:
+    path:  /grhcontrats/add/create
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:create }
+    requirements:
+        _method:  POST
+        
+grhcontrats_edit:
+    path:  /grhcontrats/edit/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:edit}
+    requirements:
+        _method:  GET
+
+grhcontrats_update:
+    path:  /grhcontrats/update/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:update}
+    requirements:
+        _method:  POST
+
+grhcontrats_show:
+    path:  /grhcontrats/show/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:show}
+    requirements:
+        _method: GET
+
+grhcontrats_dispo:
+    path:  /grhcontrats/dispo/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:dispo}
+    requirements:
+        _method: GET
+
+grhcontrats_rupture:
+    path:  /grhcontrats/rupture/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:rupture}
+    requirements:
+        _method: GET
+        
+grhcontrats_delete:
+    path:  /grhcontrats/delete/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:delete}
+    requirements:
+        _method:  POST
+        
+grhcontrats_search:
+    path:  /alert/mail/contrat/delai/{comp}/{nb}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:getContratsBy}
+        
+grhcontrats_search_advanced:
+    path:  /view/contrat/by/echeance
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:trouvContratBy}
+
+grhparams:
+    path:  /grhparams/
+    defaults: { _controller: LooninsGrhBundle:GrhParams:index}
+    requirements:
+        _method:  GET
+
+grhparams_new:
+    path:  /grhparams/new
+    defaults: { _controller: LooninsGrhBundle:GrhParams:new}
+    requirements:
+        _method:  GET
+
+grhparams_create:
+    path:  /grhparams/create
+    defaults: { _controller: LooninsGrhBundle:GrhParams:create}
+    requirements:
+        _method:  POST
+
+grhparams_show:
+    path:  /grhparams/show/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhParams:show}
+    requirements:
+        _method:  GET
+
+grhparams_edit:
+    path:  /grhparams/edit/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhParams:edit}
+    requirements:
+        _method:  GET
+
+grhparams_update:
+    path:  /grhparams/update/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhParams:update}
+    requirements:
+        _method:  POST
+
+grhparams_delete:
+    path:  /grhparams/delete/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhParams:delete}
+    requirements:
+        _method:  POST
+        
+grhalert:
+    path:  /grhalert/
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:alert}
+    requirements:
+        _method:  GET
+
+
+sexe:
+    path:  /sexe/
+    defaults: { _controller: LooninsGrhBundle:Sexe:index}
+    requirements:
+        _method:  GET
+
+sexe_new:
+    path:  /sexe/new
+    defaults: { _controller: LooninsGrhBundle:Sexe:new}
+    requirements:
+        _method:  GET
+
+sexe_create:
+    path:  /sexe/create
+    defaults: { _controller: LooninsGrhBundle:Sexe:create}
+    requirements:
+        _method:  POST
+
+sexe_edit:
+    path:  /sexe/edit/{id}
+    defaults: { _controller: LooninsGrhBundle:Sexe:edit}
+    requirements:
+        _method:  GET
+
+sexe_update:
+    path:  /sexe/update/{id}
+    defaults: { _controller: LooninsGrhBundle:Sexe:update}
+    requirements:
+        _method:  PUT|POST
+
+sexe_delete:
+    path:  /sexe/delete
+    defaults: { _controller: LooninsGrhBundle:Sexe:delete}
+    requirements:
+        _method:  DELETE
+
+sexe_show:
+    path:  /sexe/show/{id}
+    defaults: { _controller: LooninsGrhBundle:Sexe:show}
+    requirements:
+        _method:  GET
+        
+        
+matrimonial:
+    path:  /matrimonial/
+    defaults: { _controller: LooninsGrhBundle:Matrimonial:index}
+    requirements:
+        _method:  GET
+
+matrimonial_new:
+    path:  /matrimonial/new
+    defaults: { _controller: LooninsGrhBundle:Matrimonial:new}
+    requirements:
+        _method:  GET
+
+matrimonial_create:
+    path:  /matrimonial/create
+    defaults: { _controller: LooninsGrhBundle:Matrimonial:create}
+    requirements:
+        _method:  POST
+
+matrimonial_edit:
+    path:  /matrimonial/edit/{id}
+    defaults: { _controller: LooninsGrhBundle:Matrimonial:edit}
+    requirements:
+        _method:  GET
+
+matrimonial_update:
+    path:  /matrimonial/update/{id}
+    defaults: { _controller: LooninsGrhBundle:Matrimonial:update}
+    requirements:
+        _method:  PUT|POST
+
+matrimonial_delete:
+    path:  /matrimonial/delete
+    defaults: { _controller: LooninsGrhBundle:Matrimonial:delete}
+    requirements:
+        _method:  DELETE
+
+matrimonial_show:
+    path:  /matrimonial/show/{id}
+    defaults: { _controller: LooninsGrhBundle:Matrimonial:show}
+    requirements:
+        _method:  GET
+
+#gdpmails: path: /gdpmails/{page} defaults: { _controller: LooninsIncidentBundle:GdpMails:index } requirements: _method: GET gdpmails_new: path: /gdpmails/new defaults: { _controller: LooninsIncidentBundle:GdpMails:new } requirements: _method: GET gdpmails_create: path: /gdpmails/create defaults: { _controller: LooninsIncidentBundle:GdpMails:create } requirements: _method: POST gdpmails_edit: path: /gdpmails/edit/{id} defaults: { _controller: LooninsIncidentBundle:GdpMails:edit} requirements: _method: GET gdpmails_update: path: /gdpmails/update/{id} defaults: { _controller: LooninsIncidentBundle:GdpMails:update} requirements: _method: POST gdpmails_show: path: /gdpmails/show/{id} defaults: { _controller: LooninsIncidentBundle:GdpMails:show} requirements: _method: GET 
+
+grhmail_index:
+    path:     /grhmail/index
+    defaults: { _controller: LooninsGrhBundle:GrhMail:index }
+
+grhmail_delete:
+    path:     /grhmail/delete/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhMail:delete }
+
+grhmail_edit:
+    path:     /grhmail/edit/{id}
+    defaults: { _controller: LooninsGrhBundle:GrhMail:edit }
+
+
+wishes_christmas:
+    path:     /wishes/christams
+    defaults: { _controller: LooninsGrhBundle:GrhStart:merryChristms }

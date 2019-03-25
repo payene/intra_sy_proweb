@@ -1,0 +1,232 @@
+{% extends '::sar.layout.html.twig' %}
+{% block module_name %} SAR - {{ Corp }}{% endblock module_name %}
+{% block titre %} {{ Corporation }} - Intranet {% endblock%}
+
+{% set module = "sar" %}
+
+{% block modules %}
+    {{ parent() }}        
+    {#<!-- <a class="custom" id="lateStat" href=""> Stat en retard (8)</a> -->#}
+{% endblock %}
+
+{% block sidebar %}
+    <ul id="leftNavUl" >
+        <li>
+            <a href="{{ path('stat_search') }}" >
+                <span class=""> <i class="icon-black icon-home"></i> Accueil SAR </span>
+            </a>
+        </li>
+        {% if is_granted('ROLE_SAR') %}
+        <li>
+            <a href="{{ path('loginanim_index') }}">
+                <span class=""> <i class="icon-black icon-user"></i> Gestion des logins </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('animatrice') }}">
+                <span class=""> <i class="icon-black icon-user"></i> Affectation des logins </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('animatrice') }}">
+                <span class=""> <i class="icon-black icon-list"></i> Journal </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('typetable') }}">
+                <span class=""> <i class="icon-black icon-file"></i> Types d'activit&eacute;s </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('stat_import') }}">
+                <span class=""> <i class="icon-black icon-upload"></i> Importation stat  </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('anim_planning') }}">
+                <span class=""> <i class="icon-black icon-calendar"></i> Planning  </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('stat_ask_explain') }}">
+                <span class=""> <i class="icon-black icon-time"></i> Stat en retard <span style="color:red;font-weight:bold;"> &star;</span> </span>
+            </a>
+        </li>   
+        <li>
+            <a href="{{ path('respmail_index') }}">
+                <span class=""> <i class="icon-black icon-user"></i> Responsables Mail <!--span style="color:red;font-weight:bold;"> &star;</span--> </span>
+            </a>
+        </li>   
+        <li>
+            <a href="{{ path('demande_explication') }}">
+                <span class=""> <i class="icon-black icon-file"></i> Historique des D.E. <span style="color:red;font-weight:bold;"> &star;</span> </span>
+            </a>
+        </li>   
+        <li>
+            &nbsp;
+        </li>
+        <li>
+            <form class="span12" style="width:100%;" action="{{ path('stat') }}" method="post">
+                <label style="background-color:green;color:white;padding:4px;"> NOUVEAU </label>
+                
+                <div class="" style="background-color:#fff;display: inline;float: left;width:100%">
+                    {{ form_label(addStatForm.dateStat, "Date statistique") }}
+                    <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        {# Génération de l'input. #}
+                        {{ form_widget(addStatForm.dateStat, {'attr' : {'style' : 'width:120px;', 'type':'text'}}) }}
+                        <!-- <span class="add-on"><i class="icon-remove"></i></span> -->
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+                </div>                    
+                <div  class=""  style="display: block;background-color:#fff;width:100%">
+                    {{ form_label(addStatForm.type, "Table Statistique") }}
+                    {{ form_errors(addStatForm.type, {'attr': {'class': 'alert alert-error'} }) }}
+                    {# Génération de l'input. #}
+                    {{ form_widget(addStatForm.type, {'attr': {'style':'width:160px;padding:0px;'} }) }} 
+                </div>
+                <div  style="width:100%;background:#fff;display:block;">
+                    <button type="submit" class="btn btn-success" style="width:98%;" >
+                        Commencer la saisie 
+                    </button>
+                    <br/>
+                    <br/>
+                </div>
+                {{ form_rest(addStatForm) }}
+            </form>
+        </li>
+       {% endif %}
+    </ul>
+{% endblock %}
+
+{# empty Twig template #}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('#form_dateStat').prop('type', 'text');
+        $('.deleter').click(function() {
+            if (!confirm("Vous sur le point de supprimer une entité. Voulez vous continuer ?")) {
+                return false;
+            }
+        });
+        $('.needConfirm').click(function() {
+            if (!confirm("L'opération que vous allez exécuter est irréversible. Voulez vous continuer ?")) {
+                return false;
+            }
+        });
+    </script>
+    
+    <script type="text/javascript">
+        function ctrlProgrammed(){
+            var vitesse = $('#stat_msgParHeure, #stat_msg_conv_msgParHeure').val(), nbrMsg = $('#stat_total, #stat_msg_conv_total').val(), prog = $('#stat_programmed, #stat_msg_conv_programmed').val();
+
+
+            if(parseInt(vitesse) > 0 && parseInt(nbrMsg) > 0 && prog != ''){
+                
+                var progs = prog.split(':');
+                var h =  progs[0], m = progs[1];
+                var progSecondes = parseInt(h) * 3600 + parseInt(m)*60 ;
+                var reel = (parseInt(nbrMsg)/parseInt(vitesse)) * 3600;
+                var rapport = reel > (progSecondes * 7/8);
+                var color = rapport ? 'green':'red';
+                console.log(rapport);
+                if(rapport){
+                    $('#stat_retard, #stat_msg_conv_retard').val(0);                    
+                }
+                else{
+                    $('#stat_retard, #stat_msg_conv_retard').val(1);
+                }
+                var r = reel/3600;
+                formatReel(r);
+                
+                $('#stat_reel, #stat_msg_conv_reel').css({
+                    'background-color': color,
+                    'color': '#fff'
+                });
+            }
+
+        }
+
+        function formatSeconds(s){
+            s = s.toFixed(2);
+            // console.log('SS '  +s);
+
+            var h = Math.floor(s/3600); //Get whole hours
+            // console.log('H '  +h);
+
+            s -= h*3600;
+            s = s.toFixed(2);
+            var m = Math.floor(s/60); //Get remaining minutes
+            // console.log(s + '/M '  +m);
+
+            s -= m*60;
+            // console.log(s  +' /Sec '  +s);
+            var time =  (h < 10 ? '0'+h : h)+":"+(m < 10 ? '0'+m : m)+":"+(s < 10 ? '0'+s : s); //zero padding on minutes and 
+            return time;
+        }
+
+        function formatReel(reel){
+            reel = reel.toFixed(2);
+
+            var s = (reel * 3600);
+            s = s.toFixed(2);
+            console.log('SS '  +s);
+
+            var h = Math.floor(s/3600); //Get whole hours
+            console.log('H '  +h);
+
+            s -= h*3600;
+            s = s.toFixed(2);
+            var m = Math.floor(s/60); //Get remaining minutes
+            console.log(s + '/M '  +m);
+
+            s -= m*60;
+            console.log(s  +' /Sec '  +s);
+            var reelTime =  (h < 10 ? '0'+h : h)+":"+(m < 10 ? '0'+m : m)+":"+(s < 10 ? '0'+s : s); //zero padding on minutes and 
+            $('#stat_reel, #stat_msg_conv_reel').val(reelTime);
+        }
+
+        $('#stat_programmed, #stat_msg_conv_programmed').change(function(){
+            // alert('ff');
+            ctrlProgrammed();
+        });
+        
+        $('#msgParHeure, stat_msg_conv_msgParHeure').change(function(){
+            ctrlProgrammed();
+        });
+
+        $('#stat_total, #stat_msg_conv_total').change(function(){
+            ctrlProgrammed();
+        });
+
+        $('#stat_msgParHeure, #stat_msg_conv_msgParHeure').keyup(function(){
+            ctrlProgrammed();
+        });
+
+        $('#stat_total, #stat_msg_conv_total').keyup(function(){
+            ctrlProgrammed();
+        });
+
+        $('#stat_reel, #stat_msg_conv_reel').keypress(function(){
+            return false;
+        });
+
+        {#
+        // function setNbrStatEnRetard(){
+
+        //     $.ajax ({
+        //         url: "{{ path('nbr_stat_late') }}" ,
+        //         dataType: "json",
+        //         success: function ( data, textStatus, jqXHR ) {
+        //             if(data > 0)    
+        //             $('#lateStat').html(data);
+        //         }
+        //     });
+        // }
+
+        // (function() {
+        //     setNbrStatEnRetard();
+        // })();
+        #}
+    </script>
+
+{% endblock %}

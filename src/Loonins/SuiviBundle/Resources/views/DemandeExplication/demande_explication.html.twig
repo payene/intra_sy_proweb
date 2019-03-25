@@ -1,0 +1,154 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+
+
+{% block legend %}
+    Index des statistiques 
+        <button style="float: right;margin-left: 5px;" class="btn btn-primary" id="open-stat" >
+            Historiques des demandes d'explication
+        </button>
+         <br style="clear:both;">
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent()}}
+   
+{% endblock %}
+
+{% block body %}
+
+    <form class="form_horizontal form-inline" method="post" style="display: inline;">
+        <div class="form-row"> Debut </div>
+        <div class="form-row">
+            {# Génération de l'input. #}
+            {{ form_widget(searchForm.debut, {'attr':{ }}) }}
+        </div>
+
+        <div class="form-row"> Fin </div>
+        <div class="form-row ">
+            {# Génération de l'input. #}
+            {{ form_widget(searchForm.fin, {'attr':{ }}) }}
+        </div>
+
+        <div class="form-row">
+            {{ form_label(searchForm.type, "Activité") }}
+            {{ form_errors(searchForm.type, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(searchForm.type, {'attr': {'style':'width:100px;'}}) }} 
+        </div>
+
+        <div class="form-row">
+            {{ form_label(searchForm.animatrice, "Animatrice") }}
+            {{ form_errors(searchForm.animatrice, {'attr': {'class': 'alert alert-error'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(searchForm.animatrice, {'attr': {'style':'width:100px;'}}) }} 
+        </div>
+
+        <div class="form-row">
+            {{ form_widget(searchForm.submit , {'attr': { 'class':'btn btn-success'} }) }} 
+        </div>
+    </form>
+    
+    <div class="form-row" style="display: inline;float: right;">
+        <select id = "selection-action">
+            <option value="0"> Action sur la selection</option>
+            <option value="1"> Renvoyer les demandes d'explications </option>
+            <option value="2">Marquer comme répondu</option>
+        </select>
+    </div>
+
+    <br style="clear:both;" />
+
+    <style type="text/css">
+        
+        td{
+            vertical-align: middle;
+        }
+    </style>
+    <table class="table table-striped  table-hover" >
+        <thead class="alert alert-info">
+            <tr style="height:15px;">
+                <th> <input type="checkbox" id="selectAllLate" name=""> </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Date demande </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Activité  </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Date stat  </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Animatrice  </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Email </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Status  </th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;">Nombre d'envois</th>
+                <th style="padding:0px;vertical-align:middle;text-align: center;"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for demandeExplication in demandeExplications %}
+            <tr>
+                    <td id="checktd{{demandeExplication.id}}">{% if demandeExplication.status == 10 %} <input type="checkbox" value="{{ demandeExplication.id }}" name="" class="ckeckLate"> {% endif %}</td>
+                <td style="padding:0px;vertical-align:middle">{{ demandeExplication.dateDemande|date('Y-m-d')}}</td>
+                <td style="padding:0px;vertical-align:middle;">{{ demandeExplication.stat.type.typeTable}}</td>
+                <td style="padding:0px;vertical-align:middle;">{{ demandeExplication.stat.dateStat|date('Y-m-d')}}</td>
+                <td style="padding:0px;vertical-align:middle;">{{ demandeExplication.stat.animatrice.employe}}</td>
+                <td style="padding:0px;vertical-align:middle;">{{ demandeExplication.stat.animatrice.employe.email}}</td>
+                <td  id="statustd{{demandeExplication.id}}" style="padding:0px;vertical-align:middle;text-align:center" >{% if demandeExplication.status == 10 %} En attente {% else %} Répondu {% endif %}</td>
+                <td  id="nbtd{{demandeExplication.id}}" style="padding:0px;vertical-align:middle;text-align:center" >{{ demandeExplication.nbrEnvoi }}</td>
+                <td style="padding:0px;vertical-align:middle;text-align:center" ><a href="{{path('detail_demande_explication', {'id': demandeExplication.stat.id})}}" class="btn btn-success">Détails</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+
+
+
+
+
+    <style type="text/css">
+
+        select, .btn-success {
+            height:25px;
+        }
+
+        #form_debut_day{
+            width: 40px;
+            height: 25px;
+            padding: 0px;
+        }
+
+        #form_debut_month{
+            width: 40px;
+            padding:0px;
+            height: 25px;
+        }
+        #form_debut_year{
+            width: 55px;
+            padding:0px;
+            height: 25px;
+        }
+
+        #form_fin_year{
+            width: 55px;
+            padding:0px;
+            height: 25px;
+        }
+
+        #form_fin_day{
+            width: 40px;
+            height: 25px;
+            padding: 0px;
+        }
+
+        #form_fin_month{
+            width: 40px;
+            padding:0px;
+            height: 25px;
+        }
+
+    </style>
+    
+    
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% include "LooninsSuiviBundle:DemandeExplication:index.js.twig" %}
+{% endblock %}

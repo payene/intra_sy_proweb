@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Rubrique" table="rubrique">
+    <indexes>
+      <index name="rub_cat" columns="rub_cat"/>
+      <index name="rub_creator" columns="rub_creator,rub_cat"/>
+      <index name="IDX_8FA4097C2506957" columns="rub_creator"/>
+    </indexes>
+    <id name="id" type="integer" column="Id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="titre" type="string" column="titre" length="255" nullable="true"/>
+    <field name="rubDate" type="datetime" column="rub_date" nullable="false"/>
+    <many-to-one field="rubCreator" target-entity="User">
+      <join-columns>
+        <join-column name="rub_creator" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="rubCat" target-entity="Categorie">
+      <join-columns>
+        <join-column name="rub_cat" referenced-column-name="Id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

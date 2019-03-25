@@ -1,0 +1,57 @@
+<table class="table table-bordered records_list" id="tableAllEmployees">
+    <thead>
+        <tr>
+            <th style="border-radius: 0 style="padding:0px;vertical-align:middle;"px 0px;padding:0px;vertical-align:middle;">Nom</th>
+            <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">&nbsp;Prenoms</th>
+            <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">&nbsp;Date Entree</th>
+            <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">&nbsp;Departement </th>
+            <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">&nbsp;Assur&eacute;(e)</th>
+            <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">&nbsp;Date Naiss</th>
+            <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">&nbsp;Lieu Naiss</th>
+            <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">&nbsp;Sexe</th>
+            <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">&nbsp;Situation Matrimoniale</th>
+            <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;"> &nbsp; </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities %}
+            {% if  entity.dateentree.date ==  "-0001-11-30 00:00:00"  %}
+                <tr>
+                {% else %}
+                    {% set  limit = entity.dateentree|date_modify("+2 years")|date("d-m-Y") %}
+                    {% if limit <= "now"|date("d-m-Y") and  entity.assurance != 1 %}
+                    <tr class="alert alert-danger">
+                    {% else %}
+                    <tr>
+                    {% endif %}
+                    {#                        {{ entity.dateentree is empty ? "" : entity.dateentree|date("d-m-Y", false) }}#}
+                {% endif %}
+
+
+                <td style="padding:0px;vertical-align:middle;">{{ entity.nom }}</td>
+                <td style="padding:0px;vertical-align:middle;">{{ entity.prenoms }}</td>
+                <td style="padding:0px;vertical-align:middle;">
+                    {% if  entity.dateentree.date ==  "-0001-11-30 00:00:00"  %}
+                        {{ " Non précisé " }}
+                    {% else %}
+                        {#                                        {{ "OK ca passe" }}#}
+                        {{ entity.dateentree is empty ? "" : entity.dateentree|date("d-m-Y", false) }}
+                    {% endif %}
+                </td> 
+                <td style="padding:0px;vertical-align:middle;">{{ entity.departement }}</td>
+                <td style="padding:0px;vertical-align:middle;">{{ entity.assurance == 1 ? 'OUI' : 'NON' }}</td>
+                <td style="padding:0px;vertical-align:middle;">{% if entity.datenaiss %}{{entity.datenaiss|date('d-m-Y')}}{% endif %}</td>
+                <td style="padding:0px;vertical-align:middle;">{{ entity.lieuNaiss }}</td>
+                <td style="padding:0px;vertical-align:middle;">{{ entity.sexe.sexe }}</td>
+                <td style="padding:0px;vertical-align:middle;">{{ entity.sitMat.sitMat }}</td>
+                <td style="padding:0px;vertical-align:middle;">
+                    <a target="_blank" href="{{ path('grhcontrats_from_employe', { 'employe': entity.id }) }}"> &nbsp;Contrats </a> | 
+                    <a  href="{{ path('grhemployes_show', { 'id': entity.id }) }}"> Afficher </a> | 
+                    <a class="alert-success" href="{{ path('grhemployes_fiche', { 'id': entity.id }) }}">
+                        Fiche salari&eacute;
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,19 @@
+{% for message in app.session.flashbag.get('info') %}
+    <div style="position:fixed;top:50px;right: 10px;opacity:0.5;width:auto; background: green; color: white;">
+        {{ message }}            
+    </div>
+{% endfor %}
+<form method="post"> 
+	<div>
+		<h2>Sélectionnez le fichier excel</h2>
+		<div>
+			<label>Année</label>
+			<input type="number" name="year" required="required" min="2000" />
+			<label>Semaine</label>
+			<input type="number" name="week" required="required" min="1" max="54" />
+		</div>
+		<br>
+		{#<input type="file" required="required" name="fichier">#}
+		<button type="submit">lire</button>
+	</div>
+</form>

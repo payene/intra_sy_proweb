@@ -1,0 +1,257 @@
+loonins_gdpincident_homepage:
+    path:  /gdp
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:index }
+    
+gdpincident:
+    path: /incident
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:index }
+    requirements:
+        _method:  GET|POST
+
+
+gdpincident_new:
+    path:  /incident/new/
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:new }
+    requirements:
+        _method:  GET
+
+gdpincident_create:
+    path:  /incident/create/
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:create }
+    requirements:
+        _method:  POST
+
+gdpincident_show:
+    path:  /incident/show/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:show }
+    requirements:
+        _method:  GET
+
+gdpincident_catlist:
+    path:  /incident/catlist/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:catlist }
+    requirements:
+        _method:  GET
+
+gdpincident_edit:
+    path:  /incident/edit/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:edit }
+    requirements:
+        _method:  GET
+
+gdpincident_cloture:
+    path:  /incident/cloture/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:cloture }
+    requirements:
+        _method:  GET
+
+gdpincident_update:
+    path:  /incident/update/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:update }
+    requirements:
+        _method:  PUT|POST
+
+gdpincident_delete:
+    path:  /incident/delete/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:delete }
+    requirements:
+        _method:  POST|DELETE|PUT
+        
+gdpversions:
+    path: /versions/
+    defaults: { _controller: LooninsIncidentBundle:GdpVersions:index }
+    requirements:
+        _method:  GET
+
+
+gdpversions_new:
+    path:  /versions/new/{incid}
+    defaults: { _controller: LooninsIncidentBundle:GdpVersions:new }
+    requirements:
+        _method:  GET
+
+gdpversions_create:
+    path:  /versions/create/{incid}
+    defaults: { _controller: LooninsIncidentBundle:GdpVersions:create }
+    requirements:
+        _method:  POST
+
+gdpversions_show:
+    path:  /versions/show/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpVersions:show }
+    requirements:
+        _method:  GET
+
+gdpversions_catlist:
+    path:  /versions/catlist/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpVersions:catlist }
+    requirements:
+        _method:  GET
+
+gdpversions_edit:
+    path:  /versions/edit/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpVersions:edit }
+    requirements:
+        _method:  GET
+
+gdpversions_cloture:
+    path:  /versions/cloture/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpVersions:cloture }
+    requirements:
+        _method:  GET
+
+gdpversions_update:
+    path:  /versions/update/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpVersions:update }
+    requirements:
+        _method:  PUT|POST
+
+gdpversions_delete:
+    path:  /versions/delete/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpVersions:delete }
+    requirements:
+        _method:  POST
+
+gdpexport:
+    path:  /incident/export/
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:export }
+    requirements:
+        _method:  GET
+gdprecherche:
+    path:  /incident/recherche/
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:recherhche }
+    requirements:
+        _method:  POST
+        
+gdpmails:
+    path: /gdpmails/
+    defaults: { _controller: LooninsIncidentBundle:GdpMails:index }
+    requirements: 
+        _method: GET
+        
+gdpmails_new:
+    path: /gdpmails/new 
+    defaults: { _controller: LooninsIncidentBundle:GdpMails:new }
+    requirements: 
+        _method: GET 
+
+gdpmails_create: 
+    path: /gdpmails/create 
+    defaults: { _controller: LooninsIncidentBundle:GdpMails:create }
+    requirements: 
+        _method: POST 
+
+gdpmails_edit: 
+    path: /gdpmails/edit/{id} 
+    defaults: { _controller: LooninsIncidentBundle:GdpMails:edit}
+    requirements: 
+        _method: GET 
+
+gdpmails_update: 
+    path: /gdpmails/update/{id} 
+    defaults: { _controller: LooninsIncidentBundle:GdpMails:update}
+    requirements: 
+        _method: POST 
+ 
+
+gdpmails_show: 
+    path: /gdpmails/show/{id} 
+    defaults: { _controller: LooninsIncidentBundle:GdpMails:show}
+    requirements: 
+        _method: GET 
+
+gdpmails_delete: 
+    path: /gdpmails/delete/{id} 
+    defaults: { _controller: LooninsIncidentBundle:GdpMails:delete}
+    requirements: 
+        _method: POST|DELETE|PUT
+        
+gdpstatus:
+    path:  /gdpstatus
+    defaults: { _controller: LooninsIncidentBundle:GdpStatus:index }
+    requirements:
+        _method:  GET
+#       
+gdpstatus_new:
+    path:  /gdpstatus/new
+    defaults: { _controller: LooninsIncidentBundle:GdpStatus:new }
+    requirements:
+        _method:  GET
+#        
+gdpstatus_create:
+    path:  /gdpstatus/create
+    defaults: { _controller: LooninsIncidentBundle:GdpStatus:create }
+    requirements:
+        _method:  POST
+#        
+gdpstatus_edit:
+    path:  /gdpstatus/edit/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpStatus:edit}
+    requirements:
+        _method:  GET
+#
+gdpstatus_update:
+    path:  /gdpstatus/update/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpStatus:update}
+    requirements:
+        _method:  POST
+#
+gdpstatus_show:
+    path:  /gdpstatus/show/{id}
+    defaults: { _controller: LooninsIncidentBundle:GdpStatus:show}
+    requirements:
+        _method: GET
+#
+gdpstatus_delete: 
+    path: /gdpstatus/delete/{id} 
+    defaults: { _controller: LooninsIncidentBundle:GdpStatus:delete}
+    requirements: 
+        _method: POST|DELETE|PUT
+        
+typeincident:
+    path:  /typeincident
+    defaults: { _controller: LooninsIncidentBundle:TypeIncident:index }
+    requirements:
+        _method:  GET
+#       
+typeincident_new:
+    path:  /typeincident/new
+    defaults: { _controller: LooninsIncidentBundle:TypeIncident:new }
+    requirements:
+        _method:  GET
+#        
+typeincident_create:
+    path:  /typeincident/create
+    defaults: { _controller: LooninsIncidentBundle:TypeIncident:create }
+    requirements:
+        _method:  POST
+#        
+typeincident_edit:
+    path:  /typeincident/edit/{id}
+    defaults: { _controller: LooninsIncidentBundle:TypeIncident:edit}
+    requirements:
+        _method:  GET
+#
+typeincident_update:
+    path:  /typeincident/update/{id}
+    defaults: { _controller: LooninsIncidentBundle:TypeIncident:update}
+    requirements:
+        _method:  POST
+#
+typeincident_show:
+    path:  /typeincident/show/{id}
+    defaults: { _controller: LooninsIncidentBundle:TypeIncident:show}
+    requirements:
+        _method: GET
+#
+typeincident_delete: 
+    path: /typeincident/delete/{id} 
+    defaults: { _controller: LooninsIncidentBundle:TypeIncident:delete}
+    requirements: 
+        _method: POST|DELETE|PUT
+
+gdp_classeur:
+    path:  /incident/classeur/{classeur}
+    defaults: { _controller: LooninsIncidentBundle:GdpIncident:classeur }
+    requirements:
+        _method:  GET|POST

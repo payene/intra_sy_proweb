@@ -1,0 +1,638 @@
+{% extends 'LooninsSuiviBundle::layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/jquery-ui.css') }}"  rel="stylesheet" type="text/css">
+    <style type="text/css">
+        .jplan-li:hover{
+            background: rgb(0, 0, 0);
+            color: white;
+        }
+    </style>
+{% endblock %}
+{% block body -%}
+     <form class="form_horizontal" method="post">
+        <h4 style="color:black;border-bottom:solid 1px;"> Planning des animatrices</h4 style="color:black;">
+        {#<span class="alert alert-info "> 
+            
+            <b> <i>  </i> </b>   
+
+            &nbsp; <a href="#"> T&eacute;l&eacute;chargez un fichier exemple</a>
+        </span>#}
+        
+        <div class="span12">
+            <div class="span3">
+
+                <label>Semaine {{ week }} de l'année {{ year }}:</label>
+                <input id="semaine" value="{{ debut|date('d/m/Y') }} au {{ debut|date_modify('+7 day')|date('d/m/Y') }} " name="semaine">
+                <input id="#dateHidden" type="hidden">
+            </div>
+
+            <div class="span3">
+                <label>&nbsp;</label>
+                <button class="btn btn-success" type="submit">  Charger </button>
+            </div>
+        </div>
+    </form>
+
+    <hr style="clear:both;" />
+        <div  style="overflow-x:auto;">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <td rowspan="2" style="border-collapse: collapse;"> Ressources Archi </td>
+                        <td> 8 </td>
+                        <td> 8 </td>
+                        <td> 8 </td>
+                        <td> 8 </td>
+                        <td> 8 </td>
+                        <td> 0 </td>
+                        <td> 0 </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td> Lundi </td>
+                        <td> Mardi </td>
+                        <td> Mercredi </td>
+                        <td> Jeudi </td>
+                        <td> Vendredi </td>
+                        <td> Samedi </td>
+                        <td> Dimanche </td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody class="tbody" id="plan-container" >
+                </tbody>
+            </table>
+        </div>   
+        <!-- ui-dialog -->
+        <div id="my-dialog" title="Ajout d'une activité">
+            <div>
+                <div>
+                    <label>Activité</label>
+                     <select id="activ-selected">   
+                        {% for activite in activites %}
+                            <option value="{{ activite.code }}">{{ activite.code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <div style="display: inline-block;">
+                        <label>Heure début</label>
+                        <select id="hdebH" style=" width: 55px;">
+                            {% for i in 0..23 %}
+                            <option>{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        :
+                        <select id="hdebM" style=" width: 55px;">
+                            {% for i in 0..11 %}
+                            <option>{{ "%02d"|format(i*5) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div style="position: relative;">
+                        <label>Durée de programation</label>
+                        <select id="dH" style=" width: 55px;">
+                            {% for i in 0..23 %}
+                            <option>{{ i }}</option>
+                            {% endfor %}
+                        </select>    
+                        :
+                        <select id="dM" style=" width: 55px;">
+                            {% for i in 0..11 %}
+                            <option>{{ "%02d"|format(i*5) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label>Heure fin</label>
+                        <select id="hfinH" readonly style=" width: 55px;">
+                            {% for i in 0..23 %}
+                            <option>{{ i }}</option>
+                            {% endfor %}
+                        </select>    
+                        :
+                        <select id="hfinM" readonly style=" width: 55px;">
+                            {% for i in 0..11 %}
+                            <option>{{ "%02d"|format(i*5) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- ui-dialog -->
+        <div id="my-show-dialog" title="Affichage d'une activité">
+            <div>
+                <div>
+                    <label>Activité</label>
+                     <select id="show-activ-selected">   
+                        {% for activite in activites %}
+                            <option value="{{ activite.code }}">{{ activite.code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <div style="display: inline-block;">
+                        <label>Heure début</label>
+                        <select id="show-hdebH" style=" width: 55px;">
+                            {% for i in 0..23 %}
+                            <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        :
+                        <select id="show-hdebM" style=" width: 55px;">
+                            {% for i in 0..11 %}
+                            <option value="{{ "%02d"|format( i*5 ) }}">{{ "%02d"|format(i*5) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div style="position: relative;">
+                        <label>Durée de programation</label>
+                        <select id="show-dH" style=" width: 55px;">
+                            {% for i in 0..23 %}
+                            <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>    
+                        :
+                        <select id="show-dM" style=" width: 55px;">
+                            {% for i in 0..11 %}
+                            <option value="{{ "%02d"|format(i*5) }}">{{ "%02d"|format(i*5) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label>Heure fin</label>
+                        <select id="show-hfinH" readonly style=" width: 55px;">
+                            {% for i in 0..23 %}
+                            <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>    
+                        :
+                        <select id="show-hfinM" readonly style=" width: 55px;">
+                            {% for i in 0..11 %}
+                            <option value="{{ "%02d"|format( i*5 ) }}">{{ "%02d"|format( i*5 ) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script src='{{ asset("js/jquery-ui.js") }}'></script>
+    <script src='{{ asset("js/jquery.weekpicker.js") }}'></script>
+    {% include "LooninsSuiviBundle:Animatrice:plann.js.twig" %}
+    <script type="text/javascript">
+        
+        //Utilisation
+        //year et week sont des variables globales 
+        year = "{{ year }}";
+        week = "{{ week }}";
+        activityList = [ {% for activite in activites %}  '{{ activite.code }}', {% endfor %}]
+        
+        var plan = new Plan('plan-container');
+        {% for animatrice in animatrices %}
+            var ligne = new Ligne('{{ animatrice.employe.nom ~ " " ~ animatrice.employe.prenoms }}', plan, ['{{ animatrice.login.login }}'], {"id": "{{ animatrice.id }}"});
+            {% for i in 0..6 %}
+                var cel = new Cellule({{i}}, ajouterActivity, {'jour': '{{ i }}'});
+
+                {% for activ in tab[animatrice.id][i] %}
+
+                    cel.addDayPlanActivity( new DayPlanActivity("{{ activ.activite.code }}", '{{ activ.heureDebut|date("H:i") }}', '{{ activ.heureFin|date("H:i") }}', showActivity, deleteActivity, {'id' : "{{ activ.id }}"} ));
+                    //console.log(cel);
+                {% endfor %}
+
+                ligne.ajouterCellule( cel );
+
+            {% endfor %}
+            //console.log(ligne);
+            plan.addLigne( ligne );
+        {% endfor %}
+
+        $( "#my-dialog" ).dialog({
+            autoOpen: false,
+            //width: 400,
+            bgiframe: true,
+            modal: true,
+            buttons: [
+                {
+                    text: "Ajouter",
+                    click: function() {
+                        var cel = $(this).data('cellule');
+                        var activite = $('#activ-selected').val();
+                        var heureDeb = $('#hdebH').val() + ":" + $('#hdebM').val() ;
+                        var heureFin = $('#hfinH').val() + ":" + $('#hfinM').val();
+                        var dayActivity = new DayPlanActivity(activite, heureDeb, heureFin, showActivity, deleteActivity, null);
+                        //console.log( getInterval(dayActivity) <= 0  );
+                        if( getInterval(dayActivity) > 0 ){
+                            if ( controlDayActivity(dayActivity,  cel) ) {
+                                dayActivity.addTo(cel);
+                                insererActivityDb(dayActivity);
+                                //console.log(dayActivity);
+                                $( this ).dialog( "close" );
+                            }
+                        }
+                        else{
+                            alert('La date début ne peut être supérieure ou égale à la date de fin');
+                        }
+
+                    }
+                },
+                {
+                    text: "Annuler",
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            ]
+        });
+
+        $( "#my-show-dialog" ).dialog({
+            autoOpen: false,
+            //width: 400,
+            bgiframe: true,
+            modal: true,
+            buttons: [
+                /*{
+                    text: "modifier",
+                    click: function() {
+
+                        var activity = $(this).data('activity ');
+                        //console.log( activity );
+                        var activite = $('#show-activ-selected').val();
+                        var heureDeb = $('#show-hdebH').val() + ":" + $('#show-hdebM').val() ;
+                        var heureFin = $('#show-hfinH').val() + ":" + $('#show-hfinM').val();
+                        if( confirm("Êtes vous sûr de vouloir appliquer les modifications?") ){
+                            activity.heureDebut = heureDeb;
+                            activity.heureFin = heureFin;
+                            activity.activite = activite;
+                            majActivite( activity );
+                        }
+
+                    }
+                },*/
+                {
+                    text: "Annuler",
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                },
+                {
+                    text: "Supprimer",
+                    class: "btn-danger red  ",
+                    click: function() {
+                        if( confirm('Êtes vous de vouloir supprimer cette activité?') ){
+                            var activity = $(this).data('activity ');
+                            
+                            activity.selfRemove();
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                }
+            ]
+        });
+
+        function  ajouterActivity(cel){
+         //console.log(cel);
+            $( "#my-dialog" ).attr('title',  "Ajout d'activité à " + cel.ligne.nom);
+
+            $( "#my-dialog" ).data("cellule", cel)
+                             .dialog( "open" );
+        }
+
+        function insererActivityDb(activity ){
+            //alert(activity.heureDeb);
+            $.ajax({
+                    type: "POST",
+                    url: '{{ path("anim_add_planning")|escape('js') }}',
+                    data: { heureDeb : activity.heureDebut, heureFin : activity.heureFin, activite: activity.activite, semaine: week, annee: year, animatrice : activity.cellule.ligne.iothers['id'], jour : activity.cellule.iothers['jour'] },
+                    dataType: 'text',
+                    success: function(data){
+                        modifyActivity( activity, data );                 
+                    }
+                });
+            //console.log(activity);
+        }
+
+        function modifyActivity(activity, id){
+            activity.others = {'id' : id};
+        }
+
+        function showActivity( activity ){
+            $( "#my-show-dialog" ).attr('title',  "Activité " + activity.activite);
+
+            $('#show-activ-selected option[value="'+activity.activite+'"]').prop('selected', true);
+            //console.log(((activity.heureDebut.trim()).split("H"))[0]);
+            $('#show-hdebH option[value="'+parseInt(((activity.heureDebut.trim()).split(":"))[0])+'"]').prop('selected', true);
+            $('#show-hdebM option[value="'+((activity.heureDebut.trim()).split(":"))[1]+'"]').prop('selected', true);
+
+            $('#show-hfinH option[value="'+parseInt(((activity.heureFin.trim()).split(":"))[0])+'"]').prop('selected', true);
+            $('#show-hfinM option[value="'+((activity.heureFin.trim()).split(":"))[1]+'"]').prop('selected', true);
+            //recupération de la différence de temps en minutes
+            var mins = getInterval( activity  );
+            var nbMin = 0;
+            var nbH = 0;
+            if( mins < 60 ){
+                nbMin = mins;
+            }
+            else{
+                nbMin = mins%60;
+                nbH = (mins - nbMin)/60;
+            }
+
+            /*console.log(nbMin );
+            console.log(nbH );*/
+            //Durée de programmation
+            $('#show-dH option[value="'+nbH+'"]').prop('selected', true);
+            $('#show-dM option[value="'+nbMin+'"]').prop('selected', true);
+
+            $( "#my-show-dialog" ).data("activity ", activity )
+                             .dialog( "open" );
+        }
+
+
+        function deleteActivity( activity ){
+            $.ajax({
+                    type: "POST",
+                    url: '{{ path("anim_delete_planning")|escape('js') }}',
+                    data: { id : activity.others['id'] },
+                    dataType: 'text',
+                    success: function(data){
+                        if( data == "OK" ){
+                            alert('activité supprimée avec succès');
+                        }
+                    }
+                });
+            //console.log(activity);
+        }
+
+
+        function majActivite( activity ){
+            $.ajax({
+                    type: "POST",
+                    url: '{{ path("anim_edit_planning")|escape('js') }}',
+                    data: { heureDeb : activity.heureDebut, heureFin : activity.heureFin, activite: activity.activite, id : activity.others['id']},
+                    dataType: 'text',
+                    success: function(data){
+                        if( data == "OK" ){
+                            alert('Activité modifiée avec succès');
+                        }
+                    }
+                });
+            //console.log(activity);
+        }
+
+        function controlDayActivity(dayActivity, cel){
+            var chevauchement = false;
+            var existePas = true;
+
+            for (var i = 0; i < cel.activites.length; i++) {
+                    var activity = cel.activites[i];
+                    if ( intersect(dayActivity, activity) ) {
+                        chevauchement = true;
+                        alert("Cette activité ne peut être sélectionnée\nElle chevauche avec l'activité \"" + activity.activite + "\"");
+                    }
+
+                    if( dayActivity.activite == activity.activite ){
+                        existePas = false;
+                        alert("Cette activité a déjà été sélectionnée");
+                    }
+            }
+
+            var nbMinValide = true;
+
+            //Si on a plus de 8 heures avec la nouvelle activité
+            var totalMin = getNbMin( cel ) + getInterval(dayActivity);
+            if( totalMin > ( 8*60 ) ){
+                nbMinValide = false;
+                var message = "Plage d'horraire invalide!\nLe temps restant pour "+cel.ligne.nom+ " est de ";
+                //480 (en minutes) reeprésente 8 heures de travail
+                var nb = 480 - getNbMin( cel );
+
+                if (nb < 60) {
+                    message += nb + " minutes";
+                }
+                else{
+                    var nbM = nb%60;
+                    var nbH = (nb - nbM)/60;
+
+                    message+= nbH + " H " + nbM + " min";
+                    
+                }
+                alert(message);
+            }
+
+            return (!chevauchement && nbMinValide && existePas);
+        }
+
+        function getNbMin(cel){
+            var nb = 0;
+
+            for (var i = 0; i < cel.activites.length; i++) {
+                var activity = cel.activites[i];
+                nb += getInterval( activity );
+            }
+            
+            return nb;
+        }
+
+        function diff_minutes(dt2, dt1) 
+        {
+            var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+            diff /= 60;
+            return Math.round(diff);  
+        }
+
+        function getInterval(activity){
+            var deb = getHour( activity.heureDebut );
+            var fin = getHour( activity.heureFin );
+
+            return diff_minutes(fin, deb);
+        }
+
+        function getHour( heure ){
+            var times = (heure.trim()).split(":");
+            var hour = times[0];
+            var min = times[1];
+            var d = new Date(null, null, null, hour, min, null, null);
+
+            return d;
+        }
+
+        function intersect( activity1, activity2 ){
+            var deb1 = getHour( activity1.heureDebut );
+            var fin1 = getHour( activity1.heureFin );
+
+            var deb2 = getHour( activity2.heureDebut );
+            var fin2 = getHour( activity2.heureFin );
+
+                        //console.log( !( (deb1 > fin2) || (deb2 < fin1) ) );
+            return !( (deb1 > fin2) || (deb2 < fin1) ) ;
+        }
+
+        $('#dH').change(function(){
+            updateHours(1);
+        });
+
+        $('#dM').change(function(){
+            updateHours(0);
+        });
+
+        
+        $('#hdebH').change(function(){
+            updateHours(1);
+        });
+
+        $('#hdebM').change(function(){
+            updateHours(1);
+        });
+
+        
+        $('#hfinH').change(function(){
+            updateHours(1);
+        });
+
+        $('#hfinM').change(function(){
+            updateHours(1);
+        });
+
+
+
+        $('#show-dH').change(function(){
+            updateHours(2);
+        });
+
+        $('#show-dM').change(function(){
+            updateHours(2);
+        });
+
+        
+        $('#show-hdebH').change(function(){
+            updateHours(2);
+        });
+
+        $('#show-hdebM').change(function(){
+            updateHours(2);
+        });
+
+
+
+        function updateHours(status){
+            //A 0 on change l'heure fin et à 1 on change la durée de programmation
+            switch (status) {
+                case 0:
+                    var dToAdd = new Date(null, null, null, $('#dH').val(), $('#dM').val(), null, null);
+                    var hdToAdd = new Date(null, null, null, $('#hdebH').val(), $('#hdebM').val(), null, null);
+
+                    var fmin = (parseInt($('#hdebH').val()) * 60) + parseInt($('#hdebM').val()) + (parseInt($('#dH').val()) * 60) + parseInt($('#dM').val());
+
+                    if (fmin < 60){
+                        $('#hfinH').val("0");
+                        $('#hfinM').val(""+fmin);
+                    }
+                    else{
+                        var nbM = fmin%60;
+                        var nbH = (fmin - nbM)/60;
+                        //alert(nbH);
+
+                        $('#hfinH').val(""+nbH);
+                        $('#hfinM').val(""+nbM);                
+                        
+                        //console.log( fmin );
+                    }
+
+                break;
+                case 1:
+                    var hfin = new Date(null, null, null, $('#hfinH').val(), $('#hfinM').val(), null, null);
+                    var hdeb = new Date(null, null, null, $('#hdebH').val(), $('#hdebM').val(), null, null);
+
+                    var fmin = (hdeb.getTime() - hfin.getTime()) / 1000;
+                    fmin /= 60;
+                    fmin = Math.abs(Math.round( fmin ));
+                    if (fmin < 60) {
+                        $('#dH').val("0");
+                        $('#dM').val(""+fmin);
+                    }
+                    else{
+                        var nbM = fmin%60;
+                        var nbH = (fmin - nbM)/60;
+
+                        $('#dH').val(""+nbH);
+                        $('#dM').val(""+nbM);                
+                    }
+                break;
+
+                case 2:
+                       
+                    var fmin = ( parseInt($('#show-dH').val()) * 60) + parseInt($('#show-dM').val()) + parseInt( $('#show-hdebH').val() * 60 ) + parseInt( $('#show-hdebM').val() );
+
+                    if (fmin < 60) {
+                        $('#show-hfinH').val("0");
+                        $('#show-hfinH').val(""+fmin);
+                    }
+                    else{
+                        console.log(fmin);
+                        var nbM = fmin%60;
+                        var nbH = (fmin - nbM)/60;
+                        
+                        $('#show-hfinH').val(""+nbH);
+                        $('#show-hfinM').val(""+("0" + nbM).slice(-2));                
+                    }
+
+
+                break;
+            }
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        var startDate;
+        var endDate;
+        
+        var selectCurrentWeek = function() {
+            window.setTimeout(function () {
+                $('#semaine').find('.ui-datepicker-current-day a').addClass('ui-state-active')
+            }, 1);
+        }
+        
+        $('#semaine').datepicker( {
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            firstDay: 1,
+            dateFormat: "dd/mm/yy",
+            onSelect: function(dateText, inst) { 
+                var date = $(this).datepicker('getDate');
+                startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+                endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+                var dateFormat = 'dd/mm/yy';
+                $('#semaine').val( $.datepicker.formatDate( dateFormat, startDate, inst.settings ) +" au " + $.datepicker.formatDate( dateFormat, endDate, inst.settings ) );   
+                selectCurrentWeek();
+            },
+            beforeShowDay: function(date) {
+                var cssClass = '';
+                if(date >= startDate && date <= endDate)
+                    cssClass = 'ui-datepicker-current-day';
+                return [true, cssClass];
+            },
+            onChangeMonthYear: function(year, month, inst) {
+                selectCurrentWeek();
+            }/*,
+            show: function(){
+                var str = ($('#semaine').val()).substring(0, 10);
+                var format = str.substring(3, 5)+'/'+str.substring(0, 2) + '/' + str.substring(6, 10);
+                console.log(format);
+                $(this).data('DateTimePicker').date( str );
+            }*/
+        });
+        //alert($('.week-picker .ui-datepicker-calendar tr').length);
+    $('.week-picker .ui-datepicker-calendar tr').live('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
+    $('.week-picker .ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
+
+    </script>
+
+{% endblock %}

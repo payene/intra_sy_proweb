@@ -1,0 +1,43 @@
+{% extends '::grh.layout.html.twig' %}
+{% block module_name %} GRH - {{ Corp }}{% endblock module_name %}
+{% block titre %} {{ Corporation }} - Intranet {% endblock%}
+
+{% set module = "gdi" %}
+
+
+{% block sidebar %}
+<ul id="leftNavUl" >
+    <li>
+        <a href="{{ path('gdpincident') }}">
+            <span> <i class="icon-black icon-home"> </i> Liste des Incidents </span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('gdpincident_new') }}">
+            <i class="icon-black icon-plus"> </i> Nouvel Incident
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('typeincident') }}">
+            <i class="icon-black icon-wrench"> </i> parametrer les types Incident
+        </a>
+    </li>    
+</ul>
+{% endblock %}
+
+{# empty Twig template #}
+{% block javascripts %}
+    {{ parent() }}
+<script>
+    $('.deleter').click(function() {
+        if (!confirm("Vous sur le point de supprimer une entité. Voulez vous continuer ?")) {
+            return false;
+        }
+    });
+    $('.needConfirm').click(function() {
+        if (!confirm("L'opération que vous allez exécuter est irréversible. Voulez vous continuer ?")) {
+            return false;
+        }
+    });
+</script>
+{% endblock %}

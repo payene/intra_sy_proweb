@@ -1,0 +1,56 @@
+<?php
+
+namespace Loonins\GrhBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Categorie
+ *
+ * @ORM\Table(name="categorie", indexes={@ORM\Index(name="IDX_497DD6349CB76835", columns={"cat_creator"})})
+ * @ORM\Entity
+ */
+class Categorie
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="Id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cat", type="string", length=255, nullable=true)
+     */
+    private $cat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="cat_date", type="datetime", nullable=false)
+     */
+    private $catDate;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cat_creator", referencedColumnName="id")
+     * })
+     */
+    private $catCreator;
+
+
+}

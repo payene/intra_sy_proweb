@@ -1,0 +1,48 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1>Categorie</h1>
+      {#{% for rub in entity.rubriques %}
+<ul>
+    <li> rub.titre</li>
+</ul>
+      {% endfor %}#}
+
+<table class="table table-striped table-hover record_properties">
+    <tbody>
+        <tr>
+            <th>N&deg;</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Titre</th>
+            <td>{{ entity.cat }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ entity.description }}</td>
+        </tr>
+        <tr>
+            <th>Date de cr&eacute;ation</th>
+            <td>{{ entity.catDate|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('categorie') }}">
+            <button class="btn btn-primary">Liste des Cat&eacute;gories</button>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('categorie_edit', { 'id': entity.id }) }}">
+            <button class="btn btn-warning"> Editer la cat&eacute;gorie courante</button>
+        </a>
+    </li>
+    
+</ul>
+
+{#AA {{ entity.rubriques }} <br/>
+#}
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block body %}
+    <button id="show-form" class="btn btn-info" > Recherche avanc&eacute;e </button>
+    <br style="clear:both;" />
+    {{ form_start(form, {'attr': {'class' : 'span12 hide', 'id': 'advanced-form'}}) }}
+        <fieldset class="span12" style="margin:0;">
+            <div class="well span4" style="margin:0;">
+                <legend> Interval date entree </legend>
+                <div class="form-row" >
+                    <label> Debut </label>
+                    <div class=" input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        {# Génération de l'input. #}
+                        {{ form_errors(form.dateEntreeD) }}
+                        {{ form_widget(form.dateEntreeD) }}
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+                </div>
+                <div class="form-row" >
+                    <label> Fin </label>
+                    <div class=" input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        {# Génération de l'input. #}
+                        {{ form_errors(form.dateEntreeF) }}
+                        {{ form_widget(form.dateEntreeF) }}
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="well span4" style="margin:0;">
+                <legend> Interval date de naissance </legend>
+                <div class="form-row" >
+                    <label> Debut </label>
+                    <div class=" input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        {# Génération de l'input. #}
+                        {{ form_errors(form.naissD) }}
+                        {{ form_widget(form.naissD) }}
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+                </div>
+                <div class="form-row" >
+                    <label> Fin </label>
+                    <div class=" input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        {# Génération de l'input. #}
+                        {{ form_errors(form.naissF) }}
+                        {{ form_widget(form.naissF) }}
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="well span4" style="margin:0;">
+                <legend> Autres criteres </legend>
+                <div class="form-row" >
+                    <label> Nom ou prenoms ou mobile</label>
+                    <div >
+                        {# Génération de l'input. #}
+                        {{ form_errors(form.employee) }}
+                        {{ form_widget(form.employee) }}
+                    </div>
+                </div>
+                <div class="form-row" >
+                    <label> Departement </label>
+                    <div >
+                        {# Génération de l'input. #}
+                        {{ form_errors(form.departement) }}
+                        {{ form_widget(form.departement) }}
+                    </div>
+                </div>
+                <div class="form-row" >
+                    <label> Couverture assurance </label>
+                    <div >
+                        {# Génération de l'input. #}
+                        {{ form_errors(form.assurance) }}
+                        {{ form_widget(form.assurance) }}
+                    </div>
+                </div>
+                <div class="form-row" >
+                    <label> Lieu de naissance </label>
+                    <div >
+                        {# Génération de l'input. #}
+                        {{ form_errors(form.lieuNaiss) }}
+                        {{ form_widget(form.lieuNaiss) }}
+                    </div>
+                </div>
+                <div class="form-row" >
+                    <label> Situation matrimoniale </label>
+                    <div >
+                        {# Génération de l'input. #}
+                        {{ form_errors(form.sitMat) }}
+                        {{ form_widget(form.sitMat) }}
+                    </div>
+                </div>
+                <div class="form-row" >
+                    <div>
+                        {{ form_widget(form.submit) }}
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+    {{ form_end(form) }}
+
+    <hr style="clear:both;" />
+
+    {% include  'LooninsGrhBundle:GrhStart:index_employe.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $('#show-form').click(function(){
+            var invisibility = $('#advanced-form').hasClass('hide');
+            if(invisibility){
+                $('#advanced-form').removeClass('hide');
+            }
+            else{
+                $('#advanced-form').addClass('hide');
+            }
+        });
+    </script>
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        input{
+            height: 25px;
+            padding: 0px;
+        }
+    </style>
+{% endblock %}

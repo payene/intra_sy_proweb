@@ -1,0 +1,226 @@
+
+{% extends '::base.html.twig' %}
+{% block module_name %} SAR - {{ Corp }}{% endblock module_name %}
+{% block titre %} {{ Corporation }} - Intranet {% endblock%}
+
+{% block stylesheets %}
+        {{ parent() }}
+    <style type="text/css">
+        .datetimepicker>.datetimepicker-minutes th.switch{
+            opacity: 0;
+        }
+   
+        body,html{
+             overflow: hidden;
+        }
+        table{
+            box-shadow: 2px 1px 1px silver;
+        }
+        table>thead>tr, table>thead>tr>th{
+            border: solid 1px silver;
+        }
+
+        table>tbody>tr{
+            border-right: solid 1px silver;
+            border-left: solid 1px silver;
+        }
+
+        table>tbody>tr:first{
+            border: solid 3px red;
+        }
+
+        tr:last-child{
+            border-bottom: solid 1px silver;
+        }
+
+        tbody>tr>td:last-child{
+            text-align: center;
+        }
+
+        .table td, table>tbody>tr>td{
+            border: none;
+        }
+
+        .float-div{
+            position: fixed;
+            right: 3%;
+            padding: 0;
+            margin: 0;
+            vertical-align: center;
+            overflow: hidden;
+            /*border: solid 1px;*/
+        }
+
+        .float-btn, .float-btn:hover{
+           
+            /*bottom: 80%;*/
+            border-radius: 50%;
+            width: 40px;
+            height: 30px;
+            padding: 0;
+            margin: 0;
+            vertical-align: center;
+            padding-top: 10px;
+            font-weight: 800;
+            font-size: 22px;
+            border: solid 5px silver;
+            background: white;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        #suivi-layout-float-div{
+            overflow-y:scroll;height: 400px;
+        }
+    </style>           
+{% endblock %}
+
+
+{% block container %}
+    <section class="container span12 " style="box-shadow: 1px 2px 1px 1px silver;background-color: #fff;height:530px;">
+        <!-- min-height: 530px -->
+        <div class="panel panel-danger" style="height:530px;">
+        
+            <div class="panel-body span11 " style="margin-top: 10px;">
+                {% block main %}
+                    <legend>
+                        {% block legend %}
+                             
+                        {% endblock %}
+                    </legend>
+                    {% for message in app.session.flashbag.get('info') %}
+                        <div class="alert alert-success">
+                            {{ message }}            
+                        </div>
+                    {% endfor %}
+                    {% for message in app.session.flashbag.get('error') %}
+                        <div class="alert alert-error">
+                            {{ message }}            
+                        </div>
+                    {% endfor %}
+                    <div id="suivi-layout-float-div" style="overflow:none;">
+                        {% block body %}<br>ll{% endblock %}                        
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+        
+    </section>
+
+    {% block btn_float %}
+        <div class="float-div">
+            <a class="btn float-btn btn-success" href="{{ path('stat_search') }}">
+                <img title="Statistiques" style="width: 60px; height: 60px;margin-top: -20px;" src="{{ asset('css/images/home.png') }}">
+            </a>
+            <br/>
+            <a  class="btn float-btn btn-success" href="{{ path('animatrice') }}">
+                <img title="Animatrices" style="width: 25px; height: 25px;margin-top: -2px;" src="{{ asset('css/images/anim.png') }}">
+            </a>
+            <br/>
+            <a class="btn float-btn btn-success" href="{{ path('tech') }}">
+                <img title="Technique" style="width: 25px; height: 25px;margin-top: -5px;" src="{{ asset('css/images/history.png') }}">
+            </a>
+            
+            <br/>
+            <a class="btn float-btn btn-success" href="{{ path('typetable') }}">
+                <img title="Type table" style="width: 25px; height: 25px;margin-top: 0px;" src="{{ asset('css/images/typetable.png') }}">
+            </a>
+        </div>
+    {% endblock %}
+
+{% endblock %}
+   
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function ctrlProgrammed(){
+            var vitesse = $('#stat_msgParHeure, #stat_msg_conv_msgParHeure').val(), nbrMsg = $('#stat_total, #stat_msg_conv_total').val(), prog = $('#stat_programmed, #stat_msg_conv_programmed').val();
+
+
+            if(parseInt(vitesse) > 0 && parseInt(nbrMsg) > 0 && prog != ''){
+                
+                var progs = prog.split(':');
+                var h =  progs[0], m = progs[1];
+                var progSecondes = parseInt(h) * 3600 + parseInt(m)*60 ;
+                var reel = (parseInt(nbrMsg)/parseInt(vitesse)) * 3600;
+                var rapport = reel > (progSecondes * 7/8);
+                var color = rapport ? 'green':'red';
+                var r = reel/3600;
+                formatReel(r);
+                $('#stat_retard, #stat_msg_conv_retard').val(color);
+                
+                $('#stat_reel, #stat_msg_conv_reel').css({
+                    'background-color': color,
+                    'color': '#fff'
+                });
+            }
+
+        }
+
+        function formatSeconds(s){
+            s = s.toFixed(2);
+            // console.log('SS '  +s);
+
+            var h = Math.floor(s/3600); //Get whole hours
+            // console.log('H '  +h);
+
+            s -= h*3600;
+            s = s.toFixed(2);
+            var m = Math.floor(s/60); //Get remaining minutes
+            // console.log(s + '/M '  +m);
+
+            s -= m*60;
+            // console.log(s  +' /Sec '  +s);
+            var time =  (h < 10 ? '0'+h : h)+":"+(m < 10 ? '0'+m : m)+":"+(s < 10 ? '0'+s : s); //zero padding on minutes and 
+            return time;
+        }
+
+        function formatReel(reel){
+            reel = reel.toFixed(2);
+
+            var s = (reel * 3600);
+            s = s.toFixed(2);
+            console.log('SS '  +s);
+
+            var h = Math.floor(s/3600); //Get whole hours
+            console.log('H '  +h);
+
+            s -= h*3600;
+            s = s.toFixed(2);
+            var m = Math.floor(s/60); //Get remaining minutes
+            console.log(s + '/M '  +m);
+
+            s -= m*60;
+            console.log(s  +' /Sec '  +s);
+            var reelTime =  (h < 10 ? '0'+h : h)+":"+(m < 10 ? '0'+m : m)+":"+(s < 10 ? '0'+s : s); //zero padding on minutes and 
+            $('#stat_reel, #stat_msg_conv_reel').val(reelTime);
+        }
+
+        $('#stat_programmed, #stat_msg_conv_programmed').change(function(){
+            // alert('ff');
+            ctrlProgrammed();
+        });
+        
+        $('#msgParHeure, stat_msg_conv_msgParHeure').change(function(){
+            ctrlProgrammed();
+        });
+
+        $('#stat_total, #stat_msg_conv_total').change(function(){
+            ctrlProgrammed();
+        });
+
+        $('#stat_msgParHeure, #stat_msg_conv_msgParHeure').keyup(function(){
+            ctrlProgrammed();
+        });
+
+        $('#stat_total, #stat_msg_conv_total').keyup(function(){
+            ctrlProgrammed();
+        });
+
+        $('#stat_reel, #stat_msg_conv_reel').keypress(function(){
+            return false;
+        });
+    </script>
+
+{% endblock %}

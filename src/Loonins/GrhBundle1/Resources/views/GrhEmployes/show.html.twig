@@ -1,0 +1,148 @@
+{% extends 'LooninsGrhBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        .file-upload {
+          position: relative;
+          overflow: hidden;
+          margin: 10px; }
+
+        .file-upload input.file-input {
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin: 0;
+          padding: 0;
+          font-size: 20px;
+          cursor: pointer;
+          opacity: 0;
+          filter: alpha(opacity=0); }
+    </style>
+{% endblock %}
+
+{% block branch %}
+        D&eacute;tails employ&eacute;{% if entity.sexe.sexe is not same as("Masculin") %}e {% endif%}
+
+        <a href=""href="{{ path('grhemployes_new') }}">
+            <button class="btn btn-primary"> <i class="icon-white icon-plus"> </i> Ajouter un employ&eacute;</button>
+        </a>
+    {% endblock %}
+
+
+{% block body -%}
+    <table class="table span9 record_properties">
+        <tbody>
+            <tr>
+                <td rowspan="11">
+                    <img id="blah" src="{{ asset((entity.photo is empty) ? '/uploads/grh/passport.svg' : entity.photo) }} " alt="photo" style="width:250px;height:250px;" />
+                    <br/>
+                    <!-- <button class="btn file-upload">            
+                      <input type="file" id="filer" class="file-input">  Changer la photo passeport </button> -->
+                    <input type='file' id="filer" />
+                    <br style="clear:both;" />
+                    <br style="clear:both;" />
+                    <button> Sauvegarer la photo </button>
+                    <button> Annuler </button>
+                </td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ entity.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenoms</th>
+                <td>{{ entity.prenoms }}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>{{ entity.phone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ entity.email }}</td>
+            </tr>
+            <tr>
+                <th> D&eacute;partement actuel </th>
+                <td>{{ entity.departement }}</td>
+            </tr>
+            <tr>
+                <th>Date Entree</th>
+                <td>
+                    {% if  entity.dateentree.date ==  "-0001-11-30 00:00:00"  %}
+                        {{ " Non précisé " }}
+                    {% else %}
+                        {#                                        {{ "OK ca passe" }}#}
+                        {{ entity.dateentree is empty ? "" : entity.dateentree|date("d-m-Y", false) }}
+                    {% endif %}
+                </td> 
+            </tr>
+            <tr>
+                <th>Assur&eacute;(e)</th>
+                <td>{{ entity.assurance == 1 ? 'OUI' : 'NON' }}</td>
+            </tr>
+            <tr>
+                <th>Date Naiss</th>
+                <td>{{ entity.datenaiss|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Lieu Naiss</th>
+                <td>{{ entity.lieuNaiss }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ entity.sexe.sexe }}</td>
+            </tr>
+            <tr>
+                <th>Situation matrimoniale</th>
+                <td>{{ entity.sitMat.sitMat }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+        
+        <li>
+            <a href="{{ path('grhemployes_fiche', { 'id': entity.id }) }}">
+                <button class="btn btn-success"> <i class="icon-white icon-file"></i> Fiche salarie </button>
+            </a>
+        </li>
+        
+        <li>
+            <a href="{{ path('grhemployes_edit', { 'id': entity.id }) }}">
+                <button class="btn btn-warning"> <i class="icon-white icon-pencil"></i> Editer </button>
+            </a>
+        </li>
+        <li>{% include 'LooninsGrhBundle:GrhEmployes:delete.html.twig'%}</li>
+
+        <li>{% include 'LooninsGrhBundle:GrhEmployes:liste.html.twig'%}</li>
+        <li>
+            <br/>
+            <a href="{{ path('grhemployes_new') }}"> <img src="{{ asset('uploads/grh/add.png') }}" style="width:110px;">  </a>
+        </li>
+
+    </ul>
+{% endblock %}
+
+{%  block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    
+        $("#filer").change(function(){
+            // console.log('LLLLLLLLLLLLLLLLO');
+            readURL(this);
+        });
+    </script>
+{% endblock %}

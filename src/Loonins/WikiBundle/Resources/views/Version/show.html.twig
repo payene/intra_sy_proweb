@@ -1,0 +1,74 @@
+{% extends 'LooninsWikiBundle::layout.html.twig' %}
+
+{% block body -%}
+<h1>Section </h1>
+
+<table class="table record_properties">
+    <tbody>
+
+        <tr>
+            <th>Titre</th>
+            <td>{{ entity.verTitre }}</td>
+        </tr>
+        <tr>
+            <th>Cr&eacute;ation</th>
+            <td>{{ entity.verDate|date('Y-m-d H:i:s') }}</td>
+        </tr>
+       {# <tr>
+            <th>Verseceditable</th>
+            <td>{{ entity.verEditable }}</td>
+        </tr>#}
+        <tr>
+            <td colspan="2"><b>Contenu</b><br/>
+                <br/> {{ entity.verContent }}
+            </td>
+        </tr>
+            {#<tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>#}
+            {#<tr>
+                <th>Versecid</th>
+                <td>{#{{ entity.article.artTitre }}#}
+{#            </td>#}
+{#            </tr>#}
+            {#<tr>
+                <th>Ti</th>
+                <td>{{ entity.verTitre }}</td>
+            </tr>
+            <tr>
+                <th>Verseccontent</th>
+                <td>{{ entity.verContent }}</td>
+            </tr>
+            <tr>
+                <th>Versecdate</th>
+                <td>{{ entity.verDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Verseceditable</th>
+                <td>{{ entity.verEditable }}</td>
+            </tr>
+            <tr>
+                <th>Versecdel</th>
+                <td>{{ entity.verDel }}</td>
+            </tr>#}
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('article_show', { 'id': entity.verArticle.Id}) }}">
+            Retourner sur l&apos;article
+        </a>
+    </li>
+    {% if entity.verEditable == 1 %}
+    <li>
+        <a href="{{ path('version_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    {% endif %}
+
+{#    <li>{{ form(delete_form) }}</li>#}
+</ul>
+{% endblock %}
