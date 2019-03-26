@@ -1,3 +1,7 @@
+loonins_neguit:
+    resource: "@LooninsNeguitBundle/Resources/config/routing.xml"
+    prefix:   /neguit
+
 loonins_suivi_login_anim:
     resource: "@LooninsSuiviBundle/Controller/LoginAnimController.php"
     type:     annotation
