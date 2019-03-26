@@ -1,0 +1,3 @@
+loonins_neguit_homepage:
+    path:     /
+    defaults: { _controller: LooninsNeguitBundle:Default:index }
