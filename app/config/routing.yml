@@ -1,3 +1,7 @@
+loonins_neguit_profil_virtuel:
+    resource: "@LooninsNeguitBundle/Controller/ProfilVirtuelController.php"
+    type:     annotation
+
 loonins_neguit:
     resource: "@LooninsNeguitBundle/Resources/config/routing.yml"
     prefix:   /neguit

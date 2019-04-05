@@ -1,3 +1,8 @@
 loonins_neguit_homepage:
     path:     /
     defaults: { _controller: LooninsNeguitBundle:Default:index }
+
+
+loonins_neguit_pv_new:
+    path:     /pv/new
+    defaults: { _controller: LooninsNeguitBundle:ProfilVirtuel:new }

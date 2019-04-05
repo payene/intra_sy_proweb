@@ -1,7 +1,0 @@
-parameters:
-#    loonins_grh.example.class: Loonins\GrhBundle\Example
-
-services:
-#    loonins_grh.example:
-#        class: %loonins_grh.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

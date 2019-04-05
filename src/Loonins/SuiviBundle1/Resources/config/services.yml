@@ -1,7 +1,0 @@
-parameters:
-#    loonins_suivi.example.class: Loonins\SuiviBundle\Example
-
-services:
-#    loonins_suivi.example:
-#        class: %loonins_suivi.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

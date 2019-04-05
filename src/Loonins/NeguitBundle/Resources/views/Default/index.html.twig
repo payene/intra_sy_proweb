@@ -1,1 +1,20 @@
-Hello World!
+{% extends 'LooninsNeguitBundle::layout.html.twig' %}
+
+
+{% block body %}
+	<a href="" class="btn btn-info"> Ajouter une planification</a> 
+	<br style="clear:both;" />
+	<br style="clear:both;" />
+	<table id="tabSuspendu" class="table alert table-striped">
+	    <thead class="alert alert-success">
+	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date </td>
+	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type Animation </td>
+	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fantome </td>
+	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut animation </td>
+	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin animation </td>
+	    </thead>
+	    <tbody>
+
+	    </tbody>
+	</table>
+{% endblock %}
