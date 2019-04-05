@@ -1,0 +1,25 @@
+{% extends '::neguit.layout.html.twig' %}
+{% block module_name %} NEGUIT - {{ Corp }}{% endblock module_name %}
+{% block titre %} {{ Corporation }} - Intranet {% endblock%}
+
+{% set module = "neguit" %}
+
+{% block modules %}
+    {{ parent() }}        
+    {#<!-- <a class="custom" id="lateStat" href=""> Stat en retard (8)</a> -->#}
+{% endblock %}
+
+{% block sidebar %}
+    <ul id="leftNavUl" >
+        <li>
+            <a href="{{ path('loonins_neguit_homepage') }}" >
+                <span class=""> <i class="icon-black icon-home"></i> Planning Neguit </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('loonins_neguit_homepage') }}" >
+                <span class=""> <i class="icon-black icon-plus"></i> Nouvelle planification </span>
+            </a>
+        </li>
+    </ul>
+{% endblock %}
