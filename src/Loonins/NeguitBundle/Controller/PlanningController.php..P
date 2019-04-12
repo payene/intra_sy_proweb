@@ -1,0 +1,52 @@
+<?php
+
+namespace Loonins\NeguitBundle\Controller;
+
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Loonins\NeguitBundle\Entity\Planning;
+
+/**
+ * Planning controller.
+ *
+ * @Route("/planing")
+ */
+class PlanningController extends Controller
+{
+    /**
+     * Lists all Planning entities.
+     *
+     * @Route("/", name="planing_index")
+     * @Method("GET")
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $plannings = $em->getRepository('LooninsNeguitBundle:Planning')->findAll();
+
+        // $form = $this->createForm('Loonins\NeguitBundle\Form\PlanningType', $profilVirtuel);
+        $form->handleRequest($request);
+
+        
+
+        return $this->render('LooninsNeguitBundle:Default:index.html.twig');
+
+    }
+
+    /**
+     * Finds and displays a Planning entity.
+     *
+     * @Route("/{id}", name="planing_show")
+     * @Method("GET")
+     */
+    public function showAction(Planning $planning)
+    {
+
+        return $this->render('planning/show.html.twig', array(
+            'planning' => $planning,
+        ));
+    }
+}

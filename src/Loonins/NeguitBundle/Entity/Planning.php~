@@ -1,0 +1,193 @@
+<?php
+
+namespace Loonins\NeguitBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Planning
+ *
+ * @ORM\Table(name="planning")
+ * @ORM\Entity(repositoryClass="Loonins\NeguitBundle\Repository\PlanningRepository")
+ */
+class Planning
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="heureDebut", type="string", length=5)
+     */
+    private $heureDebut;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="heureFin", type="string", length=5)
+     */
+    private $heureFin;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="datePlanning", type="datetime")
+     */
+    private $datePlanning;
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdAt", type="datetimetz")
+     */
+    private $createdAt;
+
+ 
+    
+    /**
+     * @var \Loonins\NeguitBundle\Entity\LoginAnimNeguit
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\LoginAnimNeguit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="login", referencedColumnName="id")
+     * })
+     */
+    private $login;
+
+    /**
+     * @var \Loonins\NeguitBundle\Entity\ProfilVirtuel
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\ProfilVirtuel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fantome", referencedColumnName="id")
+     * })
+     */
+    private $fantome;
+
+    /**
+     * @var \Loonins\NeguitBundle\Entity\TypeAnimNeguit
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\TypeAnimNeguit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="type_anim", referencedColumnName="id")
+     * })
+     */
+    private $typeAnim;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    
+
+    /**
+     * Set heureDebut
+     *
+     * @param string $heureDebut
+     *
+     * @return Planning
+     */
+    public function setHeureDebut($heureDebut)
+    {
+        $this->heureDebut = $heureDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get heureDebut
+     *
+     * @return string
+     */
+    public function getHeureDebut()
+    {
+        return $this->heureDebut;
+    }
+
+    /**
+     * Set heureFin
+     *
+     * @param string $heureFin
+     *
+     * @return Planning
+     */
+    public function setHeureFin($heureFin)
+    {
+        $this->heureFin = $heureFin;
+
+        return $this;
+    }
+
+    /**
+     * Get heureFin
+     *
+     * @return string
+     */
+    public function getHeureFin()
+    {
+        return $this->heureFin;
+    }
+
+    /**
+     * Set datePlanning
+     *
+     * @param \DateTime $datePlanning
+     *
+     * @return Planning
+     */
+    public function setDatePlanning($datePlanning)
+    {
+        $this->datePlanning = $datePlanning;
+
+        return $this;
+    }
+
+    /**
+     * Get datePlanning
+     *
+     * @return \DateTime
+     */
+    public function getDatePlanning()
+    {
+        return $this->datePlanning;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Planning
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+}
