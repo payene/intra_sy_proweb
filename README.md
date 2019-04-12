@@ -34,3 +34,18 @@ UPDATE loonins 1.2.0   May 25, 2017 04:am
 9 - UPDATE   `Animatrice`  SET  `debutAffectation` = '2017-01-01'  WHERE  `debutAffectation` IS NULL
 10 - UPDATE  `Animatrice`  SET  `finAffectation` = '2017-06-01'  WHERE  `del` = 1
 11 - Run url http://localhost/symfony3-and-fos-user-bundle/web/app_dev.php/sar/patch/phone/number
+
+
+================================================
+NEGUIT BUNDLE
+================================================
+
+
+CREATE TABLE login_anim_neguit (id INT AUTO_INCREMENT NOT NULL, pseudo VARCHAR(255) NOT NULL, createdAt DATETIME NOT NULL, del INT NOT NULL, UNIQUE INDEX UNIQ_9D80FD7186CC499D (pseudo), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE planning_neguit (id INT AUTO_INCREMENT NOT NULL, login INT DEFAULT NULL, fantome INT DEFAULT NULL, type_anim INT DEFAULT NULL, heureDebut VARCHAR(5) NOT NULL, heureFin VARCHAR(5) NOT NULL, datePlanning DATETIME NOT NULL, createdAt DATETIME NOT NULL, INDEX IDX_A5531511AA08CB10 (login), INDEX IDX_A5531511DAFD8899 (fantome), INDEX IDX_A5531511B0A4A153 (type_anim), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE profil_virtuel (id INT AUTO_INCREMENT NOT NULL, pseudo VARCHAR(255) NOT NULL, createdAt DATETIME NOT NULL, del INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE type_anim_neguit (id INT AUTO_INCREMENT NOT NULL, libelle VARCHAR(255) NOT NULL, createdAt DATETIME NOT NULL, del INT NOT NULL, UNIQUE INDEX UNIQ_64E99650A4D60759 (libelle), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE planning_neguit ADD CONSTRAINT FK_A5531511AA08CB10 FOREIGN KEY (login) REFERENCES login_anim_neguit (id);
+ALTER TABLE planning_neguit ADD CONSTRAINT FK_A5531511DAFD8899 FOREIGN KEY (fantome) REFERENCES profil_virtuel (id);
+ALTER TABLE planning_neguit ADD CONSTRAINT FK_A5531511B0A4A153 FOREIGN KEY (type_anim) REFERENCES type_anim_neguit (id);
+ALTER TABLE typetable CHANGE code code VARCHAR(25) NOT NULL;

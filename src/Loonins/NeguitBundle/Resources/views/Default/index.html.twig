@@ -2,16 +2,70 @@
 
 
 {% block body %}
-	<a href="" class="btn btn-info"> Ajouter une planification</a> 
-	<br style="clear:both;" />
-	<br style="clear:both;" />
+	
+	{{ form_start(form, {'attr': {'class':'form_horizontal'}}) }}
+
+		<div class="form-row">
+            {{ form_label(form.datePlanning, "Date annimation") }}
+            <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                {# Génération de l'input. #}
+                {{ form_widget(form.datePlanning, {'attr' : {'style' : 'width:120px;', 'type':'text'}}) }}
+                <!-- <span class="add-on"><i class="icon-remove"></i></span> -->
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </div>
+
+		<div class="form-row">
+            {{ form_label(form.typeAnim, "Type animation") }}
+            {{ form_errors(form.typeAnim, {'attr': {'class': 'alert alert-error', 'style':'width:40px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.typeAnim, {'attr': {'class': 'span1', 'style':'width:80px'} }) }} 
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.fantome, "Fantome") }}
+            {{ form_errors(form.fantome, {'attr': {'class': 'alert alert-error', 'style':'width:40px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.fantome, {'attr': {'class': 'span1', 'style':'width:80px'} }) }} 
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.heureDebut, "Heure debut") }}
+            <div id="prg" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                {{ form_errors(form.heureDebut, {'attr': {'class': 'alert alert-error'} }) }}
+                {# Génération de l'input. #}
+                {{ form_widget(form.heureDebut, {'attr': {'class': 'span1','value':'08:00', 'style':'width:50px'} } ) }} 
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.heureFin, "Heure fin") }}
+            <div id="prg" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                {{ form_errors(form.heureFin, {'attr': {'class': 'alert alert-error'} }) }}
+                {# Génération de l'input. #}
+                {{ form_widget(form.heureFin, {'attr': {'class': 'span1','value':'08:00', 'style':'width:50px'} } ) }} 
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+        	<label>&nbsp;</label>
+     		<button class="btn btn-success" type="submit"> Enregistrer </button>
+        </div>
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+
 	<table id="tabSuspendu" class="table alert table-striped">
 	    <thead class="alert alert-success">
 	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date </td>
 	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type Animation </td>
 	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fantome </td>
-	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut animation </td>
-	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin animation </td>
+	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Pseudo </td>
+	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Heure debut </td>
+	        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Heure fin </td>
 	    </thead>
 	    <tbody>
 

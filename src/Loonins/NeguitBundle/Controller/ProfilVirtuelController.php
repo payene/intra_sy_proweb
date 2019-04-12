@@ -28,7 +28,7 @@ class ProfilVirtuelController extends Controller
 
         $profilVirtuels = $em->getRepository('LooninsNeguitBundle:ProfilVirtuel')->findAll();
 
-        return $this->render('profilvirtuel/index.html.twig', array(
+        return $this->render('LooninsNeguitBundle:profilvirtuel:index.html.twig', array(
             'profilVirtuels' => $profilVirtuels,
         ));
     }
@@ -42,20 +42,21 @@ class ProfilVirtuelController extends Controller
     public function newAction(Request $request)
     {
         $profilVirtuel = new ProfilVirtuel();
+        $em = $this->getDoctrine()->getManager();
         $form = $this->createForm('Loonins\NeguitBundle\Form\ProfilVirtuelType', $profilVirtuel);
         $form->handleRequest($request);
-
+        $pseudoArray = $em->getRepository('LooninsNeguitBundle:ProfilVirtuel')->findBy(['del' =>0], ['pseudo' => 'ASC']);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($profilVirtuel);
             $em->flush();
-
-            return $this->redirectToRoute('pv_show', array('id' => $profilVirtuel->getId()));
+            $this->get('session')->getFlashBag()->add('success', 'Login crée avec succes');
+            return $this->redirectToRoute('pv_new');
         }
 
         return $this->render('LooninsNeguitBundle:ProfilVirtuel:new.html.twig', array(
             'profilVirtuel' => $profilVirtuel,
             'form' => $form->createView(),
+            'pseudoArray' => $pseudoArray
         ));
     }
 

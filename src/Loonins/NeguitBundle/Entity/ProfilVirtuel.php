@@ -124,5 +124,8 @@ class ProfilVirtuel
     {
         return $this->del;
     }
-}
 
+    public function __toString(){
+        return $this->pseudo;
+    }
+}

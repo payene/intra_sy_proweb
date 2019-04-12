@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Planning
  *
- * @ORM\Table(name="planning")
+ * @ORM\Table(name="planning_neguit")
  * @ORM\Entity(repositoryClass="Loonins\NeguitBundle\Repository\PlanningRepository")
  */
 class Planning
@@ -42,12 +42,45 @@ class Planning
      */
     private $datePlanning;
 
+
     /**
-     * @var ArrayCollection planification
-     * @ORM\OneToMany(targetEntity="\Loonins\NeguitBundle\Entity\Plan", mappedBy="planning")
-     * 
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdAt", type="datetimetz")
      */
-    private $planification;
+    private $createdAt;
+
+ 
+    
+    /**
+     * @var \Loonins\NeguitBundle\Entity\LoginAnimNeguit
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\LoginAnimNeguit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="login", referencedColumnName="id")
+     * })
+     */
+    private $login;
+
+    /**
+     * @var \Loonins\NeguitBundle\Entity\ProfilVirtuel
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\ProfilVirtuel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fantome", referencedColumnName="id")
+     * })
+     */
+    private $fantome;
+
+    /**
+     * @var \Loonins\NeguitBundle\Entity\TypeAnimNeguit
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\TypeAnimNeguit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="type_anim", referencedColumnName="id")
+     * })
+     */
+    private $typeAnim;
 
 
     /**
@@ -59,6 +92,8 @@ class Planning
     {
         return $this->id;
     }
+
+    
 
     /**
      * Set heureDebut
@@ -109,30 +144,6 @@ class Planning
     }
 
     /**
-     * Set typeAnim
-     *
-     * @param integer $typeAnim
-     *
-     * @return Planning
-     */
-    public function setTypeAnim($typeAnim)
-    {
-        $this->typeAnim = $typeAnim;
-
-        return $this;
-    }
-
-    /**
-     * Get typeAnim
-     *
-     * @return int
-     */
-    public function getTypeAnim()
-    {
-        return $this->typeAnim;
-    }
-
-    /**
      * Set datePlanning
      *
      * @param \DateTime $datePlanning
@@ -155,5 +166,100 @@ class Planning
     {
         return $this->datePlanning;
     }
-}
 
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Planning
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set login
+     *
+     * @param \Loonins\NeguitBundle\Entity\LoginAnimNeguit $login
+     *
+     * @return Planning
+     */
+    public function setLogin(\Loonins\NeguitBundle\Entity\LoginAnimNeguit $login = null)
+    {
+        $this->login = $login;
+
+        return $this;
+    }
+
+    /**
+     * Get login
+     *
+     * @return \Loonins\NeguitBundle\Entity\LoginAnimNeguit
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * Set fantome
+     *
+     * @param \Loonins\NeguitBundle\Entity\ProfilVirtuel $fantome
+     *
+     * @return Planning
+     */
+    public function setFantome(\Loonins\NeguitBundle\Entity\ProfilVirtuel $fantome = null)
+    {
+        $this->fantome = $fantome;
+
+        return $this;
+    }
+
+    /**
+     * Get fantome
+     *
+     * @return \Loonins\NeguitBundle\Entity\ProfilVirtuel
+     */
+    public function getFantome()
+    {
+        return $this->fantome;
+    }
+
+    /**
+     * Set typeAnim
+     *
+     * @param \Loonins\NeguitBundle\Entity\TypeAnimNeguit $typeAnim
+     *
+     * @return Planning
+     */
+    public function setTypeAnim(\Loonins\NeguitBundle\Entity\TypeAnimNeguit $typeAnim = null)
+    {
+        $this->typeAnim = $typeAnim;
+
+        return $this;
+    }
+
+    /**
+     * Get typeAnim
+     *
+     * @return \Loonins\NeguitBundle\Entity\TypeAnimNeguit
+     */
+    public function getTypeAnim()
+    {
+        return $this->typeAnim;
+    }
+}

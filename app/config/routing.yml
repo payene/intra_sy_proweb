@@ -1,3 +1,11 @@
+loonins_neguit_planning:
+    resource: "@LooninsNeguitBundle/Controller/PlanningController.php"
+    type:     annotation
+
+loonins_neguit_planning:
+    resource: "@LooninsNeguitBundle/Controller/PlanningController.php"
+    type:     annotation
+
 loonins_neguit_profil_virtuel:
     resource: "@LooninsNeguitBundle/Controller/ProfilVirtuelController.php"
     type:     annotation
