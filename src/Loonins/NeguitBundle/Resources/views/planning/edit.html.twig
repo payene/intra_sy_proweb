@@ -1,21 +1,62 @@
 {% extends 'LooninsNeguitBundle::layout.html.twig' %}
 
 {% block body %}
-    <h1>Planning edit</h1>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+    {% set form = edit_form %}
 
-    <ul>
-        <li>
-            <a href="{{ path('planning_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
+    {{ form_start(form, {'attr': {'class':'form_horizontal'}}) }}
+
+        <div class="form-row">
+            {{ form_label(form.datePlanning, "Date annimation") }}
+            <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                {# Génération de l'input. #}
+                {{ form_widget(form.datePlanning, {'attr' : {'style' : 'width:120px;', 'type':'text'}}) }}
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+            {{ form_errors(form.datePlanning, {'attr': {'class': 'alert-error', 'style':'width:40px'} }) }}
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.typeAnim, "Type animation") }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.typeAnim, {'attr': {'class': 'span1', 'style':'width:80px'} }) }} 
+            {{ form_errors(form.typeAnim, {'attr': {'class': 'alert alert-info', 'style':'width:40px'} }) }}
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.fantome, "Fantome") }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.fantome, {'attr': {'class': 'span1', 'style':'width:80px'} }) }} 
+            {{ form_errors(form.fantome, {'attr': {'class': 'alert-error', 'style':'width:40px'} }) }}
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.heureDebut, "Heure debut") }}
+            <div id="prg" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                {# Génération de l'input. #}
+                {{ form_widget(form.heureDebut, {'attr': {'class': 'span1','style':'width:50px'} } ) }} 
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+                {{ form_errors(form.heureDebut, {'attr': {'class': 'alert-error'} }) }}
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.heureFin, "Heure fin") }}
+            <div id="prg" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                {# Génération de l'input. #}
+                {{ form_widget(form.heureFin, {'attr': {'class': 'span1','style':'width:50px'} } ) }} 
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+                {{ form_errors(form.heureFin, {'attr': {'class': 'alert-error'} }) }}
+        </div>
+
+        <div class="form-row">
+            <label>&nbsp;</label>
+            <button class="btn btn-warning" type="submit"> Modifier </button>
+        </div>
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
     </ul>
 {% endblock %}

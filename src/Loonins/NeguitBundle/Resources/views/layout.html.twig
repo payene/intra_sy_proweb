@@ -12,13 +12,33 @@
 {% block sidebar %}
     <ul id="leftNavUl" >
         <li>
-            <a href="{{ path('loonins_neguit_homepage') }}" >
-                <span class=""> <i class="icon-black icon-home"></i> Planning Neguit </span>
+            <a href="{{ path('planning_index') }}" >
+                <span class=""> <i class="icon-black icon-home"></i> Pointage </span>
             </a>
         </li>
         <li>
-            <a href="{{ path('planning_index') }}" >
-                <span class=""> <i class="icon-black icon-plus"></i> Nouvelle planification </span>
+            <a href="{{ path('planning_history') }}" >
+                <span class=""> <i class="icon-black icon-calendar"></i> Historique </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('pseudo_new') }}" >
+                <span class=""> <i class="icon-black icon-user"></i> Pseudos </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('pv_new') }}" >
+                <span class=""> <i class="icon-black icon-question-sign"></i> Fantomes </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('affectLoginAnim') }}" >
+                <span class=""> <i class="icon-black icon-question-sign"></i> Affectation </span>
+            </a>
+        </li>
+        <li>
+            <a href="#" >
+                <span class=""> <i class="icon-black icon-tags"></i> Type annimation </span>
             </a>
         </li>
     </ul>

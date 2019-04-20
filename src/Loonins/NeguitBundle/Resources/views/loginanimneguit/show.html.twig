@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>LoginAnimNeguit</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ loginAnimNeguit.id }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ loginAnimNeguit.pseudo }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ loginAnimNeguit.createdAt }}</td>
+            </tr>
+            <tr>
+                <th>Del</th>
+                <td>{{ loginAnimNeguit.del }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('pseudo_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('pseudo_edit', { 'id': loginAnimNeguit.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

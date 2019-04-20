@@ -136,10 +136,13 @@
                         {% set module = "" %}
                         {% block navbar %}
                         <div id="modules" class="span12">
-                            &nbsp;<a id="wiki" href="{{ path('loonins_wiki') }}"> Wiki {{Corp}} </a> 
-                            <a id="sar" href="{{ path('stat_search') }}"> Suivi des Activit&eacute;s &agrave; Risque </a> 
-                            <a id="grh"  href="{{ path('grh') }}"> Gestion des Ressources Humaines </a> 
-                            <a id="gdi" href="{{ path('loonins_gdpincident_homepage') }}"> Gestion des Incidents </a> 
+                            &nbsp;
+                            <a class="module" id="wiki" href="{{ path('loonins_wiki') }}"> Wiki {{Corp}} </a> 
+                            <a class="module" id="sar" href="{{ path('stat_search') }}"> Suivi des Activit&eacute;s &agrave; Risque </a> 
+                            <a class="module" id="grh"  href="{{ path('grh') }}"> Gestion des Ressources Humaines </a> 
+                            <a class="module" id="gdi" href="{{ path('loonins_gdpincident_homepage') }}"> Gestion des Incidents </a> 
+                            <a class="module" id="grhr" href="{{ path('loonins_grh_repertoire') }}"> Repertoire </a>
+                            <a class="module" id="neguit" href="{{ path('planning_index') }}"> Planning NEGUIT </a>
                         </div>
                         {% endblock %}
 

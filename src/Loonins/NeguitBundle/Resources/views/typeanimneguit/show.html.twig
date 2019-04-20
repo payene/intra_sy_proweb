@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>TypeAnimNeguit</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ typeAnimNeguit.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ typeAnimNeguit.libelle }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ typeAnimNeguit.createdAt }}</td>
+            </tr>
+            <tr>
+                <th>Del</th>
+                <td>{{ typeAnimNeguit.del }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('typeanimneguit_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('typeanimneguit_edit', { 'id': typeAnimNeguit.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

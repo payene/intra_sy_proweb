@@ -35,8 +35,8 @@ class GrhEmployesController extends Controller {
                 ->select('e')
                 ->from('LooninsGrhBundle:GrhEmployes', 'e')
                 ->where('e.trashed = 1')
-                ->orderBy('e.nom', 'ASC')
                 ->orderBy('e.prenoms', 'ASC')
+                ->orderBy('e.nom', 'ASC')
             ;
         $empT = $query2->getQuery()->getResult();
 
@@ -45,22 +45,17 @@ class GrhEmployesController extends Controller {
                 . ' from LooninsGrhBundle:GrhEmployes e'
                 . ' where e.trashed = 0'
                 . ' and e.id in ('
-                . ' select m.id'
+                . ' select emp.id'
                 . ' from LooninsGrhBundle:GrhContrats c'
-                . ' join c.employe m'
-                . ')'
+                . ' join c.employe emp'
+                . ' where c.status = 1)'
                 . ' order by e.nom, e.prenoms ASC'
                 );
+            // $query->setParameter('today', date('Y-m-d') . " 00:00:00");
+            // $query->setParameter('cdi', "0000-00-00");
+            // $query->setParameter('null', "NULL");
         $entities = $query->getResult();
 
-//        
-//        
-//        $entities = $em
-//                ->getRepository('LooninsGrhBundle:GrhEmployes')
-//                ->findAll()
-//                ->orderBy('');
-//        var_dump($entities)
-        
         //les employés n'ayant jamais eu de contrat
         $empN = $em->createQuery('select e'
                 . ' from LooninsGrhBundle:GrhEmployes e'

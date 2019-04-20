@@ -45,8 +45,12 @@ class GrhContratsController extends Controller {
                 ;
         $entities = $query->getQuery()->getResult();
 
+        $NbAvert = [];
+     
+        $NbAvert[$employe->getId()] = ($this->getNbrAvert($employe->getId()));
+
         return $this->render('LooninsGrhBundle:GrhContrats:index.html.twig', array(
-            'entities' => $entities
+            'entities' => $entities,
         ));
     }
 
@@ -114,6 +118,7 @@ class GrhContratsController extends Controller {
                 'empN' => $empN,
                 'searchForm' => $newForm->createView(),
                 'NbAvert' => $NbAvert,
+
         ];
     }
 
@@ -206,7 +211,7 @@ class GrhContratsController extends Controller {
                 $resp_array[] = $grhmail->getEmail();                
             }
 
-                $this->payeneSfMailer( $resp_array , 'test@test.com', $today->format('d M Y')." : ".'Etat des contrats', $mail);
+                $this->payeneSfMailer( $resp_array , 'no-reply@prowebgroupe.com', $today->format('d M Y')." : ".'Etat des contrats', $mail);
         }
         
 
@@ -431,6 +436,34 @@ class GrhContratsController extends Controller {
             'err_doublon' => "",
         );
     }
+    
+
+    /**
+     * Displays a form to create a new GrhContrats entity.
+     *
+     * @Route("/archive/{contrat}", name="grh_archive")
+     * @Method("GET")
+     * @Template()
+     */
+    public function archiveAction(GrhContrats  $contrat) {
+        $em = $this->getDoctrine()->getManager();
+        $employe = $em->getRepository('LooninsGrhBundle:GrhEmployes')->find($contrat->getEmploye());
+        
+
+        $contrat = $em->getRepository('LooninsGrhBundle:GrhContrats')->find($contrat);
+        $contrat->setStatus(5);
+        $contratEnCours = $em->getRepository('LooninsGrhBundle:GrhContrats')->findBy(['employe' => $employe->getId(), 'status' => 1 ]);
+        if( count($contratEnCours) == 0 ){
+            $employe->setTrashed(1);
+        }
+        $em->merge($employe);
+        $em->merge($contrat);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('grhcontrats',  array('page' => 1)));
+    }
+
+
 
     /**
      * Finds and displays a GrhContrats entity.
@@ -441,17 +474,16 @@ class GrhContratsController extends Controller {
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('LooninsGrhBundle:GrhContrats')->find($id);
-
         $debut = $entity->getDebut();
         $type = $entity->getType();
-//        $duree = $type->getDuree();
-////        var_dump($debut < $fin);
-//        $db = $debut->format("d-m-Y");
-//        $fn = $fin->format("Y-m-d");
-//        $fn = date("d-m-Y", strtotime("+$duree months", strtotime($db)));
-        $fn = $entity->getFinReel()->format("d-m-Y");
+
+        if(!empty($entity->getFinReel())){
+            $fn = $entity->getFinReel()->format("d-m-Y");
+        }
+        else{
+            $fn = "-";
+        }
 
         if (!$entity) {
             throw $this->createNotFoundException('L\'entité   GrhContrats  n\'existe  pas ou plus .');
@@ -551,7 +583,7 @@ class GrhContratsController extends Controller {
 //                    die('WAWAWAW ');
                 }
             } else {
-                $entity->setFinReel(null);
+                // $entity->setFinReel(NULL);
             }
 
             $em->flush();

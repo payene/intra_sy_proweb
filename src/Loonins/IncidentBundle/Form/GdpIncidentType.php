@@ -28,6 +28,8 @@ class GdpIncidentType extends AbstractType {
                     'required' => false,
                     'query_builder' => function ($er) {
                         return $er->createQueryBuilder('e')
+                                ->andwhere('e.trashed = :trashed')
+                                ->setParameter('trashed', 0)
                                 ->orderBy('e.prenoms', 'ASC')
                                 ->orderBy('e.nom', 'ASC');
                     }

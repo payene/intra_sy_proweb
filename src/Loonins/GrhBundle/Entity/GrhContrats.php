@@ -37,7 +37,7 @@ class GrhContrats {
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fin_reel", type="date", nullable=false)
+     * @ORM\Column(name="fin_reel", type="date", nullable=true)
      */
     private $finReel = '0000-00-00';
 

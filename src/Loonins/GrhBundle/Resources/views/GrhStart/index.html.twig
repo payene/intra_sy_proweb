@@ -12,30 +12,32 @@
         <a href="javascript:void(0)" class="btn btn-default btn-raised">Afficher uniquement les : </a>
         <a href="bootstrap-elements.html" data-target="#" class="btn btn-default btn-raised dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
         <ul id="index-contrats-ul" class="dropdown-menu">
-            <li class="alert active alert-success"><a class="alert-success" href="#encours" style="color: blue;" data-toggle="tab"> Contrats en cours </a></li>
-            <li class="alert alert-error"><a class="alert-error" href="#suspendu" style="color: #e9322d;" data-toggle="tab"> Contrats suspendu </a></li>
-            <li class="alert alert-error"><a class="alert-error" href="#resilie" style="color: #e9322d;" data-toggle="tab"> Contrats r&eacute;sili&eacute; </a></li>
-            <li class="alert alert-error"><a class="alert-error" href="#aterme" style="color: #e9322d;" data-toggle="tab"> Contrats &agrave; terme </a></li>
-            <li class="alert alert-info"><a class="alert-info" href="#stage" style="color: blue;" data-toggle="tab"> Stage En cours </a></li>
+            <li class="alert active alert-success"><a class="alert-success" href="#encours" style="color: blue;" data-toggle="tab"> Contrats en cours ({{ tab1|length }}) </a></li>
+            <li class="alert alert-error"><a class="alert-error" href="#suspendu" style="color: #e9322d;" data-toggle="tab"> Contrats suspendu ({{ tab2|length }}) </a></li>
+            <li class="alert alert-error"><a class="alert-error" href="#resilie" style="color: #e9322d;" data-toggle="tab"> Contrats r&eacute;sili&eacute; ({{ tab3|length }}) </a></li>
+            <li class="alert alert-error"><a class="alert-error" href="#aterme" style="color: #e9322d;" data-toggle="tab"> Contrats &agrave; terme ({{ tab4|length }}) </a></li>
+            <li class="alert alert-info"><a class="alert-info" href="#stage" style="color: blue;" data-toggle="tab"> Stage En cours ({{ tab7|length }}) </a></li>
         </ul>
     </div>
     <span id="contrats-type">
-        <a class="alert-success" href="#encours" style="color: blue;" data-toggle="tab"> Contrats en cours </a> 
+        <a class="alert-success" href="#encours" style="color: blue;" data-toggle="tab"> Contrats en cours ({{ tab1|length }}) </a> 
     </span>
     <div class="tabbable" style="clear:both; margin-top: 10px;">
         <div class="tab-content" >
             <div class="tab-pane active" id="encours">
                 <table class="table" id="tableEncours">
                     <thead class="alert alert-success">
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;border-right:solid 1px;" > N&deg; </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" >&nbsp;Type </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employ&eacute; </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Email </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > D&eacute;partement </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date entree </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut contrat</td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin pr&eacute;vu </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Contrat enregistr&eacute; le </td>
+                        <tr>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;border-right:solid 1px;" > N&deg; </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" >&nbsp;Type </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employ&eacute; </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Email </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > D&eacute;partement </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date entree </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut contrat</td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin pr&eacute;vu </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Contrat enregistr&eacute; le </td>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for c in tab1 %}
@@ -89,14 +91,16 @@
             <div class="tab-pane" id="suspendu">
                 <table id="tabSuspendu" class="table alert table-striped">
                     <thead class="alert alert-success">
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employ&eacute; </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Email </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > D&eacute;partement </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date entree </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut contrat</td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin pr&eacute;vu </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Contrat enregistr&eacute; le </td>
+                        <tr>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employ&eacute; </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Email </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > D&eacute;partement </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date entree </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut contrat</td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin pr&eacute;vu </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Contrat enregistr&eacute; le </td>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for c in tab2 %}
@@ -137,20 +141,23 @@
             <div class="tab-pane" id="resilie">
                 <table id="tableResilie" class="table table-striped alert-danger">
                     <thead class="alert alert-success">
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employ&eacute; </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Email </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > D&eacute;partement </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date entree </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut contrat</td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin pr&eacute;vu </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Contrat enregistr&eacute; le </td>
+                        <tr>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employ&eacute; </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Email </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > D&eacute;partement </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date entree </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut contrat</td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin pr&eacute;vu </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Contrat enregistr&eacute; le </td>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for c in tab3 %}
                             <tr>
                                 <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">{% if c.type %} {{ c.type.type }}  {% endif %}</td>
                                 <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;"> {{ c.employe }}</td>
+                                <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > {{ c.employe.email }}</td>
                                 <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;"> {{ c.employe.departement }}</td>
                                 <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">
                                     {% if  c.employe.dateentree.date ==  "-0001-11-30 00:00:00"  %}
@@ -182,20 +189,23 @@
             <div class="tab-pane" id="aterme">
                 <table id="tableAterme" class="table table-striped alert-danger">
                     <thead class="alert alert-success">
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employ&eacute; </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Email </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > D&eacute;partement </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date entree </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut contrat</td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin pr&eacute;vu </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Contrat enregistr&eacute; le </td>
+                        <tr>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employ&eacute; </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Email </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > D&eacute;partement </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date entree </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut contrat</td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin pr&eacute;vu </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Contrat enregistr&eacute; le </td>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for c in tab4 %}
                             <tr>
                                 <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">{% if c.type %} {{ c.type.type }}  {% endif %}</td>
                                 <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;"> {{ c.employe }}</td>
+                                <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > {{ c.employe.email }}</td>
                                 <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;"> {{ c.employe.departement }}</td>
                                 <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">
                                     {% if  c.employe.dateentree.date ==  "-0001-11-30 00:00:00"  %}
@@ -230,14 +240,16 @@
             <div class="tab-pane" id="stage">
                 <table class="table alert-info" id="tableStage">
                     <thead class="alert alert-success">
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employ&eacute; </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Email </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > D&eacute;partement </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date entree </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut contrat</td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin pr&eacute;vu </td>
-                        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Contrat enregistr&eacute; le </td>
+                        <tr>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employ&eacute; </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Email </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > D&eacute;partement </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date entree </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Debut contrat</td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fin pr&eacute;vu </td>
+                            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Contrat enregistr&eacute; le </td>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for c in tab7 %}

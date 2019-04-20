@@ -1,0 +1,31 @@
+{% extends 'LooninsNeguitBundle::layout.html.twig' %}
+
+{% block body %}
+    <h3> Creation d'un nouveau type d'annimation NEGUIT </h3>
+
+
+     {{ form_start(form, {'attr': {'class':'form_horizontal'}}) }}
+        <div class="form-row">
+            {{ form_errors(form.libelle, {'attr': {'class': 'alert alert-error', 'style':'width:90px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.libelle, {'attr': {'class': 'span1', 'style':'width:200px','placeholder':'Tapez le libelle ici', 'AUTOCOMPLETE':'OFF'} }) }} 
+        </div>
+        
+        <div class="form-row">
+            <button class="btn btn-success" type="submit"> Enregistrer </button>
+        </div>
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+
+    
+    <hr style="clear: both;" />
+    
+    <h4>
+        Liste des types existants
+    </h4>
+    
+    {% for type in typeAnimNeguits %}
+        <span class="alert alert-info badge badge-info"> <h5> {{ type.libelle|capitalize }} </h5> </span>
+    {% endfor %}
+{% endblock %}

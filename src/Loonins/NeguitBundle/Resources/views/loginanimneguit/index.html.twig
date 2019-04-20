@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>LoginAnimNeguit list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Pseudo</th>
+                <th>Createdat</th>
+                <th>Del</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for loginAnimNeguit in loginAnimNeguits %}
+            <tr>
+                <td><a href="{{ path('pseudo_show', { 'id': loginAnimNeguit.id }) }}">{{ loginAnimNeguit.id }}</a></td>
+                <td>{{ loginAnimNeguit.pseudo }}</td>
+                <td>{{ loginAnimNeguit.createdAt }}</td>
+                <td>{{ loginAnimNeguit.del }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('pseudo_show', { 'id': loginAnimNeguit.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('pseudo_edit', { 'id': loginAnimNeguit.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('pseudo_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

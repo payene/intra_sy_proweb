@@ -1,45 +1,85 @@
-{% extends 'base.html.twig' %}
+{% extends 'LooninsNeguitBundle::layout.html.twig' %}
+
 
 {% block body %}
-    <h1>Planning list</h1>
+    
+    {{ form_start(form, {'attr': {'class':'form_horizontal'}}) }}
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Heuredebut</th>
-                <th>Heurefin</th>
-                <th>Dateplanning</th>
-                <th>Createdat</th>
-                <th>Actions</th>
-            </tr>
+        <div class="form-row">
+            {{ form_label(form.datePlanning, "Date annimation") }}
+            <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                {# Génération de l'input. #}
+                {{ form_widget(form.datePlanning, {'attr' : {'style' : 'width:120px;', 'type':'text'}}) }}
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+            {{ form_errors(form.datePlanning, {'attr': {'class': 'alert-error', 'style':'width:40px'} }) }}
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.typeAnim, "Type animation") }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.typeAnim, {'attr': {'class': 'span1', 'style':'width:80px'} }) }} 
+            {{ form_errors(form.typeAnim, {'attr': {'class': 'alert alert-info', 'style':'width:40px'} }) }}
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.fantome, "Fantome") }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.fantome, {'attr': {'class': 'span1', 'style':'width:80px'} }) }} 
+            {{ form_errors(form.fantome, {'attr': {'class': 'alert-error', 'style':'width:40px'} }) }}
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.heureDebut, "Heure debut") }}
+            <div id="prg" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                {# Génération de l'input. #}
+                {{ form_widget(form.heureDebut, {'attr': {'class': 'span1','style':'width:50px'} } ) }} 
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+                {{ form_errors(form.heureDebut, {'attr': {'class': 'alert-error'} }) }}
+        </div>
+
+        <div class="form-row">
+            {{ form_label(form.heureFin, "Heure fin") }}
+            <div id="prg" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                {# Génération de l'input. #}
+                {{ form_widget(form.heureFin, {'attr': {'class': 'span1','style':'width:50px'} } ) }} 
+                <span class="add-on"><i class="icon-remove"></i></span>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+                {{ form_errors(form.heureFin, {'attr': {'class': 'alert-error'} }) }}
+        </div>
+
+        <div class="form-row">
+            <label>&nbsp;</label>
+            <button class="btn btn-success" type="submit"> Enregistrer </button>
+        </div>
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <table  class="table table-striped  table-hover">
+        <thead class="alert alert-success">
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type Animation </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fantome </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Pseudo </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Heure debut </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Heure fin </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" >   </td>
         </thead>
         <tbody>
-        {% for planning in plannings %}
-            <tr>
-                <td><a href="{{ path('planning_show', { 'id': planning.id }) }}">{{ planning.id }}</a></td>
-                <td>{{ planning.heureDebut }}</td>
-                <td>{{ planning.heureFin }}</td>
-                <td>{% if planning.datePlanning %}{{ planning.datePlanning|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ planning.createdAt }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('planning_show', { 'id': planning.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('planning_edit', { 'id': planning.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
+            {% for planning in plannings %}
+                <tr>
+                    <td> {{ planning.datePlanning|date('d/m/Y') }} </td>
+                    <td> {{ planning.typeAnim }} </td>
+                    <td> {{ planning.fantome }} </td>
+                    <td> {{ planning.login }} </td>
+                    <td> {{ planning.heureDebut }} </td>
+                    <td> {{ planning.heureFin }} </td>
+                    <td> <a href="{{ path('planning_edit', {'id' : planning.id}) }}" class="alert-danger"> Modifier </a> </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('planning_new') }}">Create a new entry</a>
-        </li>
-    </ul>
 {% endblock %}

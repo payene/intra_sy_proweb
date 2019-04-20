@@ -41,6 +41,12 @@ grh_renew:
     requirements:
         _method:  GET
 
+grh_archive:
+    path:  /grh/archive/{contrat}
+    defaults: { _controller: LooninsGrhBundle:GrhContrats:archive}
+    requirements:
+        _method:  GET
+
 grhstat:
     path:  /grhstat
     defaults: { _controller: LooninsGrhBundle:GrhStart:index }

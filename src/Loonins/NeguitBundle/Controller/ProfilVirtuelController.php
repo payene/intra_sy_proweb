@@ -12,7 +12,7 @@ use Loonins\NeguitBundle\Form\ProfilVirtuelType;
 /**
  * ProfilVirtuel controller.
  *
- * @Route("/pv")
+ * @Route("/neguit/pv")
  */
 class ProfilVirtuelController extends Controller
 {
@@ -47,13 +47,15 @@ class ProfilVirtuelController extends Controller
         $form->handleRequest($request);
         $pseudoArray = $em->getRepository('LooninsNeguitBundle:ProfilVirtuel')->findBy(['del' =>0], ['pseudo' => 'ASC']);
         if ($form->isSubmitted() && $form->isValid()) {
+            $profilVirtuel->setCreatedAt(new \DateTime());
+            $profilVirtuel->setDel(0);
             $em->persist($profilVirtuel);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Login crée avec succes');
             return $this->redirectToRoute('pv_new');
         }
 
-        return $this->render('LooninsNeguitBundle:ProfilVirtuel:new.html.twig', array(
+        return $this->render('LooninsNeguitBundle:profilvirtuel:new.html.twig', array(
             'profilVirtuel' => $profilVirtuel,
             'form' => $form->createView(),
             'pseudoArray' => $pseudoArray

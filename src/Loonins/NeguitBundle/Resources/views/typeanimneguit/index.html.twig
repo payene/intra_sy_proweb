@@ -1,0 +1,44 @@
+{% extends 'LooninsNeguitBundle::layout.html.twig' %}
+
+
+{% block body %}
+    <h1>TypeAnimNeguit list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Createdat</th>
+                <th>Del</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for typeAnimNeguit in typeAnimNeguits %}
+            <tr>
+                <td><a href="{{ path('typeanimneguit_show', { 'id': typeAnimNeguit.id }) }}">{{ typeAnimNeguit.id }}</a></td>
+                <td>{{ typeAnimNeguit.libelle }}</td>
+                <td>{{ typeAnimNeguit.createdAt }}</td>
+                <td>{{ typeAnimNeguit.del }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('typeanimneguit_show', { 'id': typeAnimNeguit.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('typeanimneguit_edit', { 'id': typeAnimNeguit.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('typeanimneguit_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

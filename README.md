@@ -36,6 +36,15 @@ UPDATE loonins 1.2.0   May 25, 2017 04:am
 11 - Run url http://localhost/symfony3-and-fos-user-bundle/web/app_dev.php/sar/patch/phone/number
 
 
+
+
+================================================
+GRH BUNDLE
+================================================
+14-04-2019 / ALTER TABLE grh_contrats CHANGE fin_reel fin_reel DATE DEFAULT NULL;
+
+
+
 ================================================
 NEGUIT BUNDLE
 ================================================

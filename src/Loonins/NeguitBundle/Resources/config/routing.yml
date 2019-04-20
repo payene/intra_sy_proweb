@@ -1,13 +1,13 @@
-loonins_neguit_homepage:
-    path:     /
-    defaults: { _controller: LooninsNeguitBundle:Default:index }
+# loonins_neguit_homepage:
+#     path:     /neguit
+#     defaults: { _controller: LooninsNeguitBundle:Default:index }
 
 
-loonins_neguit_pv_new:
-    path:     /pv/new
-    defaults: { _controller: LooninsNeguitBundle:ProfilVirtuel:new }
+# loonins_neguit_pv_new:
+#     path:     /neguit/pv/new
+#     defaults: { _controller: LooninsNeguitBundle:ProfilVirtuel:new }
 
 
-loonins_neguit_planning:
-    path:     /planing
-    defaults: { _controller: LooninsNeguitBundle:Planning:index }
+# loonins_neguit_planning:
+#     path:     /neguit/planing
+#     defaults: { _controller: LooninsNeguitBundle:Planning:index }

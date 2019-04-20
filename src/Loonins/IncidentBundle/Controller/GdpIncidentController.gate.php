@@ -28,7 +28,7 @@ class GdpIncidentController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $formBuilder = $this->createFormBuilder();
-// On ajoute les champs de l'entité que l'on veut à notre formulaire  
+        // On ajoute les champs de l'entité que l'on veut à notre formulaire  
         $formBuilder
                 ->add('debut', 'date', array('widget' => 'single_text'))
                 ->add('fin', 'date', array('widget' => 'single_text'))
@@ -89,7 +89,7 @@ class GdpIncidentController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $formBuilder = $this->createFormBuilder();
-// On ajoute les champs de l'entité que l'on veut à notre formulaire  
+        // On ajoute les champs de l'entité que l'on veut à notre formulaire  
         $formBuilder
                 ->add('debut', 'date', array('widget' => 'single_text'))
                 ->add('fin', 'date', array('widget' => 'single_text'))
@@ -163,10 +163,10 @@ class GdpIncidentController extends Controller {
 
         $req = $entity->getCategorie()->getRequireEmployee();
         $emp = $entity->getEmploye();
-//        var_dump($emp);
-//        
-//        $session = $this->getSession();
-//        $session->get('event');
+            //        var_dump($emp);
+            //        
+            //        $session = $this->getSession();
+            //        $session->get('event');
         $reqEmpError = 0;
         if ($req && is_null($emp)) {
             $reqEmpError = 1;
@@ -178,66 +178,13 @@ class GdpIncidentController extends Controller {
                 $receivers = array("denis.kombate@gmail.com", "blog@payene.name");
                 $this->payeneSfMailer($receivers, $senderMail, "MAILER INCIDENT", '$messag' . date('d-m-Y H:i;s', time()) . '');
 
-                /*
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($entity);
-                $em->flush();
-                $em->refresh($entity);
-                $emails = $em->getRepository('LooninsIncidentBundle:GdpMails')->findAll();
-                //$sendto = 'denis.kombate@gmail.com';
-
-                $destinataires = array();
-                $senderMail = "no-Reply@prowebgroupe.com";
-                $subject = "Nouvel Incident PROWEB ".  date('d M Y H:i;s', time());
-                $message = $entity->getDescription();
-
-                $senderMail = "no-reply@prowebgroupe.com";
-                $receivers = array("denis.kombate@gmail.com", "payene@payene.name");
-
-                // $from = array("incident@prowebgroupe.com" => "Nouvel Incident PROWEB ");
-                foreach ($emails as $mail) {
-                    $email = $mail->getEmail();
-                    if (!in_array($email, $destinataires)) {
-                        $destinataires[] = $email;
-                    }
-                }
-
-                var_dump($destinataires);
-                if (in_array($user->getEmail(), $destinataires)) {
-                    $destinataires[] = $email;
-                }
-
-                $user = $this->container->get('security.context')->getToken()->getUser();
-                $destinataires[] = $user->getEmail();
-
-                $rtn = $this->payeneSfMailer($receivers, $senderMail, $subject, $message);
-
-                var_dump($rtn);
-
-                */
+                
                 die(' sf ');
-/*
-                $user = $this->container->get('security.context')->getToken()->getUser();
-                $destinataires[] = $user->getEmail();
-//$destinataires = "denis.kombate@gmail.com";
-                $message = \Swift_Message::newInstance()
-                        ->setSubject('Nouvel Incident')
-                        ->setFrom($from)
-                        ->setTo($destinataires)
-                        ->setBody("" . $entity->getDescription());
-//                    ->setBody('Your Mail');
-//                    User a ajouté un nouvel incident à proweb le
-//->setPart($this->renderView('LooninsIncidentBundle:GdpIncident:email.html.twig', array('type' => 'Nouvel incident', 'entity' => $entity), 'text/html'));
-//            $done = 
-                $this->get('mailer')->send($message);
-//		var_dump($done);
-                return $this->redirect($this->generateUrl('gdpincident_show', array('id' => $entity->getId())));
 
-                */
             }
         }
-//die('');
-//        $entity->setEmploye($emp);
+        //die('');
+        //        $entity->setEmploye($emp);
 
 
         return array(
