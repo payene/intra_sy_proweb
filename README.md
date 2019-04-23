@@ -58,3 +58,25 @@ ALTER TABLE planning_neguit ADD CONSTRAINT FK_A5531511AA08CB10 FOREIGN KEY (logi
 ALTER TABLE planning_neguit ADD CONSTRAINT FK_A5531511DAFD8899 FOREIGN KEY (fantome) REFERENCES profil_virtuel (id);
 ALTER TABLE planning_neguit ADD CONSTRAINT FK_A5531511B0A4A153 FOREIGN KEY (type_anim) REFERENCES type_anim_neguit (id);
 ALTER TABLE typetable CHANGE code code VARCHAR(25) NOT NULL;
+
+
+===================================    LIAISON ENTRE USED*R ET EMPLOYE : ONE TO ONE EMPLOYE - USER    =================================================
+
+ALTER TABLE grh_employes ADD user INT DEFAULT NULL;
+ALTER TABLE grh_employes ADD CONSTRAINT FK_22E37D608D93D649 FOREIGN KEY (user) REFERENCES User (id);
+CREATE UNIQUE INDEX UNIQ_22E37D602ABD43F2 ON grh_employes (Id);
+CREATE UNIQUE INDEX UNIQ_22E37D608D93D649 ON grh_employes (user);
+ALTER TABLE profil_virtuel CHANGE createdAt createdAt DATETIME NOT NULL;
+ALTER TABLE login_anim_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
+ALTER TABLE type_anim_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
+ALTER TABLE planning_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
+
+
+===================================    LIAISON ENTRE AffectLoginNeguit et LoginAnimNeguit   =================================================
+
+ALTER TABLE profil_virtuel CHANGE createdAt createdAt DATETIME NOT NULL;
+ALTER TABLE login_anim_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
+ALTER TABLE type_anim_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
+ALTER TABLE planning_neguit DROP FOREIGN KEY FK_A5531511AA08CB10;
+ALTER TABLE planning_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
+ALTER TABLE planning_neguit ADD CONSTRAINT FK_A5531511AA08CB10 FOREIGN KEY (login) REFERENCES affect_login_neguit (id);

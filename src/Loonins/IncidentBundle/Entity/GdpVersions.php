@@ -55,7 +55,7 @@ class GdpVersions
     /**
      * @var \GdpIncident
      *
-     * @ORM\ManyToOne(targetEntity="GdpIncident")
+     * @ORM\ManyToOne(targetEntity="GdpIncident", inversedBy="versions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="incident", referencedColumnName="id")
      * })

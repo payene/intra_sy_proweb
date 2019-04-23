@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Planning
  *
- * @ORM\Table(name="planning")
+ * @ORM\Table(name="planning_neguit")
  * @ORM\Entity(repositoryClass="Loonins\NeguitBundle\Repository\PlanningRepository")
  */
 class Planning
@@ -50,12 +50,11 @@ class Planning
      */
     private $createdAt;
 
- 
     
     /**
-     * @var \Loonins\NeguitBundle\Entity\LoginAnimNeguit
+     * @var \Loonins\NeguitBundle\Entity\AffectLoginNeguit
      *
-     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\LoginAnimNeguit")
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\AffectLoginNeguit")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="login", referencedColumnName="id")
      * })
@@ -95,99 +94,4 @@ class Planning
 
     
 
-    /**
-     * Set heureDebut
-     *
-     * @param string $heureDebut
-     *
-     * @return Planning
-     */
-    public function setHeureDebut($heureDebut)
-    {
-        $this->heureDebut = $heureDebut;
-
-        return $this;
-    }
-
-    /**
-     * Get heureDebut
-     *
-     * @return string
-     */
-    public function getHeureDebut()
-    {
-        return $this->heureDebut;
-    }
-
-    /**
-     * Set heureFin
-     *
-     * @param string $heureFin
-     *
-     * @return Planning
-     */
-    public function setHeureFin($heureFin)
-    {
-        $this->heureFin = $heureFin;
-
-        return $this;
-    }
-
-    /**
-     * Get heureFin
-     *
-     * @return string
-     */
-    public function getHeureFin()
-    {
-        return $this->heureFin;
-    }
-
-    /**
-     * Set datePlanning
-     *
-     * @param \DateTime $datePlanning
-     *
-     * @return Planning
-     */
-    public function setDatePlanning($datePlanning)
-    {
-        $this->datePlanning = $datePlanning;
-
-        return $this;
-    }
-
-    /**
-     * Get datePlanning
-     *
-     * @return \DateTime
-     */
-    public function getDatePlanning()
-    {
-        return $this->datePlanning;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Planning
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
 }

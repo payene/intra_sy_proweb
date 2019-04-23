@@ -36,7 +36,7 @@ class GdpStatus
     private $num;
 
      /**     
-     * @ORM\OneToMany(targetEntity="Loonins\IncidentBundle\Entity\GdpIncident", mappedBy="GdpStatus", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Loonins\IncidentBundle\Entity\GdpIncident", mappedBy="status", cascade={"persist"})
     */
     private $incidents;
 

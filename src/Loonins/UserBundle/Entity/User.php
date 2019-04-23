@@ -25,6 +25,11 @@ class User extends BaseUser
     protected $id;
 
     /**
+    * @ORM\OneToOne(targetEntity="\Loonins\GrhBundle\Entity\GrhEmployes", cascade={"persist", "remove"}, mappedBy="user")
+    */
+    protected $employe;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -38,38 +43,28 @@ class User extends BaseUser
     {
         return (string) $this->getId();
     }
+
+    /**
+     * Set employe
+     *
+     * @param \Loonins\GrhBundle\Entity\GrhEmployes $employe
+     *
+     * @return User
+     */
+    public function setEmploye(\Loonins\GrhBundle\Entity\GrhEmployes $employe = null)
+    {
+        $this->employe = $employe;
+
+        return $this;
+    }
+
+    /**
+     * Get employe
+     *
+     * @return \Loonins\GrhBundle\Entity\GrhEmployes
+     */
+    public function getEmploye()
+    {
+        return $this->employe;
+    }
 }
-
-
-
-
-
-
-// // src/LooninsUserBundle/Entity/User.php
-
-// namespace LooninsUserBundle\Entity;
-
-// use FOS\UserBundle\Model\User as BaseUser;
-// use Doctrine\ORM\Mapping as ORM;
-
-// /**
-//  *User
-//  *
-//  * @ORM\Table()
-//  * @ORM\Entity
-//  */
-// class User extends BaseUser
-// {
-//     /**
-//      * @ORM\Id
-//      * @ORM\Column(type="integer")
-//      * @ORM\GeneratedValue(strategy="AUTO")
-//      */
-//     protected $id;
-
-//     public function __construct()
-//     {
-//         parent::__construct();
-//         // your own logic
-//     }
-// }

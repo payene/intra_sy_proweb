@@ -79,7 +79,7 @@ class GdpIncident {
     /**
      * @var \GdpStatus
      *
-     * @ORM\ManyToOne(targetEntity="GdpStatus")
+     * @ORM\ManyToOne(targetEntity="GdpStatus", inversedBy="incidents")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="status", referencedColumnName="id")
      * })
@@ -119,15 +119,15 @@ class GdpIncident {
     /**
      * @var \Loonins\GrhBundle\Entity\GrhEmployes
      *
-     * @ORM\ManyToOne(targetEntity="\Loonins\GrhBundle\Entity\GrhEmployes")
+     * @ORM\ManyToOne(targetEntity="\Loonins\GrhBundle\Entity\GrhEmployes", inversedBy="incidents")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="employe", referencedColumnName="Id")
+     *   @ORM\JoinColumn(name="employe", referencedColumnName="id")
      * })
      */
     private $employe;
 
     /**
-     * @ORM\OneToMany(targetEntity="Loonins\IncidentBundle\Entity\GdpVersions", mappedBy="GdpIncident", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Loonins\IncidentBundle\Entity\GdpVersions", mappedBy="incident", cascade={"persist"})
      */
     private $versions;
 

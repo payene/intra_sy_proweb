@@ -66,6 +66,9 @@ security:
         - { path: ^/grh/, roles: [ROLE_GRH] }
         - { path: ^/sar/, roles: [ROLE_SAR] }
         - { path: ^/suivi/, roles: [ROLE_GRH] }
+        
+        - { path: ^/neguit/, roles: [ROLE_USER] }
+        - { path: ^/affectLoginAnimLogin, roles: [ROLE_ADMIN] }
 #        - { path: ^/grh^, roles: [ROLE_ADMIN] }
         - { path: ^/profile/show, roles: ROLE_USER }
         

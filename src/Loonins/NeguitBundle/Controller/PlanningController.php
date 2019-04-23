@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Loonins\NeguitBundle\Entity\Planning;
+use Loonins\NeguitBundle\Entity\AffectLoginAnim;
 use Loonins\NeguitBundle\Form\PlanningType;
 use Symfony\Component\Form\FormError;
 use FOS\UserBundle\Util\LegacyFormHelper;
@@ -32,84 +33,94 @@ class PlanningController extends Controller
         $planning = new Planning();
         $strToday = (new \DateTime())->format('Y-m-d') . ' 00:00:00';  
         $today  = new \DateTime($strToday);
-        // $planning->setHeureDebut('09:15');
-        // $planning->setHeureDebut('12:30');
-        $datePlanning = $today->format('Y-m-d') . ' 00:00:00';
-
-        $planning->setDatePlanning($today);
-        // $planning->setHeureDebut("10:00");
-        $form = $this->createForm('Loonins\NeguitBundle\Form\PlanningType', $planning);
-        $form->handleRequest($request);
-        // dump($datePlanning); exit();
-        if ($form->isSubmitted()){
-
-            if($planning->getDatePlanning()->format('Y-m-d') != date('Y-m-d')){
-                $form->get('datePlanning')->addError(new FormError('Date incorrecte'));
-            }
-
-            if(empty($planning->getTypeAnim())){
-                $form->get('typeAnim')->addError(new FormError('Type animation requis'));
-            }
-
-            if(empty($planning->getFantome())){
-                $form->get('fantome')->addError(new FormError('Fantome requis'));
-            }
-
-            $heureDebut = $planning->getHeureDebut();
-            $tabHeure = explode(":", $heureDebut);
-            if(count($tabHeure) != 2){
-                $form->get('heureDebut')->addError(new FormError('Format heure incorrect .'));
-            }
-            else{
-                if(intval($tabHeure[0] > 24) || intval($tabHeure[0] < 0 )){
-                    $form->get('heureDebut')->addError(new FormError('Format heure incorrect ..'));
-                }
-                if(intval($tabHeure[1] > 59) || intval($tabHeure[1] < 0 )){
-                    $form->get('heureDebut')->addError(new FormError('Format heure incorrect'));
-                }
-            }
-
-
-            $heureFin = $planning->getHeureFin();
-            $tabHeure = explode(":", $heureDebut);
-            if(count($tabHeure) != 2){
-                $form->get('heureFin')->addError(new FormError('Format heure incorrect'));
-            }
-            else{
-                if(intval($tabHeure[0] > 24) || intval($tabHeure[0] < 0 )){
-                    $form->get('heureFin')->addError(new FormError('Format heure incorrect'));
-                }
-                if(intval($tabHeure[1] > 59) || intval($tabHeure[1] < 0 )){
-                    $form->get('heureFin')->addError(new FormError('Format heure incorrect'));
-                }
-
-                $dateHeureDebut = new \DateTime($planning->getDatePlanning()->format('Y-m-d') . " ". $heureDebut);
-                $dateHeureFin = new \DateTime($planning->getDatePlanning()->format('Y-m-d') . " ". $heureFin);
-
-                if($dateHeureFin < $dateHeureDebut){
-                    $form->get('heureDebut')->addError(new FormError('Interval d\'heure incorrect incorrect'));
-                }
-            }
-
-
-
-
-            if($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $planning->setCreatedAt(new \DateTime());
-                $em->persist($planning);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Login crée avec succes');
-                return $this->redirectToRoute('planning_index');
-            }
+        $employe = $this->getUser()->getEmploye();
+        $affectNeguit = NULL;
+        if(!empty($employe)){
+            $affectNeguit = $em->getRepository('LooninsNeguitBundle:AffectLoginNeguit')->findOneBy(['employe' => $employe->getId(),'finAffectation' => NULL]);            
         }
 
+        $formTwig = NULL;
+        if(!empty($affectNeguit)){
+            // $planning->setHeureDebut('09:15');
+            // $planning->setHeureDebut('12:30');
+            $datePlanning = $today->format('Y-m-d') . ' 00:00:00';
+            $planning->setDatePlanning($today);
+            // $planning->setHeureDebut("10:00");
+            $form = $this->createForm('Loonins\NeguitBundle\Form\PlanningType', $planning);
+            $form->handleRequest($request);
+            $planning->setLogin( $affectNeguit );
+            // dump($datePlanning); exit();
+            if ($form->isSubmitted()){
+
+                if($planning->getDatePlanning()->format('Y-m-d') != date('Y-m-d')){
+                    $form->get('datePlanning')->addError(new FormError('Date incorrecte'));
+                }
+
+                if(empty($planning->getTypeAnim())){
+                    $form->get('typeAnim')->addError(new FormError('Type animation requis'));
+                }
+
+                if(empty($planning->getFantome())){
+                    $form->get('fantome')->addError(new FormError('Fantome requis'));
+                }
+
+                $heureDebut = $planning->getHeureDebut();
+                $tabHeure = explode(":", $heureDebut);
+                if(count($tabHeure) != 2){
+                    $form->get('heureDebut')->addError(new FormError('Format heure incorrect .'));
+                }
+                else{
+                    if(intval($tabHeure[0] > 24) || intval($tabHeure[0] < 0 )){
+                        $form->get('heureDebut')->addError(new FormError('Format heure incorrect ..'));
+                    }
+                    if(intval($tabHeure[1] > 59) || intval($tabHeure[1] < 0 )){
+                        $form->get('heureDebut')->addError(new FormError('Format heure incorrect'));
+                    }
+                }
+
+
+                $heureFin = $planning->getHeureFin();
+                $tabHeure = explode(":", $heureDebut);
+                if(count($tabHeure) != 2){
+                    $form->get('heureFin')->addError(new FormError('Format heure incorrect'));
+                }
+                else{
+                    if(intval($tabHeure[0] > 24) || intval($tabHeure[0] < 0 )){
+                        $form->get('heureFin')->addError(new FormError('Format heure incorrect'));
+                    }
+                    if(intval($tabHeure[1] > 59) || intval($tabHeure[1] < 0 )){
+                        $form->get('heureFin')->addError(new FormError('Format heure incorrect'));
+                    }
+
+                    $dateHeureDebut = new \DateTime($planning->getDatePlanning()->format('Y-m-d') . " ". $heureDebut);
+                    $dateHeureFin = new \DateTime($planning->getDatePlanning()->format('Y-m-d') . " ". $heureFin);
+
+                    if($dateHeureFin < $dateHeureDebut){
+                        $form->get('heureDebut')->addError(new FormError('Interval d\'heure incorrect incorrect'));
+                    }
+                }
+
+
+
+
+                if($form->isValid()) {
+                    $planning->setCreatedAt(new \DateTime());
+                    $em->persist($planning);
+                    $em->flush();
+                    $this->get('session')->getFlashBag()->add('success', 'Login crée avec succes');
+                    return $this->redirectToRoute('planning_index');
+                }
+            }
+
+            $formTwig = $form->createView();
+        }
         $plannings = $em->getRepository('LooninsNeguitBundle:Planning')->findBy(['datePlanning' => $today]);
         // exit;
 
         return $this->render('LooninsNeguitBundle:planning:index.html.twig', array(
             'plannings' => $plannings,
-            'form' => $form->createView(),
+            'planning' => $planning,
+            'form' => $formTwig,
         ));
         // return $this->render('planning/index.html.twig', array(
         //     'plannings' => $plannings,
@@ -158,14 +169,14 @@ class PlanningController extends Controller
             $datePlanning = new \DateTime($datePlanning . ' '. '00:00:00s');
             $criteras['datePlanning'] = $datePlanning;
             if(!empty($fantome)){
-                $criteras['fantome'] = $fantome->getId();
+                $criteras['fantome'] = $fantome;
             }
 
             if(!empty($typeAnim)){
-                $criteras['typeAnim'] = $typeAnim->getId();
+                $criteras['typeAnim'] = $typeAnim;
             }
 
-            $plannings = $em->getRepository('LooninsNeguitBundle:Planning')->findBy();    // dump($datePlanning); exit();
+            $plannings = $em->getRepository('LooninsNeguitBundle:Planning')->findBy($criteras);    // dump($datePlanning); exit();
 
             if($formRech->isValid()) {
                 // $em->getRepository('LooninsNeguitBundle:Planning')->findBy(['debut' => $planning->getHeureDebut() ]);

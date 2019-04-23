@@ -3,6 +3,7 @@
 
 {% block body %}
     {{ form_start(form, {'attr': {'class':'form_horizontal'}}) }}
+        
 
         <div class="form-row">
             {{ form_label(form.datePlanning, "Date annimation") }}
@@ -30,7 +31,7 @@
 
         <div class="form-row">
             <label>&nbsp;</label>
-            <button class="btn btn-success" type="submit"> Enregistrer </button>
+            <button class="btn btn-success" type="submit"> Rechercher </button>
         </div>
         {{ form_widget(form) }}
     {{ form_end(form) }}
@@ -54,7 +55,7 @@
                     <td> {{ planning.login }} </td>
                     <td> {{ planning.heureDebut }} </td>
                     <td> {{ planning.heureFin }} </td>
-                    <td> <a href="{{ path('planning_edit', {'id' : planning.id}) }}" class="alert-danger"> Modifier </a> </td>
+                    <td> &nbsp; </td>
                 </tr>
             {% endfor %}
         </tbody>

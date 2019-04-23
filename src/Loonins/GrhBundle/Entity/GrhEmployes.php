@@ -23,11 +23,11 @@ class GrhEmployes {
     /**
      * @var integer
      *
-     * @ORM\Column(name="Id", type="integer", nullable=false)
+     * @ORM\Column(name="Id", type="integer", nullable=false, unique=true)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -182,6 +182,14 @@ class GrhEmployes {
      * @ORM\Column(name="trashed", type="boolean", nullable=false)
      */
     private $trashed = '0';
+
+    /**
+    * @ORM\OneToOne(targetEntity="\Loonins\UserBundle\Entity\User", cascade={"persist", "remove"}, inversedBy="employe")
+    * @ORM\JoinColumn(name="user", nullable=true, referencedColumnName="id")
+    */
+    protected $user;
+
+
 
 
     /**
@@ -355,7 +363,7 @@ class GrhEmployes {
     }
 
     public function __toString() {
-        return (string) $this->getNom() . ' ' . $this->getPrenoms();
+        return "". $this->getNom() . ' ' . $this->getPrenoms();
     }
 
     /**
@@ -689,4 +697,33 @@ class GrhEmployes {
     {
         return $this->commentaire;
     }
+
+    
+
+    /**
+     * Set user
+     *
+     * @param \Loonins\UserBundle\Entity\User $user
+     *
+     * @return GrhEmployes
+     */
+    public function setUser(\Loonins\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Loonins\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+
+
 }

@@ -50,12 +50,11 @@ class Planning
      */
     private $createdAt;
 
- 
     
     /**
-     * @var \Loonins\NeguitBundle\Entity\LoginAnimNeguit
+     * @var \Loonins\NeguitBundle\Entity\AffectLoginNeguit
      *
-     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\LoginAnimNeguit")
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\AffectLoginNeguit")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="login", referencedColumnName="id")
      * })
@@ -94,6 +93,7 @@ class Planning
     }
 
     
+
 
     /**
      * Set heureDebut
@@ -194,11 +194,11 @@ class Planning
     /**
      * Set login
      *
-     * @param \Loonins\NeguitBundle\Entity\LoginAnimNeguit $login
+     * @param \Loonins\NeguitBundle\Entity\AffectLoginNeguit $login
      *
      * @return Planning
      */
-    public function setLogin(\Loonins\NeguitBundle\Entity\LoginAnimNeguit $login = null)
+    public function setLogin(\Loonins\NeguitBundle\Entity\AffectLoginNeguit $login = null)
     {
         $this->login = $login;
 
@@ -208,7 +208,7 @@ class Planning
     /**
      * Get login
      *
-     * @return \Loonins\NeguitBundle\Entity\LoginAnimNeguit
+     * @return \Loonins\NeguitBundle\Entity\AffectLoginNeguit
      */
     public function getLogin()
     {

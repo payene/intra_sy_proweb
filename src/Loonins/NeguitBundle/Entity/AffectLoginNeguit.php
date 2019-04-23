@@ -168,5 +168,9 @@ class AffectLoginNeguit
         return $this->loginAnimNeguit;
     }
 
+    public function __toString(){
+        return  ($this->loginAnimNeguit)->getPseudo() . " / " . $this->employe ;
+    }
+
 }
 

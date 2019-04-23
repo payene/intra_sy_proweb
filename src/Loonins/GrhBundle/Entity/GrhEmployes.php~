@@ -111,14 +111,14 @@ class GrhEmployes {
     /**
      * @var string
      *
-     * @ORM\Column(name="competence", type="string", length=255, nullable=true)
+     * @ORM\Column(name="competence", type="text", length=65535, nullable=true)
      */
     private $competence;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="experience", type="string", length=255, nullable=true)
+     * @ORM\Column(name="experience", type="text", length=65535, nullable=true)
      */
     private $experience;
     
@@ -182,6 +182,12 @@ class GrhEmployes {
      * @ORM\Column(name="trashed", type="boolean", nullable=false)
      */
     private $trashed = '0';
+
+    /**
+    * @ORM\OneToOne(targetEntity="\Loonins\UserBundle\Entity\User", cascade={"persist", "remove"}, inversedBy="employe")
+    * @ORM\JoinColumn(name="id", nullable=true)
+    */
+    protected $user;
 
 
     /**
@@ -593,4 +599,102 @@ class GrhEmployes {
         }
         return $absences;
     }
+
+    /**
+     * Set competence
+     *
+     * @param string $competence
+     *
+     * @return GrhEmployes
+     */
+    public function setCompetence($competence)
+    {
+        $this->competence = $competence;
+
+        return $this;
+    }
+
+    /**
+     * Get competence
+     *
+     * @return string
+     */
+    public function getCompetence()
+    {
+        return $this->competence;
+    }
+
+    /**
+     * Set experience
+     *
+     * @param string $experience
+     *
+     * @return GrhEmployes
+     */
+    public function setExperience($experience)
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    /**
+     * Get experience
+     *
+     * @return string
+     */
+    public function getExperience()
+    {
+        return $this->experience;
+    }
+
+    /**
+     * Set niveauEtude
+     *
+     * @param string $niveauEtude
+     *
+     * @return GrhEmployes
+     */
+    public function setNiveauEtude($niveauEtude)
+    {
+        $this->niveauEtude = $niveauEtude;
+
+        return $this;
+    }
+
+    /**
+     * Get niveauEtude
+     *
+     * @return string
+     */
+    public function getNiveauEtude()
+    {
+        return $this->niveauEtude;
+    }
+
+    /**
+     * Set commentaire
+     *
+     * @param string $commentaire
+     *
+     * @return GrhEmployes
+     */
+    public function setCommentaire($commentaire)
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaire
+     *
+     * @return string
+     */
+    public function getCommentaire()
+    {
+        return $this->commentaire;
+    }
+
+    
 }
