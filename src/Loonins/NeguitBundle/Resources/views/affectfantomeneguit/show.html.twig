@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>AffectFantomeNeguit</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ affectFantomeNeguit.id }}</td>
+            </tr>
+            <tr>
+                <th>Debutaffect</th>
+                <td>{% if affectFantomeNeguit.debutAffect %}{{ affectFantomeNeguit.debutAffect|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Finaffect</th>
+                <td>{% if affectFantomeNeguit.finAffect %}{{ affectFantomeNeguit.finAffect|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('affectfantomeneguit_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('affectfantomeneguit_edit', { 'id': affectFantomeNeguit.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

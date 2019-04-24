@@ -1,0 +1,41 @@
+{% extends 'LooninsNeguitBundle::layout.html.twig' %}
+
+{% block body %}
+    <h1>AffectFantomeNeguit list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Debutaffect</th>
+                <th>Finaffect</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for affectFantomeNeguit in affectFantomeNeguits %}
+            <tr>
+                <td><a href="{{ path('affectfantomeneguit_show', { 'id': affectFantomeNeguit.id }) }}">{{ affectFantomeNeguit.id }}</a></td>
+                <td>{% if affectFantomeNeguit.debutAffect %}{{ affectFantomeNeguit.debutAffect|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if affectFantomeNeguit.finAffect %}{{ affectFantomeNeguit.finAffect|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('affectfantomeneguit_show', { 'id': affectFantomeNeguit.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('affectfantomeneguit_edit', { 'id': affectFantomeNeguit.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('affectfantomeneguit_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
