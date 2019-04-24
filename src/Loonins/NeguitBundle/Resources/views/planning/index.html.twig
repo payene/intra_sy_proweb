@@ -72,6 +72,7 @@
 
     <table  class="table table-striped  table-hover">
         <thead class="alert alert-success">
+        <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" >  Horodatage </td>
             <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date </td>
             <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type Animation </td>
             <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fantome </td>
@@ -83,13 +84,18 @@
         <tbody>
             {% for planning in plannings %}
                 <tr>
+                    <td> {{ planning.createdAt|date('d/m/Y H:i:s') }} </td>
                     <td> {{ planning.datePlanning|date('d/m/Y') }} </td>
                     <td> {{ planning.typeAnim }} </td>
                     <td> {{ planning.fantome }} </td>
                     <td> {{ planning.login }} </td>
                     <td> {{ planning.heureDebut }} </td>
                     <td> {{ planning.heureFin }} </td>
-                    <td> <a href="{{ path('planning_edit', {'id' : planning.id}) }}" class="alert-danger"> Modifier </a> </td>
+                    <td>
+                        {% if planning.login.employe.user.id == app.user.id %}
+                        <a href="{{ path('planning_edit', {'id' : planning.id}) }}" class="alert-danger"> Modifier </a> 
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
