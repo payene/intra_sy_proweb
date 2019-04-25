@@ -1,0 +1,3 @@
+loonins_calendar_homepage:
+    path:     /
+    defaults: { _controller: LooninsCalendarBundle:Default:index }
