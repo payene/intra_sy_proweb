@@ -26,8 +26,7 @@ class AffectLoginNeguitType extends AbstractType
             ->add('loginAnimNeguit',EntityType::class,array(
                 'class'=>'Loonins\NeguitBundle\Entity\LoginAnimNeguit',
                 'choice_label'=>'pseudo',
-                )
-            )
+                ))
             ->add('debutAffectation',DateType::class, array('widget' => 'single_text'))
             
         ;

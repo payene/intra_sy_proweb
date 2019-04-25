@@ -6,7 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-
+use FOS\UserBundle\Util\LegacyFormHelper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class PlanningType extends AbstractType
 {
     /**
@@ -15,13 +16,13 @@ class PlanningType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('heureDebut')
             ->add('heureFin')
             ->add('datePlanning', DateType::class, array('widget' => 'single_text'))
-            // ->add('createdAt')
-            // ->add('login')
-            ->add('fantome')
+            //->add('createdAt')
+           // ->add('login')
             ->add('typeAnim')
         ;
     }

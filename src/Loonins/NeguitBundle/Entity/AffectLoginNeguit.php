@@ -34,7 +34,7 @@ class AffectLoginNeguit
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="finAffectation", type="datetime",nullable=true)
+     * @ORM\Column(name="finAffectation", type="date",nullable=true)
      */
     private $finAffectation;
 
@@ -61,25 +61,25 @@ class AffectLoginNeguit
     private $loginAnimNeguit;
 
 
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
 
-
     /**
      * Set debutAffectation
      *
      * @param \DateTime $debutAffectation
      *
-     * @return LoginAnimNeguit
+     * @return AffectLoginNeguit
      */
-    public function setdebutAffectation($debutAffectation)
+    public function setDebutAffectation($debutAffectation)
     {
         $this->debutAffectation = $debutAffectation;
 
@@ -91,20 +91,19 @@ class AffectLoginNeguit
      *
      * @return \DateTime
      */
-    public function getdebutAffectation()
+    public function getDebutAffectation()
     {
         return $this->debutAffectation;
     }
-
 
     /**
      * Set finAffectation
      *
      * @param \DateTime $finAffectation
      *
-     * @return LoginAnimNeguit
+     * @return AffectLoginNeguit
      */
-    public function setfinAffectation($finAffectation)
+    public function setFinAffectation($finAffectation)
     {
         $this->finAffectation = $finAffectation;
 
@@ -116,16 +115,17 @@ class AffectLoginNeguit
      *
      * @return \DateTime
      */
-    public function getfinAffectation()
+    public function getFinAffectation()
     {
         return $this->finAffectation;
     }
 
-        /**
+    /**
      * Set employe
      *
      * @param \Loonins\GrhBundle\Entity\GrhEmployes $employe
-     * @return GdpIncident
+     *
+     * @return AffectLoginNeguit
      */
     public function setEmploye(\Loonins\GrhBundle\Entity\GrhEmployes $employe = null)
     {
@@ -137,21 +137,21 @@ class AffectLoginNeguit
     /**
      * Get employe
      *
-     * @return \Loonins\GrhBundle\Entity\GrhEmployes 
+     * @return \Loonins\GrhBundle\Entity\GrhEmployes
      */
     public function getEmploye()
     {
         return $this->employe;
     }
 
-
     /**
      * Set loginAnimNeguit
      *
-     * @param \Loonins\NeguitBundle\Entity\LoginAnimNeguits $loginAnimNeguit
-     * @return LoginAnimNeguit
+     * @param \Loonins\NeguitBundle\Entity\LoginAnimNeguit $loginAnimNeguit
+     *
+     * @return AffectLoginNeguit
      */
-    public function setloginAnimNeguit(\Loonins\NeguitBundle\Entity\LoginAnimNeguit $loginAnimNeguit = null)
+    public function setLoginAnimNeguit(\Loonins\NeguitBundle\Entity\LoginAnimNeguit $loginAnimNeguit = null)
     {
         $this->loginAnimNeguit = $loginAnimNeguit;
 
@@ -161,16 +161,15 @@ class AffectLoginNeguit
     /**
      * Get loginAnimNeguit
      *
-     * @return \Loonins\NeguitBundle\Entity\LoginAnimNeguits 
+     * @return \Loonins\NeguitBundle\Entity\LoginAnimNeguit
      */
-    public function getloginAnimNeguit()
+    public function getLoginAnimNeguit()
     {
         return $this->loginAnimNeguit;
     }
 
-    public function __toString(){
+     public function __toString(){
         return  ($this->loginAnimNeguit)->getPseudo() . " / " . $this->employe ;
     }
 
 }
-

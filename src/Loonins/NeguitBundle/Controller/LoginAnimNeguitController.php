@@ -12,7 +12,7 @@ use Loonins\NeguitBundle\Form\LoginAnimNeguitType;
 /**
  * LoginAnimNeguit controller.
  *
- * @Route("/pseudo")
+ * @Route("/neguit/pseudo")
  */
 class LoginAnimNeguitController extends Controller
 {

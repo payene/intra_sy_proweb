@@ -7,7 +7,7 @@
         {{ form_start(form, {'attr': {'class':'form_horizontal'}}) }}
 
             <div class="form-row">
-                {{ form_label(form.datePlanning, "Date annimation") }}
+                {{ form_label(form.datePlanning, "Date animation") }}
                 <div class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                     {# Génération de l'input. #}
                     {{ form_widget(form.datePlanning, {'attr' : {'style' : 'width:120px;', 'type':'text'}}) }}
@@ -24,7 +24,7 @@
             </div>
 
             <div class="form-row">
-                {{ form_label(form.fantome, "Fantome") }}
+                {{ form_label(form.fantome, "Affectation") }}
                 {# Génération de l'input. #}
                 {{ form_widget(form.fantome, {'attr': {'class': 'span1', 'style':'width:80px'} }) }} 
                 {{ form_errors(form.fantome, {'attr': {'class': 'alert-error', 'style':'width:40px'} }) }}
@@ -75,7 +75,7 @@
         <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" >  Horodatage </td>
             <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Date </td>
             <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type Animation </td>
-            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Fantome </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Affectation </td>
             <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Pseudo </td>
             <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Heure debut </td>
             <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Heure fin </td>
@@ -87,7 +87,7 @@
                     <td> {{ planning.createdAt|date('d/m/Y H:i:s') }} </td>
                     <td> {{ planning.datePlanning|date('d/m/Y') }} </td>
                     <td> {{ planning.typeAnim }} </td>
-                    <td> {{ planning.fantome }} </td>
+                    <td> {{ planning.affectFantomeNeguit }} </td>
                     <td> {{ planning.login }} </td>
                     <td> {{ planning.heureDebut }} </td>
                     <td> {{ planning.heureFin }} </td>

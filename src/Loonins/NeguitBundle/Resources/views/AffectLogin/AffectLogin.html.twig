@@ -44,11 +44,11 @@
                     <td> {{ affectation.employe.nom }} {{ affectation.employe.prenoms }} </td>
                     <td> {{ affectation.loginAnimNeguit.pseudo }} </td>
                     {% if affectation.finAffectation != null %}
-                    <td> {{ affectation.finAffectation }} </td>
+                    <td> {{ affectation.finAffectation|date('d-m-Y') }} </td>
                     {% else %}
                     <td></td>
                    	{% endif %}
-                    <td> <a href="#" class="alert-danger"> Modifier </a> </td>
+                    <td> <a href="{{ path('affectLoginAnimLogin_fin', { 'id': affectation.id }) }}" class="alert-danger"> Mettre fin </a> </td>
                 </tr>
             {% endfor %}
         </tbody>

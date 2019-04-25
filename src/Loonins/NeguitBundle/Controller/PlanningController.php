@@ -46,7 +46,20 @@ class PlanningController extends Controller
             $datePlanning = $today->format('Y-m-d') . ' 00:00:00';
             $planning->setDatePlanning($today);
             // $planning->setHeureDebut("10:00");
-            $form = $this->createForm('Loonins\NeguitBundle\Form\PlanningType', $planning);
+            $repository=$this->getDoctrine()->getRepository('Loonins\GrhBundle\Entity\GrhEmployes');
+            $employeConnecte = $repository->findOneBy(['user'=>$this->getUser()->getId()]);
+
+
+             //$form = $this->createForm(PlanningType::Class, $planning,array());
+            $form = $this->createForm('Loonins\NeguitBundle\Form\PlanningType', $planning)
+            ->add('fantome',LegacyFormHelper::getType('Symfony\Bridge\Doctrine\Form\Type\EntityType'),array('class' => 'LooninsNeguitBundle:AffectFantomeNeguit','placeholder' => '-selectionner-',  'multiple' => false, 'mapped' => false, 'required' => false, 'choice_value' => 'id', 'query_builder' => function ($er) use ($employeConnecte) {
+                    return $er->createQueryBuilder('a')
+                        ->join('a.affectLogintNeguit', 'afln')
+                        ->where('afln.employe = :employe and a.finAffect is null')
+                        ->setparameter('employe',$employeConnecte)
+                        ;
+            }));
+            
             $form->handleRequest($request);
             $planning->setLogin( $affectNeguit );
             // dump($datePlanning); exit();
@@ -60,8 +73,8 @@ class PlanningController extends Controller
                     $form->get('typeAnim')->addError(new FormError('Type animation requis'));
                 }
 
-                if(empty($planning->getFantome())){
-                    $form->get('fantome')->addError(new FormError('Fantome requis'));
+                if(empty($planning->getaffectFantomeNeguit())){
+                    $form->get('affectFantomeNeguit')->addError(new FormError('Affectation requis'));
                 }
 
                 $heureDebut = $planning->getHeureDebut();
@@ -116,7 +129,7 @@ class PlanningController extends Controller
         }
         $plannings = $em->getRepository('LooninsNeguitBundle:Planning')->findBy(['datePlanning' => $today]);
         // exit;
-
+        
         return $this->render('LooninsNeguitBundle:planning:index.html.twig', array(
             'plannings' => $plannings,
             'planning' => $planning,

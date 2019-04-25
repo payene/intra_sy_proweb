@@ -53,7 +53,7 @@ class GrhEmployesController extends Controller {
                 );
             // $query->setParameter('today', date('Y-m-d') . " 00:00:00");
             // $query->setParameter('cdi', "0000-00-00");
-            // $query->setParameter('null', "NULL");
+            // $query->setParameter('null',  "NULL");
         $entities = $query->getResult();
 
         //les employés n'ayant jamais eu de contrat
@@ -138,9 +138,9 @@ class GrhEmployesController extends Controller {
         $resp_array = [];
         //$anniv_array = [];
         
-//        foreach ($respmails as $respmail) {
-//            $resp_array[] = $respmail->getEmail();
-//        }
+        //        foreach ($respmails as $respmail) {
+        //            $resp_array[] = $respmail->getEmail();
+        //        }
         
         $grhmails = $em->getRepository("LooninsGrhBundle:GrhMail")->findAll();
         foreach ($grhmails as $grhmail) {

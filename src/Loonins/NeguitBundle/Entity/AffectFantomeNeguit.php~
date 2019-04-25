@@ -1,0 +1,60 @@
+<?php
+
+namespace Loonins\NeguitBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AffectFantomeNeguit
+ *
+ * @ORM\Table(name="affect_fantome_neguit")
+ * @ORM\Entity(repositoryClass="Loonins\NeguitBundle\Repository\AffectFantomeNeguitRepository")
+ */
+class AffectFantomeNeguit
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="debutAffect", type="date")
+     */
+    private $debutAffect;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="finAffect", type="date",nullable=true)
+     */
+    private $finAffect;
+
+    /**
+     * @var \Loonins\NeguitBundle\Entity\AffectLoginNeguit
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\AffectLoginNeguit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="affectLogintNeguit", referencedColumnName="id")
+     * })
+     */
+    private $affectLogintNeguit;
+
+
+    /**
+     * @var \Loonins\NeguitBundle\Entity\ProfilVirtuel
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\ProfilVirtuel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="profilVirtuel", referencedColumnName="id")
+     * })
+     */
+    private $profilVirtuel;
+
+}
+

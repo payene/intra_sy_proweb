@@ -67,8 +67,12 @@ security:
         - { path: ^/sar/, roles: [ROLE_SAR] }
         - { path: ^/suivi/, roles: [ROLE_GRH] }
         
+        - { path: ^/neguit/affectLoginAnimLogin, roles: [ROLE_ADMIN] }
+        - { path: ^/neguit/affectfantomeneguit, roles: [ROLE_ADMIN] }
+        - { path: ^/neguit/pseudo, roles: [ROLE_ADMIN] }
+        - { path: ^/neguit/pv, roles: [ROLE_ADMIN] }
+        - { path: ^/neguit/typeanimneguit, roles: [ROLE_ADMIN] }
         - { path: ^/neguit/, roles: [ROLE_USER] }
-        - { path: ^/affectLoginAnimLogin, roles: [ROLE_ADMIN] }
 #        - { path: ^/grh^, roles: [ROLE_ADMIN] }
         - { path: ^/profile/show, roles: ROLE_USER }
         

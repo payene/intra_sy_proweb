@@ -8,12 +8,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Loonins\NeguitBundle\Entity\AffectLoginNeguit;
 use Loonins\NeguitBundle\Form\AffectLoginNeguitType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\FormError;
 
+
+/**
+ * AffectFantomeNeguit controller.
+ *
+ * @Route("/neguit/affectLoginAnimLogin")
+ */
 class AffectLoginAnimController extends Controller
 {
 	 /**
      * 
-     * @Route("/affectLoginAnimLogin", name="affectLoginAnim")
+     * @Route("/", name="affectLoginAnim")
      * 
      */
     public function affectLoginAnimLoginAction(Request $request)
@@ -26,6 +34,16 @@ class AffectLoginAnimController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+             $repository=$this->getDoctrine()->getRepository('Loonins\NeguitBundle\Entity\AffectLoginNeguit');
+             $affectation =$this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT a FROM Loonins\NeguitBundle\Entity\AffectLoginNeguit a WHERE a.loginAnimNeguit= :login and a.finAffectation is null')
+            ->setParameter('login',$form['loginAnimNeguit']->getdata())
+            ->getResult();
+
+            if(empty($affectation))
+            {
+                
             $repository=$this->getDoctrine()
             ->getRepository('Loonins\GrhBundle\Entity\GrhEmployes');
             $employe = $repository->findOneBy(['id'=>$form['employe']->getdata()]);
@@ -35,11 +53,16 @@ class AffectLoginAnimController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('affectLoginAnim');
+
+            }else
+            {   
+                    $form->addError(new FormError('login deja affecte a un employe'));
+            }
         }
 
         $repository=$this->getDoctrine()
         ->getRepository('Loonins\NeguitBundle\Entity\AffectLoginNeguit');
-        $affectations = $repository->findAll();
+        $affectations = $repository->findBy(['finAffectation'=>null]);
 
 
 
@@ -48,5 +71,34 @@ class AffectLoginAnimController extends Controller
                         'affectations'=>$affectations,
  						]);
    
+    }
+
+
+     /**
+     * 
+     *
+     * @Route("/affectLoginAnimLogin_fin/{id}", name="affectLoginAnimLogin_fin")
+     * @Method({"GET", "POST"})
+     */
+    public function finAffectLoginAnimLoginAction(Request $request, AffectLoginNeguit $affectLoginNeguit)
+    {
+        $form = $this->createFormBuilder()
+        ->add('dateFin',DateType::class, array('widget' => 'single_text'))
+         ->getForm();
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $affectLoginNeguit->setfinAffectation($form->get('dateFin')->getData());
+                $em->flush();
+
+            return $this->redirectToRoute('affectLoginAnim');
+        }
+
+        return $this->render('LooninsNeguitBundle:AffectLogin:finAffectation.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }

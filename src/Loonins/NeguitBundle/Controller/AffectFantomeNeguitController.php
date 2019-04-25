@@ -8,11 +8,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Loonins\NeguitBundle\Entity\AffectFantomeNeguit;
 use Loonins\NeguitBundle\Form\AffectFantomeNeguitType;
-
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 /**
  * AffectFantomeNeguit controller.
  *
- * @Route("/affectfantomeneguit")
+ * @Route("/neguit/affectfantomeneguit")
  */
 class AffectFantomeNeguitController extends Controller
 {
@@ -20,16 +21,49 @@ class AffectFantomeNeguitController extends Controller
      * Lists all AffectFantomeNeguit entities.
      *
      * @Route("/", name="affectfantomeneguit_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+
+        $affect = new AffectFantomeNeguit();
+
+        $form = $this->createForm('Loonins\NeguitBundle\Form\AffectFantomeNeguitType', $affect);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+         $repository=$this->getDoctrine()->getRepository('Loonins\NeguitBundle\Entity\AffectFantomeNeguit');
+         $affectation =$this->getDoctrine()
+        ->getManager()
+        ->createQuery('SELECT a FROM Loonins\NeguitBundle\Entity\AffectFantomeNeguit a WHERE a.profilVirtuel= :profil and a.finAffect is null')
+        ->setParameter('profil',$form->get('profilVirtuel')->getdata())
+        ->getResult();
+         
+         if(empty($affectation))
+            {
+                
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($affect);
+                    $em->flush();
+
+                return $this->redirectToRoute('affectfantomeneguit_index');
+                 
+            }else
+            {   
+                    $form->addError(new FormError('affectation deja existante'));
+            }
+        }
+
+        $repository=$this->getDoctrine()
+        ->getRepository('Loonins\NeguitBundle\Entity\AffectFantomeNeguit');
+        $affectations = $repository->findBy(array('finAffect'=>null));
         $em = $this->getDoctrine()->getManager();
 
-        $affectFantomeNeguits = $em->getRepository('LooninsNeguitBundle:AffectFantomeNeguit')->findAll();
 
         return $this->render('LooninsNeguitBundle:affectfantomeneguit:index.html.twig', array(
-            'affectFantomeNeguits' => $affectFantomeNeguits,
+            'form' => $form->createView(),
+            'affectations'=>$affectations,
         ));
     }
 
@@ -136,5 +170,34 @@ class AffectFantomeNeguitController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+
+     /**
+     * 
+     *
+     * @Route("/affectfantomeneguit_fin/{id}", name="affectfantomeneguit_fin")
+     * @Method({"GET", "POST"})
+     */
+    public function finAction(Request $request, AffectFantomeNeguit $affectFantomeNeguit)
+    {
+        $form = $this->createFormBuilder()
+        ->add('dateFin',DateType::class, array('widget' => 'single_text'))
+         ->getForm();
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $affectFantomeNeguit->setfinAffect($form->get('dateFin')->getData());
+                $em->flush();
+
+            return $this->redirectToRoute('affectfantomeneguit_index');
+        }
+
+        return $this->render('LooninsNeguitBundle:affectfantomeneguit:finAffectLogin.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }

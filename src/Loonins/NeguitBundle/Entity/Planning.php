@@ -62,9 +62,9 @@ class Planning
     private $login;
 
     /**
-     * @var \Loonins\NeguitBundle\Entity\ProfilVirtuel
+     * @var \Loonins\NeguitBundle\Entity\AffectFantomeNeguit
      *
-     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\ProfilVirtuel")
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\AffectFantomeNeguit")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fantome", referencedColumnName="id")
      * })
@@ -82,18 +82,17 @@ class Planning
     private $typeAnim;
 
 
+
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-
-    
-
 
     /**
      * Set heureDebut
@@ -218,11 +217,11 @@ class Planning
     /**
      * Set fantome
      *
-     * @param \Loonins\NeguitBundle\Entity\ProfilVirtuel $fantome
+     * @param \Loonins\NeguitBundle\Entity\AffectFantomeNeguit $fantome
      *
      * @return Planning
      */
-    public function setFantome(\Loonins\NeguitBundle\Entity\ProfilVirtuel $fantome = null)
+    public function setFantome(\Loonins\NeguitBundle\Entity\AffectFantomeNeguit $fantome = null)
     {
         $this->fantome = $fantome;
 
@@ -232,7 +231,7 @@ class Planning
     /**
      * Get fantome
      *
-     * @return \Loonins\NeguitBundle\Entity\ProfilVirtuel
+     * @return \Loonins\NeguitBundle\Entity\AffectFantomeNeguit
      */
     public function getFantome()
     {

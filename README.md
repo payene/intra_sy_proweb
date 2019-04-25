@@ -80,3 +80,14 @@ ALTER TABLE type_anim_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
 ALTER TABLE planning_neguit DROP FOREIGN KEY FK_A5531511AA08CB10;
 ALTER TABLE planning_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
 ALTER TABLE planning_neguit ADD CONSTRAINT FK_A5531511AA08CB10 FOREIGN KEY (login) REFERENCES affect_login_neguit (id);
+
+
+
+
+===================================    LIAISON ENTRE AffectFantomeNeguit et LoginAnimNeguit   =================================================
+CREATE TABLE affect_fantome_neguit (id INT AUTO_INCREMENT NOT NULL, debutAffect DATE NOT NULL, finAffect DATE NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE profil_virtuel CHANGE createdAt createdAt DATETIME NOT NULL;
+ALTER TABLE login_anim_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
+ALTER TABLE type_anim_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
+ALTER TABLE planning_neguit CHANGE createdAt createdAt DATETIME NOT NULL;
+

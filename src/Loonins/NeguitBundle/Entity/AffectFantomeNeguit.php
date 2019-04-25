@@ -31,15 +31,36 @@ class AffectFantomeNeguit
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="finAffect", type="date")
+     * @ORM\Column(name="finAffect", type="date",nullable=true)
      */
     private $finAffect;
+
+    /**
+     * @var \Loonins\NeguitBundle\Entity\AffectLoginNeguit
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\AffectLoginNeguit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="affectLogintNeguit", referencedColumnName="id")
+     * })
+     */
+    private $affectLogintNeguit;
+
+
+    /**
+     * @var \Loonins\NeguitBundle\Entity\ProfilVirtuel
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\ProfilVirtuel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="profilVirtuel", referencedColumnName="id")
+     * })
+     */
+    private $profilVirtuel;
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -93,5 +114,58 @@ class AffectFantomeNeguit
     {
         return $this->finAffect;
     }
-}
 
+    /**
+     * Set affectLogintNeguit
+     *
+     * @param \Loonins\NeguitBundle\Entity\AffectLoginNeguit $affectLogintNeguit
+     *
+     * @return AffectFantomeNeguit
+     */
+    public function setAffectLogintNeguit(\Loonins\NeguitBundle\Entity\AffectLoginNeguit $affectLogintNeguit = null)
+    {
+        $this->affectLogintNeguit = $affectLogintNeguit;
+
+        return $this;
+    }
+
+    /**
+     * Get affectLogintNeguit
+     *
+     * @return \Loonins\NeguitBundle\Entity\AffectLoginNeguit
+     */
+    public function getAffectLogintNeguit()
+    {
+        return $this->affectLogintNeguit;
+    }
+
+    /**
+     * Set profilVirtuel
+     *
+     * @param \Loonins\NeguitBundle\Entity\ProfilVirtuel $profilVirtuel
+     *
+     * @return AffectFantomeNeguit
+     */
+    public function setProfilVirtuel(\Loonins\NeguitBundle\Entity\ProfilVirtuel $profilVirtuel = null)
+    {
+        $this->profilVirtuel = $profilVirtuel;
+
+        return $this;
+    }
+
+    /**
+     * Get profilVirtuel
+     *
+     * @return \Loonins\NeguitBundle\Entity\ProfilVirtuel
+     */
+    public function getProfilVirtuel()
+    {
+        return $this->profilVirtuel;
+    }
+
+
+
+    public function __toString(){
+        return  ($this->affectLogintNeguit)->getloginAnimNeguit()->getPseudo() . " / " . $this->profilVirtuel->getPseudo() ;
+    }
+}

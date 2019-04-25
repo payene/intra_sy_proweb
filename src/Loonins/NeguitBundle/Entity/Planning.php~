@@ -62,9 +62,9 @@ class Planning
     private $login;
 
     /**
-     * @var \Loonins\NeguitBundle\Entity\ProfilVirtuel
+     * @var \Loonins\NeguitBundle\Entity\AffectFantomeNeguit
      *
-     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\ProfilVirtuel")
+     * @ORM\ManyToOne(targetEntity="\Loonins\NeguitBundle\Entity\AffectFantomeNeguit")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fantome", referencedColumnName="id")
      * })
@@ -82,16 +82,5 @@ class Planning
     private $typeAnim;
 
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    
 
 }
