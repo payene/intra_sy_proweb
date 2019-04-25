@@ -1,3 +1,8 @@
+loonins_calendar:
+    resource: "@LooninsCalendarBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 loonins_neguit_affect_fantome_neguit:
     resource: "@LooninsNeguitBundle/Controller/AffectFantomeNeguitController.php"
     type:     annotation
