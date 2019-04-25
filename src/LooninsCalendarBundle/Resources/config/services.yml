@@ -1,4 +1,0 @@
-services:
-#    loonins_calendar.example:
-#        class: LooninsCalendarBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
