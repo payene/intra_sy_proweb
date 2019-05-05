@@ -7,6 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
+    fichier_directory: '%kernel.root_dir%/../web/uploads/planning'
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
@@ -44,8 +45,9 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     #exception_controller: LooninsUserBundle:Exception:showException
+    exception_controller: LooninsUserBundle:Exception:showException
 
-
+  
 # Doctrine Configuration
 doctrine:
     dbal:

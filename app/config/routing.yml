@@ -1,3 +1,27 @@
+loonins_ges_conge_solde:
+    resource: "@LooninsGesCongeBundle/Controller/SoldeController.php"
+    type:     annotation
+
+loonins_ges_conge_demande_conge:
+    resource: "@LooninsGesCongeBundle/Controller/DemandeCongeController.php"
+    type:     annotation
+
+loonins_ges_conge_type_demande:
+    resource: "@LooninsGesCongeBundle/Controller/TypeDemandeController.php"
+    type:     annotation
+
+loonins_ges_conge:
+    resource: "@LooninsGesCongeBundle/Resources/config/routing.yml"
+    prefix:   /gesconge
+
+loonins_calendar_planning_conge:
+    resource: "@LooninsCalendarBundle/Controller/PlanningCongeController.php"
+    type:     annotation
+
+loonins_calendar_planning_hebdo:
+    resource: "@LooninsCalendarBundle/Controller/PlanningHebdoController.php"
+    type:     annotation
+
 loonins_calendar:
     resource: "@LooninsCalendarBundle/Resources/config/routing.yml"
     prefix:   /calendar

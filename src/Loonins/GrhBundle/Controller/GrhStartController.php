@@ -110,19 +110,22 @@ class GrhStartController extends Controller {
         $query3 = $em->createQueryBuilder();
         $query5 = $em->createQueryBuilder();
         $query7 = $em->createQueryBuilder();
+        $query8 = $em->createQueryBuilder();
 
         $tab1 = $this->contratEnCours($query1);
         $tab2 = $this->contratSuspendu($query2);
         $tab3 = $this->contratResilie($query3);
         $tab5 = $this->contratATerme($query5);
         $tab7 = $this->contratStage($query7);
+        $tabOnTop = $this->contratAttenteArchive($query8);
                 
         return $this->render('LooninsGrhBundle:GrhStart:index.html.twig', array(
-                    'tab1' => $tab1,
-                    'tab2' => $tab2,
-                    'tab3' => $tab3,
-                    'tab4' => $tab5,
-                    'tab7' => $tab7,
+            'tab1' => $tab1,
+            'tab2' => $tab2,
+            'tab3' => $tab3,
+            'tab4' => $tab5,
+            'tab7' => $tab7,
+            'tabOnTop' => $tabOnTop,
         ));
     }
 
@@ -309,26 +312,6 @@ class GrhStartController extends Controller {
         return $formRech = $formBuilder->getForm();
     }
 
-    public function indebxAction($absolute = null, $limit = null) {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQueryBuilder();
-        if (!$absolute instanceof \DateTime) {
-            $absolute = new \DateTime();
-            $absolute = date('Y-m-d H:i:s', $absolute->getTimestamp());
-        }
-        if (empty($limit)) {
-            $limit = 3;
-        }
-        $query
-                ->select("c, DATEDIFF(c.date,'$absolute') as diff")
-                ->from('LooninsGrhBundle:GrhContrats', 'c')
-                ->where("c.status != 3")
-                ->andwhere("c.status != 4")
-                ->andwhere("c.diff < 145");
-        $entities = $query->getQuery()->getResult();
-        // var_dump($entities);
-        die('');
-    }
 
     public function contratEnCours($query) {
         $query
@@ -386,6 +369,18 @@ class GrhStartController extends Controller {
             ->andWhere('e7.trashed = 0')
             ->orderBy('e7.prenoms', 'ASC')
             ->orderBy('e7.nom', 'ASC');
+        return $liste = $query->getQuery()->getResult();
+    }
+
+    public function contratAttenteArchive($query) {
+        $query
+            ->select('c8')
+            ->from('LooninsGrhBundle:GrhContrats', 'c8')
+            ->join('c8.employe', 'e8')
+            ->where('c8.status = 4')
+            ->andWhere('e8.trashed = 0')
+            ->orderBy('e8.prenoms', 'ASC')
+            ->orderBy('e8.nom', 'ASC');
         return $liste = $query->getQuery()->getResult();
     }
 

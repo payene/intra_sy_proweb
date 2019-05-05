@@ -1,0 +1,4 @@
+services:
+#    loonins_ges_conge.example:
+#        class: Loonins\GesCongeBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

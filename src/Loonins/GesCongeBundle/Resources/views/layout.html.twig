@@ -1,0 +1,39 @@
+{% extends '::gesconge.layout.html.twig' %}
+{% block module_name %} NEGUIT - {{ Corp }}{% endblock module_name %}
+{% block titre %} {{ Corporation }} - Intranet {% endblock%}
+
+{% set module = "conge" %}
+
+{% block modules %}
+    {{ parent() }}        
+    {#<!-- <a class="custom" id="lateStat" href=""> Stat en retard (8)</a> -->#}
+{% endblock %}
+
+{% block sidebar %}
+    <ul id="leftNavUl" >
+        <li>
+            <a href="{{ path('demandeconge_index')}}" >
+                <span class=""> <i class="icon-black icon-home"></i> Demande </span>
+            </a>
+        </li>
+{% if is_granted('ROLE_ADMIN')%}
+        <li>
+            <a href="{{ path('typedemande_index')}}" >
+                <span class=""> <i class="icon-black icon-home"></i> Type demande </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ path ('demandeconge_validation')}}" >
+                <span class=""> <i class="icon-black icon-home"></i> Validation de demande</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ path ('solde_index')}}" >
+                <span class=""> <i class="icon-black icon-home"></i> Solde</span>
+            </a>
+        </li>
+ {% endif %}       
+    </ul>
+{% endblock %}

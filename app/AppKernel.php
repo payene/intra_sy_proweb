@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new Loonins\NeguitBundle\LooninsNeguitBundle(),
             new Loonins\CalendarBundle\LooninsCalendarBundle(),
+            new Loonins\GesCongeBundle\LooninsGesCongeBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

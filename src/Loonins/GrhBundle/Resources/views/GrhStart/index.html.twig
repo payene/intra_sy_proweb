@@ -6,6 +6,69 @@
 
 
 {% block body %}
+
+
+    <div class="tab-pane active" id="contrats">
+        <table class="table table-bordered table-striped records_list" style="border-radius: 0px 0px;" id="tableContrats">
+            <thead class="alert-success" style="border-radius: 0px 0px;" >
+                <tr style="border-radius: 0px 0px;" >
+                    <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;">Type</th>
+                    <th style="padding:0px;vertical-align:middle;">Employ&eacute;</th>
+                    <th style="padding:0px;vertical-align:middle;">Email</th>
+                    <th style="padding:0px;vertical-align:middle;">Debut</th>
+                    <th style="padding:0px;vertical-align:middle;">Dur&eacute;e</th>
+                    <th style="padding:0px;vertical-align:middle;">Fin</th>
+                    <th style="padding:0px;vertical-align:middle;">Date enregistrement</th>
+                    <th style="padding:0px;vertical-align:middle;">Status</th>
+                    <th style="border-radius: 0px 0px;padding:0px;vertical-align:middle;"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                    {% for c in tabOnTop %}
+                        <tr>
+                            <td> {% if c.type %} {{ c.type.type }}  {% endif %}  </td>
+                            <td> {{ c.employe }}  </td>
+                            <td> {{ c.employe.email }}  </td>
+                            <td> {% if c.debut %}{{ c.debut|date('d-m-Y') }}{% endif %}  </td>
+                            <td>
+                                {% if c.type %}
+                                    {{  c.type.duree == 0 ? "-" :  c.type.duree }}
+                                {% endif %} 
+                            </td>
+                            <td> 
+                                {% if c.type.duree == 0 %}
+                                    {{"Indefini"}}
+                                {% else %}
+                                    {% if c.finReel %} {{ c.finReel|date('d-m-Y') }} {% endif %} 
+                                {% endif %}
+                            </td>
+                            <td> {% if c.date %}{{ c.date|date('d-m-Y') }}{% endif %} </td>
+                            <td> 
+                                {% if c.status == 1 %}
+                                    En cours
+                                {#{% elseif c.status == 2 %}
+                                    Suspendu;
+                                {% elseif c.status == 3 %}
+                                    R&eacute;sili&eacute;#}
+                                {% elseif c.status == 4     %}
+                                    A terme
+                                {% elseif c.status == 5     %}
+                                    Archiv&eacute;
+                                {% endif %}
+                            </td>
+                            <td>  
+                                    
+                                    <a class="alert-danger" href="{{ path('grh_archive', { 'contrat': c.id }) }}"> <i class="icon icon-inbox"> </i> Archiver </a>
+                                  
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
     
     
      <div class="btn-group">
@@ -15,7 +78,7 @@
             <li class="alert active alert-success"><a class="alert-success" href="#encours" style="color: blue;" data-toggle="tab"> Contrats en cours ({{ tab1|length }}) </a></li>
             <li class="alert alert-error"><a class="alert-error" href="#suspendu" style="color: #e9322d;" data-toggle="tab"> Contrats suspendu ({{ tab2|length }}) </a></li>
             <li class="alert alert-error"><a class="alert-error" href="#resilie" style="color: #e9322d;" data-toggle="tab"> Contrats r&eacute;sili&eacute; ({{ tab3|length }}) </a></li>
-            <li class="alert alert-error"><a class="alert-error" href="#aterme" style="color: #e9322d;" data-toggle="tab"> Contrats &agrave; terme ({{ tab4|length }}) </a></li>
+            <li class="alert alert-error"><a class="alert-error" href="#aterme" style="color: #e9322d;" data-toggle="tab"> Contrats archiv&eacute;s ({{ tab4|length }}) </a></li>
             <li class="alert alert-info"><a class="alert-info" href="#stage" style="color: blue;" data-toggle="tab"> Stage En cours ({{ tab7|length }}) </a></li>
         </ul>
     </div>

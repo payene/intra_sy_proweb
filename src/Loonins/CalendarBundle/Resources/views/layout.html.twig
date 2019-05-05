@@ -1,0 +1,27 @@
+{% extends '::calendar.layout.html.twig' %}
+{% block module_name %} NEGUIT - {{ Corp }}{% endblock module_name %}
+{% block titre %} {{ Corporation }} - Intranet {% endblock%}
+
+{% set module = "planning" %}
+
+{% block modules %}
+    {{ parent() }}        
+    {#<!-- <a class="custom" id="lateStat" href=""> Stat en retard (8)</a> -->#}
+{% endblock %}
+
+{% block sidebar %}
+    <ul id="leftNavUl" >
+        <li>
+            <a href="{{ path('planninghebdo_index') }}" >
+                <span class=""> <i class="icon-black icon-home"></i> Planning Hebdo </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ path('planningconge_index')}}" >
+                <span class=""> <i class="icon-black icon-home"></i> Planning Cong&eacute; </span>
+            </a>
+        </li>
+        
+    </ul>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'LooninsGesCongeBundle::layout.html.twig' %}
+
+{% block body %}
+    {{ form_start(form, {'attr': {'class':'form_horizontal'}}) }}
+        <div class="form-row">
+            <label>Nom du type de demande :</label>
+            {{ form_errors(form.libelle, {'attr': {'class': 'alert alert-error', 'style':'width:90px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.libelle, {'attr': {'class': 'span1', 'style':'width:200px', 'AUTOCOMPLETE':'OFF'} }) }} 
+        </div>
+       
+        
+        <div class="form-row">
+            <button class="btn btn-success" type="submit" style="margin-top: 25px"> Enregistrer </button>
+        </div>
+        {{ form_widget(form) }}
+{{ form_end(form) }}
+
+    <table  class="table table-striped  table-hover">
+        <thead class="alert alert-success">
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type de demande </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" >   </td>
+        </thead>
+        <tbody>
+            {% for typeDemande in typeDemandes %}
+                <tr>
+                    <td> {{ typeDemande.libelle }} </td>
+                    <td> <a href="#" class="alert-danger"> Modifier </a> </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

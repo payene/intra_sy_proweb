@@ -121,7 +121,7 @@ class GdpIncident {
      *
      * @ORM\ManyToOne(targetEntity="\Loonins\GrhBundle\Entity\GrhEmployes", inversedBy="incidents")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="employe", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="employe", referencedColumnName="Id")
      * })
      */
     private $employe;

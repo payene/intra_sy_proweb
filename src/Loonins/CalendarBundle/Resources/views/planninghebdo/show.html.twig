@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>PlanningHebdo</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ planningHebdo.id }}</td>
+            </tr>
+            <tr>
+                <th>Numweek</th>
+                <td>{{ planningHebdo.numWeek }}</td>
+            </tr>
+            <tr>
+                <th>Annee</th>
+                <td>{{ planningHebdo.annee }}</td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>{{ planningHebdo.source }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if planningHebdo.createdAt %}{{ planningHebdo.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Del</th>
+                <td>{{ planningHebdo.del }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('planninghebdo_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('planninghebdo_edit', { 'id': planningHebdo.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

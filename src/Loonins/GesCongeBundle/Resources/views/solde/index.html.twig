@@ -1,0 +1,105 @@
+{% extends 'LooninsGesCongeBundle::layout.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+    <div class="span4">
+   <h4 class=" text-center "  style="width:200px">creation de solde individuel </h4> 
+     {{ form_start(form, {'attr': {'class':'form-horizontal'}}) }}
+        <div class="form-row">
+            <label>Employe :</label>
+            {{ form_errors(form.employe, {'attr': {'class': 'alert alert-error', 'style':'width:90px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.employe, {'attr': {'class': 'span1', 'style':'width:200px'} }) }} 
+        </div>
+        <div class="form-row">
+            <label>Type de demande  :</label>
+            {{ form_errors(form.typeDemande, {'attr': {'class': 'alert alert-error', 'style':'width:90px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.typeDemande, {'attr': {'class': 'span1', 'style':'width:200px', 'AUTOCOMPLETE':'OFF'} }) }} 
+        </div>
+        <div class="form-row">
+            <label>Solde  :</label>
+            {{ form_errors(form.solde, {'attr': {'class': 'alert alert-error', 'style':'width:90px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(form.solde, {'attr': {'class': 'span1', 'style':'width:200px', 'AUTOCOMPLETE':'OFF'} }) }} 
+        </div>
+        <br>
+        <div class="form-row text-center" style="width:200px">
+            <button class="btn btn-success text-center" type="submit" " > Enregistrer </button>
+        </div>
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    </div>
+    <div class="span4">
+    <h4 class=" text-center "  style="width:200px">creation de solde par type  </h4> 
+     {{ form_start(formpartype, {'attr': {'class':'form-horizontal'}}) }}
+        <div class="form-row">
+            <label>Type de demande  :</label>
+            {{ form_errors(formpartype.typeDemande, {'attr': {'class': 'alert alert-error', 'style':'width:90px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(formpartype.typeDemande, {'attr': {'class': 'span1', 'style':'width:200px', 'AUTOCOMPLETE':'OFF'} }) }} 
+        </div>
+        <div class="form-row">
+            <label>Solde  :</label>
+            {{ form_errors(formpartype.solde, {'attr': {'class': 'alert alert-error', 'style':'width:90px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(formpartype.solde, {'attr': {'class': 'span1', 'style':'width:200px', 'AUTOCOMPLETE':'OFF'} }) }} 
+        </div>
+        <br>
+        <div class="form-row text-center" style="width:200px">
+            <button class="btn btn-success text-center" type="submit" " > Enregistrer </button>
+        </div>
+        {{ form_widget(formpartype) }}
+    {{ form_end(formpartype) }}
+
+    </div>
+    <div class="span4">
+    <h4 class=" text-center "  style="width:200px">creation pour tous les types  </h4> 
+     {{ form_start(allform, {'attr': {'class':'form-horizontal'}}) }}
+
+        <div class="form-row">
+            <label>Solde  :</label>
+            {{ form_errors(allform.solde, {'attr': {'class': 'alert alert-error', 'style':'width:90px'} }) }}
+            {# Génération de l'input. #}
+            {{ form_widget(allform.solde, {'attr': {'class': 'span1', 'style':'width:200px', 'AUTOCOMPLETE':'OFF'} }) }} 
+        </div>
+        <br>
+        <div class="form-row text-center" style="width:200px">
+            {{ form_widget(allform.enregistrer, {'attr': {'class': 'btn btn-success text-center', 'AUTOCOMPLETE':'OFF'} }) }} 
+        </div>
+        {{ form_widget(allform) }}
+    {{ form_end(allform) }}
+
+
+    </div>
+    </div>
+</div>
+
+
+<div class="text-center mb-10"> <h3>Liste des soldes</h3> </div>
+
+<div class="container">
+    <div class="row">
+         <table  class="table table-striped  table-hover">
+        <thead class="alert alert-success">
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Employe </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > Type de demande </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" > solde   </td>
+            <td style="border-radius: 0px 0px;padding:0px;vertical-align:middle;" >   </td>
+        </thead>
+        <tbody>
+         {% for solde in soldes %}
+                <tr>
+                    <td> {{ solde.employe }} </td>
+                    <td> {{ solde.typeDemande.libelle }} </td>
+                    <td> {{ solde.solde }} </td>
+                    <td> <a href="" class="alert-success"> Modifier </a> </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

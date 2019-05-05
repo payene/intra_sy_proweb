@@ -12,8 +12,7 @@ class ExceptionController extends Controller
      */
     public function showExceptionAction()
     {
-        return $this->render('LooninsUserBundle:ExceptionController:show_exception.html.twig', array(
-            // ...
+        return $this->render('Exception/error.html.twig', array(
         ));
     }
 

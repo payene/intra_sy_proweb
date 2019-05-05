@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>PlanningConge</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ planningConge.id }}</td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>{{ planningConge.source }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if planningConge.createdAt %}{{ planningConge.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Del</th>
+                <td>{{ planningConge.del }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('planningconge_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('planningconge_edit', { 'id': planningConge.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

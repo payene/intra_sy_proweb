@@ -1,0 +1,120 @@
+<?php
+
+namespace Loonins\GesCongeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Solde
+ *
+ * @ORM\Table(name="solde")
+ * @ORM\Entity(repositoryClass="Loonins\GesCongeBundle\Repository\SoldeRepository")
+ */
+class Solde
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="solde", type="integer")
+     */
+    private $solde;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="derniereMaj", type="datetime")
+     */
+    private $derniereMaj;
+
+
+    /**
+     * @var \Loonins\GrhBundle\Entity\GrhEmployes
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\GrhBundle\Entity\GrhEmployes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="employe", referencedColumnName="Id")
+     * })
+     */
+    private $employe;
+
+
+    /**
+     * @var \Loonins\GesCongeBundle\Entity\TypeDemande
+     *
+     * @ORM\ManyToOne(targetEntity="\Loonins\GesCongeBundle\Entity\TypeDemande")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="typeDemande", referencedColumnName="id")
+     * })
+     */
+    private $typeDemande;
+
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set solde
+     *
+     * @param integer $solde
+     *
+     * @return Solde
+     */
+    public function setSolde($solde)
+    {
+        $this->solde = $solde;
+
+        return $this;
+    }
+
+    /**
+     * Get solde
+     *
+     * @return int
+     */
+    public function getSolde()
+    {
+        return $this->solde;
+    }
+
+    /**
+     * Set derniereMaj
+     *
+     * @param \DateTime $derniereMaj
+     *
+     * @return Solde
+     */
+    public function setDerniereMaj($derniereMaj)
+    {
+        $this->derniereMaj = $derniereMaj;
+
+        return $this;
+    }
+
+    /**
+     * Get derniereMaj
+     *
+     * @return \DateTime
+     */
+    public function getDerniereMaj()
+    {
+        return $this->derniereMaj;
+    }
+}
+
